@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Menu Principal</title>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" href="styles/estilos.css">
+	<link rel="stylesheet" href="http://localhost/projeto-automoveis/server/teste_banco.php">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+		
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script type="text/javascript" src="functions/routie.min.js"></script>
+	<script type="text/javascript" src="functions/jquery.mask.js"></script>
+	<script type="text/javascript" src="functions/functions.js"></script>
+    
+</head>
+
+<style type="text/css">
+
+	table, th, td {
+	  text-align: center;
+	}
+	
+	form .campo {
+		border: 1px solid black;
+	}
+	.coluna {
+		float: left;
+		padding-right: 20px;
+	}
+	.coluna input {
+		width: 100%;
+
+	}
+	.colunac {
+		float: left;
+	}
+	.linha {
+		float: left;
+		width: 100%;
+	}
+	.botao {
+		text-align: center;
+		display: inline-block;
+	}
+	.wh6 {
+		width: 50%;
+	}	
+	.wh5 {
+		width: 45%;
+	}
+	.wh4{
+		width: 16.66%;
+	}
+	.wh3 {
+		width: 25%;
+	}
+	.wh2 {
+		width: 20%;
+	}
+	.wh1 {
+		width: 12%;
+	}
+	.wh0 {
+		width: 15%;
+	}
+	select {
+		display: block;
+	}
+	.table .thead-dark th {
+	  color: #fff;
+	  background-color: #620000;
+	  border-color: #FF8888;
+	}
+	
+</style>
+
+<body>
+	<nav class="navbar navbar-default">
+	  <div class="container-fluid">
+	    <div class="navbar-header">
+	      <a class="navbar-brand" class="active" href="menuprincipal.html">Sistema de Automóveis</a>
+	    </div>
+	    <ul class="nav navbar-nav">
+	      <a name="relatorio.html" id="relatoriopesquisa"></a>
+	      <li><a  href="relatorio.html">Gerar Relatórios</a></li>
+	    </ul>
+	  </div>
+	</nav>
+<div id="menubusca">
+	<h1><p align="center"><strong> Busca Rápida </strong> </p></h1>	
+	<div align="center">
+		<div class="linha">
+			<div class="coluna wh6" align="left">
+		          <input id="buscarapidadescricao" class="search_input" type="text" name="" placeholder="Digite a descrição do veículo...">
+		          <div align="center">
+		          	<button id="botaobuscardescricao" class="search_icon" align="left"><i>Buscar</i></button>
+		          </div>
+		    </div>
+		    <div class="coluna wh6" align="left">
+		          <input id="buscarapidamarca" class="search_input" type="text" name="" placeholder="Digite a marca do veículo...">
+		          <div align="center">
+		          	<button id="botaobuscarmarca" class="search_icon" align="left"><i>Buscar</i></button>
+		      	  </div>
+		    </div>
+		</div>
+	<div>
+</div>
+
+<div id="menuprincipal">
+	<input id="idAutomovel" type="hidden" value="0" />
+	<table class="table" style="width:100%">	
+		<thead>
+			<tr>
+				<th>Descrição</th>
+				<th>Placa</th>
+			    <th>Marca</th>
+			    <th>Selecionar</th>
+			</tr>
+		</thead>
+	<tbody>
+	</tbody>
+	</table>
+	<div align="center">
+		<br><br>
+
+			<label align="right" for="cadastrarnovo"></label> <button id="cadastrarnovo" type="button" > Cadastrar</button></a>
+			<label align="right" for="excluir"> </label><button id="excluirveiculoid" type="button">Excluir Selecionados</button>	
+	</div>
+	<br>
+	
+    <br><br> 
+	<div align="center">
+		<nav aria-label="Navegação de página">
+		  <ul class="pagination justify-content-end">
+		    <li class="page-item">
+		      <a class="page-link" id="pageant" tabindex="-1">Anterior</a>
+		    </li>
+		    <li class="page-item"><a id="page1" class="page-link" href="#">1</a></li>
+		    <li class="page-item"><a id="page2" class="page-link" href="#">2</a></li>
+		    <li class="page-item"><a id="page3" class="page-link" href="#">3</a></li>
+		    <li class="page-item">
+		      <a class="page-link" id="pagenext">Próximo</a>
+		    </li>
+		  </ul>
+		</nav>
+	</div>
+	<div>
+	</div>
+</div>
+
+<div id="alterar-tela" style="display: none;">
+	<p align="left" > <font size="6" > Dados Cadastrais</font></p>
+	<HR ALIGN=center WIDTH=100% SIZE=20 COLOR=black NOSHADE>
+	<form>
+		<div class="linha">
+			<div class="coluna wh6">
+				<label for="descricao">Descrição</label>
+				<input type="text" name="descricao" placeholder="Nome do Veículo" class="campo" id="alterar-descricao">
+			</div>
+
+			<div class="coluna wh3">
+				<label for="placa">Placa</label>
+				<input type="text" name="placa" placeholder="XXX-XXXX" class="campo" id="alterar-placa">
+			</div>
+			<div class="coluna wh3">
+				<label for="renavam">Código RENAVAM</label>
+				<input type="text" name="renavam" placeholder="XXXXXXXX-X"class="campo" id="alterar-renavam">
+			</div>
+		</div>
+		<br> <br>
+		<br> <br>
+		<div class="linha">
+			<div class="coluna wh4">
+			<label for="sel1">Ano Modelo</label>
+	  		<select class="form-control" id="alterar-anomodelo">
+  				<option value="1990">1990</option>
+				<option value="1991">1991</option>
+				<option value="1992">1992</option>
+				<option value="1993">1993</option>
+				<option value="1994">1994</option>
+				<option value="1995">1995</option>
+				<option value="1996">1996</option>
+				<option value="1997">1997</option>
+				<option value="1998">1998</option>
+				<option value="1999">1999</option>
+	  			<option value="2000">2000</option>
+	  			<option value="2001">2001</option>
+	  			<option value="2002">2002</option>
+	  			<option value="2003">2003</option>
+	  			<option value="2004">2004</option>
+	  			<option value="2005">2005</option>
+	  			<option value="2006">2006</option>
+	  			<option value="2007">2007</option>
+	  			<option value="2008">2008</option>
+	  			<option value="2009">2009</option>
+				<option value="2010">2010</option>
+				<option value="2011">2011</option>
+				<option value="2012">2012</option>
+				<option value="2013">2013</option>
+				<option value="2014">2014</option>
+				<option value="2015">2015</option>
+				<option value="2016">2016</option>
+				<option value="2017">2017</option>
+				<option value="2018">2018</option>
+				<option value="2019">2019</option>
+			</select>
+			</div>
+			<div class="coluna wh4">
+				<label for="sel1">Ano Fabricação</label>
+	  			<select class="form-control" id="alterar-anofabricacao">
+	  				<option value="1990">1990</option>
+					<option value="1991">1991</option>
+					<option value="1992">1992</option>
+					<option value="1993">1993</option>
+					<option value="1994">1994</option>
+					<option value="1995">1995</option>
+					<option value="1996">1996</option>
+					<option value="1997">1997</option>
+					<option value="1998">1998</option>
+					<option value="1999">1999</option>
+					<option value="2000">2000</option>
+		  			<option value="2001">2001</option>
+		  			<option value="2002">2002</option>
+		  			<option value="2003">2003</option>
+		  			<option value="2004">2004</option>
+		  			<option value="2005">2005</option>
+		  			<option value="2006">2006</option>
+		  			<option value="2007">2007</option>
+		  			<option value="2008">2008</option>
+		  			<option value="2009">2009</option>
+					<option value="2010">2010</option>
+					<option value="2011">2011</option>
+					<option value="2012">2012</option>
+					<option value="2013">2013</option>
+					<option value="2014">2014</option>
+					<option value="2015">2015</option>
+					<option value="2016">2016</option>
+					<option value="2017">2017</option>
+					<option value="2018">2018</option>
+					<option value="2019">2019</option>
+				</select>
+			</div>
+			<div class="coluna wh4">
+				<label for="sel1">Marca</label>
+	  			<select class="form-control" id="alterar-marca">
+	  				<option value="renault">Renault</option>
+					<option value="fiat">Fiat</option>
+					<option value="chevrolet">Chevrolet</option>
+					<option value="volkswagem">Volkswagem</option>
+					<option value="ford">Ford</option>
+					<option value="nissan">Nissan</option>
+					<option value="hyundai">Hyundai</option>
+					<option value="toyota">Toyota</option>
+					<option value="mitsubishi">Mitubishi</option>
+					<option value="kia">Kia</option>
+					<option value="honda">Honda</option>
+				</select>
+			</div>		
+			<div class="coluna wh3">
+				<label for="cor">Cor</label>
+				<input type="text" name="cor" placeholder="Ex: Preto" class="campo" id="alterar-cor">
+			</div>
+			<div class="coluna wh3">
+				<label for="km">Km</label>
+				<input type="text" name="km" placeholder="0 km" class="campo" id="alterar-km">
+			</div>
+			
+		</div>
+		<br> <br>
+		<br> <br>
+		<div class="linha">
+			<div class="coluna wh6">
+				<label for="preco">Preço</label>
+				<input type="text" name="preco" placeholder="R$" class="campo" id="alterar-preco">
+			</div>
+
+			<div class="coluna wh6">
+				<label for="precofipe">Preço FIPE</label>
+				<input type="text" name="precofipe" placeholder="R$" class="campo" id="alterar-precofipe">
+			</div>
+		</div>
+	</form>
+	<br> <br>
+	<br> <br>
+	<p align="left" > <font size="6"> Componentes Adicionais</font></p>
+	<HR ALIGN=center WIDTH=100% SIZE=2 COLOR=black NOSHADE>
+
+	<form>
+		<div class="linha">
+			<div class="colunac wh1">
+				<input type="checkbox" name="preco" value="1" id="alterar-arcondicionado">
+				<label for="arcondicionado">Ar Condicionado</label>
+			</div>
+			<div class="colunac wh1">
+				<input type="checkbox" name="airbag" value="2" id="alterar-airbag">
+				<label for="airbag">Airbag</label>
+			</div>
+			<div class="colunac wh1">
+				<input type="checkbox" name="cdplayer" value="3" id="alterar-cdplayer">
+				<label for="cdplayer">CD player</label>
+			</div>
+			<div class="colunac wh1">
+				<input type="checkbox" name="direcaohidraulica" value="4" id="alterar-direcaohidraulica">
+				<label for="direcaohidraulica">Direção Hidráulica</label>
+			</div>
+			<div class="colunac wh1">
+				<input type="checkbox" name="vidro" value="5" id="alterar-vidro">
+				<label for="vidro">Vidro Elétrico</label>
+			</div>
+			<div class="colunac wh1">
+				<input type="checkbox" name="trava" value="6" id="alterar-trava">
+				<label for="trava">Trava Elétrica</label>
+			</div>
+		</div>
+		<br> <br>
+		<br> <br>
+		<div class="linha">
+			<div class="colunac wh2">
+				<input type="checkbox" name="cambio" value="7" id="alterar-cambio">
+				<label for="cambio">Câmbio Automático</label>
+			</div>
+			<div class="colunac wh2">
+				<input type="checkbox" name="rodas" value="8" id="alterar-rodas">
+				<label for="rodas">Rodas de Liga</label>
+			</div>
+			<div class="colunac wh2">	
+				<input type="checkbox" name="alarme" value="9" id="alterar-alarme">
+				<label for="alarme">Alarme</label>
+			</div>
+		</div>
+		<br> <br>
+		<br> <br><br> <br><br> <br>
+		<div div align="center">
+		<div class="linha">
+			<div class="botao" >
+				<input id="confirmaalteracaotelaprincipal" class="btn btn-success" value="Salvar" type="button">
+			</div>
+			<div class="botao">
+				<a id="menuprincipal.html" href="menuprincipal.html"> <button type="button" class="btn btn-outline-danger">  Cancelar</button>  </a>
+			</div>
+		</div>
+		</div>
+	</form>
+</div>
+<div id="novo-tela" style="display: none;">
+	
+	<p align="left" > <font size="6" > Dados Cadastrais</font></p>
+	<HR ALIGN=center WIDTH=100% SIZE=20 COLOR=black NOSHADE>
+	<form>
+		<div class="linha">
+			<div class="coluna wh6">
+				<label for="descricao">Descrição</label>
+				<input type="text" name="descricao" placeholder="Nome do Veículo" class="campo" id="novo-descricao">
+			</div>
+
+			<div class="coluna wh3">
+				<label for="placa">Placa</label>
+				<input type="text" name="placa" placeholder="XXX-XXXX" class="campo" id="novo-placa">
+			</div>
+			<div class="coluna wh3">
+				<label for="renavam">Código RENAVAM</label>
+				<input type="text" name="renavam" placeholder="XXXXXXXX-X"class="campo" id="novo-renavam">
+			</div>
+		</div>
+		<br> <br>
+		<br> <br>
+		<div class="linha">
+			<div class="coluna wh4">
+			<label for="sel1">Ano Modelo</label>
+	  		<select class="form-control" id="novo-anomodelo">
+  				<option value="1990">1990</option>
+				<option value="1991">1991</option>
+				<option value="1992">1992</option>
+				<option value="1993">1993</option>
+				<option value="1994">1994</option>
+				<option value="1995">1995</option>
+				<option value="1996">1996</option>
+				<option value="1997">1997</option>
+				<option value="1998">1998</option>
+				<option value="1999">1999</option>
+				<option value="2000">2000</option>
+	  			<option value="2001">2001</option>
+	  			<option value="2002">2002</option>
+	  			<option value="2003">2003</option>
+	  			<option value="2004">2004</option>
+	  			<option value="2005">2005</option>
+	  			<option value="2006">2006</option>
+	  			<option value="2007">2007</option>
+	  			<option value="2008">2008</option>
+	  			<option value="2009">2009</option>
+				<option value="2010">2010</option>
+				<option value="2011">2011</option>
+				<option value="2012">2012</option>
+				<option value="2013">2013</option>
+				<option value="2014">2014</option>
+				<option value="2015">2015</option>
+				<option value="2016">2016</option>
+				<option value="2017">2017</option>
+				<option value="2018">2018</option>
+				<option value="2019">2019</option>
+			</select>
+			</div>
+			<div class="coluna wh4">
+				<label for="sel1">Ano Fabricação</label>
+	  			<select class="form-control" id="novo-anofabricacao">
+					<option value="1990">1990</option>
+					<option value="1991">1991</option>
+					<option value="1992">1992</option>
+					<option value="1993">1993</option>
+					<option value="1994">1994</option>
+					<option value="1995">1995</option>
+					<option value="1996">1996</option>
+					<option value="1997">1997</option>
+					<option value="1998">1998</option>
+					<option value="1999">1999</option>
+					<option value="2000">2000</option>
+		  			<option value="2001">2001</option>
+		  			<option value="2002">2002</option>
+		  			<option value="2003">2003</option>
+		  			<option value="2004">2004</option>
+		  			<option value="2005">2005</option>
+		  			<option value="2006">2006</option>
+		  			<option value="2007">2007</option>
+		  			<option value="2008">2008</option>
+		  			<option value="2009">2009</option>
+					<option value="2010">2010</option>
+					<option value="2011">2011</option>
+					<option value="2012">2012</option>
+					<option value="2013">2013</option>
+					<option value="2014">2014</option>
+					<option value="2015">2015</option>
+					<option value="2016">2016</option>
+					<option value="2017">2017</option>
+					<option value="2018">2018</option>
+					<option value="2019">2019</option>
+				</select>
+			</div>
+			<div class="coluna wh4">
+				<label for="sel1">Marca</label>
+	  			<select class="form-control" id="novo-marca">
+					<option value="fiat">Fiat</option>
+					<option value="chevrolet">Chevrolet</option>
+					<option value="volkswagem">Volkswagem</option>
+					<option value="ford">Ford</option>
+					<option value="nissan">Nissan</option>
+					<option value="hyundai">Hyundai</option>
+					<option value="toyota">Toyota</option>
+					<option value="mitsubishi">Mitubishi</option>
+					<option value="kia">Kia</option>
+					<option value="honda">Honda</option>
+				</select>
+			</div>	
+			<div class="coluna wh3">
+				<label for="cor">Cor</label>
+				<input type="text" name="cor" placeholder="Ex: Preto" class="campo" id="novo-cor">
+			</div>
+			<div class="coluna wh3">
+				<label for="km">Km</label>
+				<input type="text" name="km" placeholder="0 km" class="campo" id="novo-km">
+			</div>
+		</div>
+		<br> <br>
+		<br> <br>
+		<div class="linha">
+			<div class="coluna wh6">
+				<label for="preco">Preço</label>
+				<input type="text" name="preco" placeholder="R$" class="campo" id="novo-preco">
+			</div>
+
+			<div class="coluna wh6">
+				<label for="precofipe">Preço FIPE</label>
+				<input type="text" name="precofipe" placeholder="R$" class="campo" id="novo-precofipe">
+			</div>
+		</div>
+	</form>
+	<br> <br>
+	<br> <br>
+	<p align="left" > <font size="6"> Componentes Adicionais</font></p>
+	<HR ALIGN=center WIDTH=100% SIZE=2 COLOR=black NOSHADE>
+	<form>
+		<div class="linha">
+			<div class="colunac wh1">
+				<input type="checkbox" name="preco" value="11" id="novo-arcondicionado">
+				<label for="arcondicionado">Ar Condicionado</label>
+			</div>
+			<div class="colunac wh1">
+				<input type="checkbox" name="airbag" value="12" id="novo-airbag">
+				<label for="airbag">Airbag</label>
+			</div>
+			<div class="colunac wh1">
+				<input type="checkbox" name="cdplayer" value="13" id="novo-cdplayer">
+				<label for="cdplayer">CD player</label>
+			</div>
+			<div class="colunac wh1">
+				<input type="checkbox" name="direcaohidraulica" value="14" id="novo-direcaohidraulica">
+				<label for="direcaohidraulica">Direção Hidráulica</label>
+			</div>
+			<div class="colunac wh1">
+				<input type="checkbox" name="vidro" value="15" id="novo-vidro">
+				<label for="vidro">Vidro Elétrico</label>
+			</div>
+			<div class="colunac wh1">
+				<input type="checkbox" name="trava" value="16" id="novo-trava">
+				<label for="trava">Trava Elétrica</label>
+			</div>
+		</div>
+		<br> <br>
+		<br> <br>
+		<div class="linha">
+			<div class="colunac wh2">
+				<input type="checkbox" name="cambio" value="17" id="novo-cambio">
+				<label for="cambio">Câmbio Automático</label>
+			</div>
+			<div class="colunac wh2">
+				<input type="checkbox" name="rodas" value="18" id="novo-rodas">
+				<label for="rodas">Rodas de Liga</label>
+			</div>
+			<div class="colunac wh2">	
+				<input type="checkbox" name="alarme" value="19" id="novo-alarme">
+				<label for="alarme">Alarme</label>
+			</div>
+		</div>
+		<br> <br>
+		<br> <br><br> <br><br> <br>
+		<div div align="center">
+		<div class="linha">
+			<div class="botao" >
+				<input id="confirmanovotelaprincipal" class="btn btn-success" value="Salvar" type="button">
+			</div>
+			<div class="botao">
+				<a id="menuprincipal.html" href="menuprincipal.html"> <button type="button" class="btn btn-outline-danger">  Cancelar</button>  </a>
+			</div>
+		</div>
+	</div>
+	</form>
+</div>
+</body>
+</html>
+
