@@ -19,6 +19,14 @@ if($action == 'alterar'){
 	echo json_encode(listar($_GET));
 }
 
+
+// function validaDados($veiculo){
+
+	
+
+// }
+
+
 function connectionFactory(){
 
 	$servername = "localhost";
@@ -69,7 +77,6 @@ function insereAdicionais($idVeiculo, $adicionais) {
 		$result = $conn->query($sql);
 
 	}
-	
 }
 	
 function removeDados($id){

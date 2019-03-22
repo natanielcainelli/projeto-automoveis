@@ -15,6 +15,69 @@ function vincularEventos() {
 
 	});
 
+	routie('editar/?:id', function(id){
+		veiculo = [];
+		$.ajax({
+			url: 'http://localhost/projeto-automoveis/server/teste_banco.php',
+			type: 'GET',
+			dataType: 'json',
+			data: {'action': 'listarultimoid'},
+			async: false,
+			success: function(result) {
+				veiculo = result;
+			},
+			error: function(error) {}
+		});
+		
+		console.table(veiculo);
+
+		$('#idAutomovel').val(id);
+		$('#menuprincipal').hide();
+		$('#alterar-tela').show();
+
+		$('#alterar-descricao').val(veiculo[id-1].descricao);
+		$('#alterar-placa').val(veiculo[id-1].placa).mask("AAA-0000");
+		$('#alterar-renavam').val(veiculo[id-1].renavam).mask("00000000-0");
+		$('#alterar-anomodelo').val(veiculo[id-1].anomodelo);
+		$('#alterar-anofabricacao').val(veiculo[id-1].anofabrica);
+		$('#alterar-cor').val(veiculo[id-1].cor);
+		$('#alterar-km').val(veiculo[id-1].km);
+		$('#alterar-marca').val(veiculo[id-1].marca.toLowerCase());
+		$('#alterar-preco').val(veiculo[id-1].preco).mask('R$ #########');
+		$('#alterar-precofipe').val(veiculo[id-1].precofipe).mask('R$ #########');
+
+		var value = "alterar";
+		validaCampos(value);
+
+		var data ={
+
+			id: id
+
+		};	
+
+		var veiculos = [];
+		$.ajax({
+			url: 'http://localhost/projeto-automoveis/server/teste_banco.php',
+			type: 'POST',
+			dataType: 'json',
+			data: {'data': data ,'action': 'geradadosadicionais'},
+			async: false,
+			success: function(result) {
+				
+				veiculos = result;
+			},
+			error: function(error) {
+			}
+		});
+
+		$.each(veiculos, function(key, value) {
+
+			$("input[value="+ value.adicionais +"]").prop('checked', true);
+
+		});
+
+	});
+
 	$('#botaobuscardescricao').on('click', function() {
 		
 			listar();
@@ -29,6 +92,13 @@ function vincularEventos() {
 
 		$('#menuprincipal').hide();
 		$('#novo-tela').show();	
+
+		$('#novo-placa').mask("AAA-0000");
+		$('#novo-renavam').mask("00000000-0");
+		$('#novo-preco').mask('R$ #########');
+		$('#novo-precofipe').mask('R$ #########');
+
+
 		var value = "novo";
 		validaCampos(value);
 
@@ -54,9 +124,11 @@ function vincularEventos() {
 			},
 			error: function(error) {}
 		});	
+
 		if(ids > 0){
 			alert('Veiculos excluídos com sucesso');
 		}
+
 		$('input[type=checkbox]').each(function(key, value) {
 			
 			if ($(this).is(':checked')) {
@@ -195,19 +267,18 @@ function vincularEventos() {
 			}
 		}
 
-
 		var data = {
 
 			descricao: $("#novo-descricao").val() == "" ? "" : $("#novo-descricao").val(),
-			placa: $("#novo-placa").val() == "" ? "" : $("#novo-placa").val(),
-			renavam: $("#novo-renavam").val() == "" ? 0 : $("#novo-renavam").val(),
+			placa: $("#novo-placa").unmask().val() == "" ? "" : $("#novo-placa").unmask().val(),
+			renavam: $("#novo-renavam").unmask().val() == "" ? 0 : $("#novo-renavam").unmask().val(),
 			anomodelo: $("#novo-anomodelo").val() == "" ? 0 : $("#novo-anomodelo").val(),
 			anofabrica: $("#novo-anofabricacao").val()== "" ? 0 : $("#novo-anofabricacao").val(),
 			cor: $("#novo-cor").val() == "" ? "" : $("#novo-cor").val(),
 			km: $("#novo-km").val() == "" ? 0 : $("#novo-km").val(),
 			marca: $("#novo-marca").val() == "" ? "" : $("#novo-marca").val(),
-			preco: $("#novo-preco").val() == "" ? 0 : $("#novo-preco").val(),
-			precofipe: $("#novo-precofipe").val() == "" ? 0 : $("#novo-precofipe").val(),
+			preco: $("#novo-preco").unmask().val() == "" ? 0 : $("#novo-preco").unmask().val(),
+			precofipe: $("#novo-precofipe").unmask().val() == "" ? 0 : $("#novo-precofipe").unmask().val(),
 
 			veiculo_id: idatual,
 			adicionais: adicionais
@@ -238,18 +309,19 @@ function vincularEventos() {
 
 function validaCampos($value){
 
+
 	$('#'+ $value +'-descricao').on("blur", function(){
 		if($(this).val() == ""){
 			alert('Digite uma descricao para o veiculo');
 		}
 	});
 	$('#'+ $value +'-placa').on("blur", function(){
-		if(	$(this).val() == "" || $(this).val().length < 7 || $(this).val().length > 7 ){
+		if(	$(this).val() == "" || $(this).val().length < 8 || $(this).val().length > 8 ){
 			alert('Digite uma placa para o veiculo');
 		}
 	});
 	$('#'+ $value +'-renavam').on("blur", function(){
-		if(	$(this).val() == "" || $(this).val().length < 9 || $(this).val().length > 9 ){
+		if(	$(this).val() == "" || $(this).val().length < 10 || $(this).val().length > 10 ){
 			alert('Digite um renavam para o veiculo');
 		}
 	});
@@ -428,3 +500,4 @@ function editar(veiculo) {
 
 	});
 }
+
