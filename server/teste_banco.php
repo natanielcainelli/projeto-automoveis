@@ -19,10 +19,10 @@ if($action == 'alterar'){
 	echo json_encode(listar($_GET));
 }
 
-function validaDados($veiculo){
+// function validaDados($veiculo){
 
-	$veiculo = filter_input(INPUT_POST, "veiculo", FILTER_SANITIZE_STRING);
-}
+// 	$veiculo = filter_input(INPUT_POST, "veiculo", FILTER_SANITIZE_STRING);
+// }
 
 function connectionFactory(){
 
