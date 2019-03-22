@@ -19,10 +19,6 @@ if($action == 'alterar'){
 	echo json_encode(listar($_GET));
 }
 
-// function validaDados($veiculo){
-
-// 	$veiculo = filter_input(INPUT_POST, "veiculo", FILTER_SANITIZE_STRING);
-// }
 
 function connectionFactory(){
 
@@ -50,6 +46,8 @@ function insereDados($veiculo){
 
 	$conn = connectionFactory();
 
+	validaDados($veiculo);
+
 	$sql = "INSERT INTO veiculo (descricao, placa, renavam, anomodelo, anofabrica, cor, km, marca, preco, precofipe) VALUES ('{$veiculo['descricao']}','{$veiculo['placa']}',{$veiculo['renavam']},{$veiculo['anomodelo']},{$veiculo['anofabrica']},'{$veiculo['cor']}',{$veiculo['km']},'{$veiculo['marca']}',{$veiculo['preco']},{$veiculo['precofipe']});";
 
 	error_log($sql);
@@ -64,6 +62,23 @@ function insereDados($veiculo){
 
 }
 
+function validaDados($veiculo){
+	
+	error_log(print_r($veiculo, true));
+
+	$veiculo['descricao'] = filter_var($veiculo['descricao'],FILTER_SANITIZE_STRING);
+	$veiculo['placa'] = filter_var($veiculo['placa'],FILTER_SANITIZE_STRING);
+	$veiculo['renavam'] = filter_var($veiculo['renavam'],FILTER_SANITIZE_STRING);
+	$veiculo['cor'] = filter_var($veiculo['cor'],FILTER_SANITIZE_STRING);
+	$veiculo['km'] = filter_var($veiculo['km'],FILTER_SANITIZE_STRING);
+	$veiculo['preco'] = filter_var($veiculo['preco'],FILTER_SANITIZE_STRING);
+	$veiculo['precofipe'] = filter_var($veiculo['precofipe'],FILTER_SANITIZE_STRING);
+
+	error_log(print_r($veiculo, true));
+
+	return $veiculo;
+
+}
 
 function insereAdicionais($idVeiculo, $adicionais) {
 
@@ -88,7 +103,7 @@ function removeDados($id){
 			error_log($sql);
 			$result = $conn->multi_query($sql);
 			
-		}
+		}				
 
 	}
 	
