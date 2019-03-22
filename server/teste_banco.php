@@ -46,7 +46,7 @@ function insereDados($veiculo){
 
 	$conn = connectionFactory();
 
-	validaDados($veiculo);
+	$veiculo = validaDados($veiculo);
 
 	$sql = "INSERT INTO veiculo (descricao, placa, renavam, anomodelo, anofabrica, cor, km, marca, preco, precofipe) VALUES ('{$veiculo['descricao']}','{$veiculo['placa']}',{$veiculo['renavam']},{$veiculo['anomodelo']},{$veiculo['anofabrica']},'{$veiculo['cor']}',{$veiculo['km']},'{$veiculo['marca']}',{$veiculo['preco']},{$veiculo['precofipe']});";
 
@@ -64,8 +64,6 @@ function insereDados($veiculo){
 
 function validaDados($veiculo){
 	
-	error_log(print_r($veiculo, true));
-
 	$veiculo['descricao'] = filter_var($veiculo['descricao'],FILTER_SANITIZE_STRING);
 	$veiculo['placa'] = filter_var($veiculo['placa'],FILTER_SANITIZE_STRING);
 	$veiculo['renavam'] = filter_var($veiculo['renavam'],FILTER_SANITIZE_STRING);
@@ -74,7 +72,7 @@ function validaDados($veiculo){
 	$veiculo['preco'] = filter_var($veiculo['preco'],FILTER_SANITIZE_STRING);
 	$veiculo['precofipe'] = filter_var($veiculo['precofipe'],FILTER_SANITIZE_STRING);
 
-	error_log(print_r($veiculo, true));
+	// error_log(print_r($veiculo, true));
 
 	return $veiculo;
 
@@ -104,7 +102,6 @@ function removeDados($id){
 			$result = $conn->multi_query($sql);
 			
 		}				
-
 	}
 	
 	connectionKill($conn);
