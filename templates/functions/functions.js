@@ -98,7 +98,6 @@ function vincularEventos() {
 		$('#novo-preco').mask('R$ #########');
 		$('#novo-precofipe').mask('R$ #########');
 
-
 		var value = "novo";
 		validaCampos(value);
 
@@ -160,48 +159,62 @@ function vincularEventos() {
 		var adicionais = [];
 		var i = 0;
 
-		for (var j = 1; j < 10; j++) {
-			if($("input[value="+ j +"]").is(':checked')){
-				adicionais[i] = j ; 
-				i++;
-			}
+	
+		var value = "alterar";
+		var erro = validaCampos(value);
+
+
+		if(erro == true){
+
+			var erro = validaCampos(value);
+			alert('Por favor preencha todos os campos para continuar')
+
 		}
+		if(erro == false){
 
-		var data = {
-			id: id,
-			descricao: $("#alterar-descricao").val(),
-			placa: $("#alterar-placa").unmask().val(),
-			renavam: $("#alterar-renavam").unmask().val(),
-			anomodelo: $("#alterar-anomodelo").val(),
-			anofabrica: $("#alterar-anofabricacao").val(),
-			cor: $("#alterar-cor").val(),
-			km: $("#alterar-km").val(),
-			marca: $("#alterar-marca").val(),
-			preco: $("#alterar-preco").unmask().val(),
-			precofipe: $("#alterar-precofipe").unmask().val(),
+			for (var j = 1; j < 10; j++) {
+				if($("input[value="+ j +"]").is(':checked')){
+					adicionais[i] = j ; 
+					i++;
+				}
+			}
 
-			veiculo_id: id,
-			adicionais: adicionais
+			var data = {
+				id: id,
+				descricao: $("#alterar-descricao").val(),
+				placa: $("#alterar-placa").unmask().val(),
+				renavam: $("#alterar-renavam").unmask().val(),
+				anomodelo: $("#alterar-anomodelo").val(),
+				anofabrica: $("#alterar-anofabricacao").val(),
+				cor: $("#alterar-cor").val(),
+				km: $("#alterar-km").val(),
+				marca: $("#alterar-marca").val(),
+				preco: $("#alterar-preco").unmask().val(),
+				precofipe: $("#alterar-precofipe").unmask().val(),
 
-		};
+				veiculo_id: id,
+				adicionais: adicionais
 
-		$.ajax({
-			url: 'http://localhost/projeto-automoveis/server/teste_banco.php',
-			type: 'POST',
-			dataType: 'json',
-			data: {'data': data, 'action': 'alterar'},
+			};
 
-			success: function(result) {
-				veiculos = result;
-			},
-			error: function(error) {}
-		});			
+			$.ajax({
+				url: 'http://localhost/projeto-automoveis/server/teste_banco.php',
+				type: 'POST',
+				dataType: 'json',
+				data: {'data': data, 'action': 'alterar'},
+
+				success: function(result) {
+					veiculos = result;
+				},
+				error: function(error) {}
+			});			
 
 
-		$('#alterar-tela').hide();	
-		$('#menuprincipal').show();
-		listar();
-		alert('Veiculo modificado com sucesso');
+			$('#alterar-tela').hide();	
+			$('#menuprincipal').show();
+			listar();
+			alert('Veiculo modificado com sucesso');
+		}
 	});
 	
 
@@ -260,56 +273,70 @@ function vincularEventos() {
 		var idatual = parseInt(ultimoid.id) + 1;
 		var i = 0;
 
-		for (var j = 11; j < 20; j++) {
-			if($("input[value="+ j +"]").is(':checked')){
-				adicionais[i] = (j - 10); 
-				i++;
-			}
+
+		var value = "novo";
+		var erro = validaCampos(value);
+
+
+		if(erro == true){
+
+			var erro = validaCampos(value);
+			alert('Por favor preencha todos os campos para continuar')
+
 		}
 
-		var data = {
+		if(erro == false){
 
-			descricao: $("#novo-descricao").val() == "" ? "" : $("#novo-descricao").val(),
-			placa: $("#novo-placa").unmask().val() == "" ? "" : $("#novo-placa").unmask().val(),
-			renavam: $("#novo-renavam").unmask().val() == "" ? 0 : $("#novo-renavam").unmask().val(),
-			anomodelo: $("#novo-anomodelo").val() == "" ? 0 : $("#novo-anomodelo").val(),
-			anofabrica: $("#novo-anofabricacao").val()== "" ? 0 : $("#novo-anofabricacao").val(),
-			cor: $("#novo-cor").val() == "" ? "" : $("#novo-cor").val(),
-			km: $("#novo-km").val() == "" ? 0 : $("#novo-km").val(),
-			marca: $("#novo-marca").val() == "" ? "" : $("#novo-marca").val(),
-			preco: $("#novo-preco").unmask().val() == "" ? 0 : $("#novo-preco").unmask().val(),
-			precofipe: $("#novo-precofipe").unmask().val() == "" ? 0 : $("#novo-precofipe").unmask().val(),
-
-			veiculo_id: idatual,
-			adicionais: adicionais
-			
-		};
-
-		$.ajax({
-			url: 'http://localhost/projeto-automoveis/server/teste_banco.php',
-			type: 'POST',
-			dataType: 'json',
-			data: {'data': data, 'action': 'novo'},
-
-			success: function(result) {
-				veiculos = result;
-
-			},
-			error: function(error) {
-
+			for (var j = 11; j < 20; j++) {
+				if($("input[value="+ j +"]").is(':checked')){
+					adicionais[i] = (j - 10); 
+					i++;
+				}
 			}
-		});			
-		alert('Veiculo cadastrado com sucesso');
-		window.location.href="menuprincipal.html"
 
-		listar();
+			var data = {
 
+				descricao: $("#novo-descricao").val() == "" ? "" : $("#novo-descricao").val(),
+				placa: $("#novo-placa").unmask().val() == "" ? "" : $("#novo-placa").unmask().val(),
+				renavam: $("#novo-renavam").unmask().val() == "" ? 0 : $("#novo-renavam").unmask().val(),
+				anomodelo: $("#novo-anomodelo").val() == "" ? 0 : $("#novo-anomodelo").val(),
+				anofabrica: $("#novo-anofabricacao").val()== "" ? 0 : $("#novo-anofabricacao").val(),
+				cor: $("#novo-cor").val() == "" ? "" : $("#novo-cor").val(),
+				km: $("#novo-km").val() == "" ? 0 : $("#novo-km").val(),
+				marca: $("#novo-marca").val() == "" ? "" : $("#novo-marca").val(),
+				preco: $("#novo-preco").unmask().val() == "" ? 0 : $("#novo-preco").unmask().val(),
+				precofipe: $("#novo-precofipe").unmask().val() == "" ? 0 : $("#novo-precofipe").unmask().val(),
+
+				veiculo_id: idatual,
+				adicionais: adicionais
+				
+			};
+
+			$.ajax({
+				url: 'http://localhost/projeto-automoveis/server/teste_banco.php',
+				type: 'POST',
+				dataType: 'json',
+				data: {'data': data, 'action': 'novo'},
+
+				success: function(result) {
+					veiculos = result;
+
+				},
+				error: function(error) {
+
+				}
+			});			
+			alert('Veiculo cadastrado com sucesso');
+			window.location.href="menuprincipal.html"
+
+			listar();
+		}
 	});
 }
 
 function validaCampos($value){
 
-
+	
 	$('#'+ $value +'-descricao').on("blur", function(){
 		if($(this).val() == ""){
 			alert('Digite uma descricao para o veiculo');
@@ -345,6 +372,34 @@ function validaCampos($value){
 			alert('Digite um preço da tabela fipe para o veiculo');
 		}
 	});
+
+	var erro = validaFormulario($value);
+
+	return erro;
+}
+
+function validaFormulario($value){
+
+	var erro = false;
+
+	if($('#'+ $value +'-descricao') == ""){
+		erro = true;
+	}if($('#'+ $value +'-placa') == "" || $('#'+ $value +'-placa').val().length < 8 || $('#'+ $value +'-placa').val().length > 8 ){
+		erro = true;
+	}if($('#'+ $value +'-renavam') == "" || $('#'+ $value +'-renavam').val().length < 10 || $('#'+ $value +'-renavam').val().length > 10){
+		erro = true;
+	}if($('#'+ $value +'-cor') == ""){
+		erro = true;
+	}if($('#'+ $value +'-km') == ""){
+		erro = true;
+	}if($('#'+ $value +'-preco') == "" || $('#'+ $value +'-preco').val() <= 0){
+		erro = true;
+	}if($('#'+ $value +'-precofipe') == "" || $('#'+ $value +'-precofipe').val() <= 0){
+		erro = true;
+	}
+
+	return erro;
+
 }
 
 function obterUltimoIndice() {
