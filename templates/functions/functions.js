@@ -22,6 +22,7 @@ function vincularEventos() {
 	routie('editar/?:id', function(id){
 		$('#alterar_menu').show();
 		$('#novo_menu').hide();
+		$('#menubusca').hide();
 		veiculo = [];
 		$.ajax({
 			url: 'http://localhost/projeto-automoveis/server/teste_banco.php',
@@ -38,6 +39,7 @@ function vincularEventos() {
 		$('#idAutomovel').val(id);
 		$('#menuprincipal').hide();
 		$('#alterar-tela').show();
+
 
 		$('#descricao').val(veiculo[id-1].descricao);
 		$('#placa').val(veiculo[id-1].placa).mask("AAA-0000");
@@ -152,6 +154,17 @@ function vincularEventos() {
 		listar();
 	});
 
+
+	 $('#buscarapidadescricao').keypress(function(e){
+      if(e.keyCode==13)
+      $('#botaobuscardescricao').click();
+    });
+
+	  $('#buscarapidamarca').keypress(function(e){
+      if(e.keyCode==13)
+      $('#botaobuscarmarca').click();
+    });
+
 	$('#confirmaalteracaotelaprincipal').on('click', function() {
 		var id = parseInt($('#idAutomovel').val());
 		var adicionais = [];
@@ -209,7 +222,7 @@ function vincularEventos() {
 			listar();
 			alert('Veiculo modificado com sucesso');
 		}
-		$('#menubusca').show();
+
 	});
 	
 
@@ -306,7 +319,7 @@ function vincularEventos() {
 
 			listar();
 		}
-		$('#menubusca').show();
+		// $('#menubusca').show();
 	});
 }
 
@@ -315,37 +328,59 @@ function validaCampos(){
 	
 	$('#descricao').on("blur", function(){
 		if($(this).val() == ""){
-			alert('Digite uma descricao para o veiculo');
+			$("#erros_form").show();
+			$("#erros_form_descricao").show();
+			// $(this).class.val("campo_erro");
+		}if($(this).val() != ""){
+			$("#erros_form_descricao").hide();
 		}
 	});
 	$('#placa').on("blur", function(){
 		if(	$(this).val() == "" || $(this).val().length < 8 || $(this).val().length > 8 ){
-			alert('Digite uma placa para o veiculo');
+			$("#erros_form").show();
+			$("#erros_form_placa").show();
+		}if($(this).val() != ""){
+			$("#erros_form_placa").hide();
 		}
 	});
 	$('#renavam').on("blur", function(){
 		if(	$(this).val() == "" || $(this).val().length < 10 || $(this).val().length > 10 ){
-			alert('Digite um renavam para o veiculo');
+			$("#erros_form").show();
+			$("#erros_form_renavam").show();
+		}if($(this).val() != ""){
+			$("#erros_form_renavam").hide();
 		}
 	});
 	$('#cor').on("blur", function(){
 		if(	$(this).val() == "" ){
-			alert('Digite uma cor para o veiculo');
+			$("#erros_form").show();
+			$("#erros_form_cor").show();
+		}if($(this).val() != ""){
+			$("#erros_form_cor").hide();
 		}
 	});
 	$('#km').on("blur", function(){
 		if(	$(this).val() == "" || $(this).val() < 0 ){
-			alert('Digite uma kilometragem para o veiculo');
+			$("#erros_form").show();
+			$("#erros_form_km").show();
+		}if($(this).val() != ""){
+			$("#erros_form_km").hide();
 		}
 	});
 	$('#preco').on("blur", function(){
 		if(	$(this).val() == "" || $(this).val() <= 0 ){
-			alert('Digite um preço para o veiculo');
+			$("#erros_form").show();
+			$("#erros_form_preco").show();
+		}if($(this).val() != ""){
+			$("#erros_form_preco").hide();
 		}
 	});
 	$('#precofipe').on("blur", function(){
 		if(	$(this).val() == "" || $(this).val() <= 0 ){
-			alert('Digite um preço da tabela fipe para o veiculo');
+			$("#erros_form").show();
+			$("#erros_form_precofipe").show();
+		}if($(this).val() != ""){
+			$("#erros_form_precofipe").hide();
 		}
 	});
 
