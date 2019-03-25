@@ -68,11 +68,9 @@ function validaDados($veiculo){
 	$veiculo['placa'] = filter_var($veiculo['placa'],FILTER_SANITIZE_STRING);
 	$veiculo['renavam'] = filter_var($veiculo['renavam'],FILTER_SANITIZE_STRING);
 	$veiculo['cor'] = filter_var($veiculo['cor'],FILTER_SANITIZE_STRING);
-	$veiculo['km'] = filter_var($veiculo['km'],FILTER_SANITIZE_STRING);
-	$veiculo['preco'] = filter_var($veiculo['preco'],FILTER_SANITIZE_STRING);
-	$veiculo['precofipe'] = filter_var($veiculo['precofipe'],FILTER_SANITIZE_STRING);
-
-	// error_log(print_r($veiculo, true));
+	$veiculo['km'] = filter_var($veiculo['km'],FILTER_SANITIZE_NUMBER_INT);
+	$veiculo['preco'] = filter_var($veiculo['preco'],FILTER_SANITIZE_NUMBER_FLOAT);
+	$veiculo['precofipe'] = filter_var($veiculo['precofipe'],FILTER_SANITIZE_NUMBER_FLOAT);
 
 	return $veiculo;
 
@@ -86,7 +84,6 @@ function insereAdicionais($idVeiculo, $adicionais) {
 		$sql = "INSERT INTO veiculo_adicionais (adicionais, veiculo_id) VALUES ($adicional, $idVeiculo)";
 		error_log($sql);
 		$result = $conn->query($sql);
-
 	}
 }
 	
@@ -100,7 +97,6 @@ function removeDados($id){
 			$sql = "DELETE FROM veiculo  WHERE (id = $values); DELETE FROM veiculo_adicionais WHERE (veiculo_id = $values);";
 			error_log($sql);
 			$result = $conn->multi_query($sql);
-			
 		}				
 	}
 	
@@ -159,15 +155,19 @@ function listar($filtros){
 
 	$sql = "SELECT id,descricao, placa, renavam, anomodelo, anofabrica, cor, km , marca, preco, precofipe FROM veiculo ";
 
-	if(isset($filtros['descricao']) && $filtros['descricao'] != ''){
+	if(isset($filtros['descricao']) && $filtros['descricao'] != '' &&$filtros['marca'] == ''){
 
-		$sql.= "WHERE descricao = '{$filtros['descricao']}'";
+		$sql.= " WHERE descricao = '{$filtros['descricao']}' ";
 	}
-	if(isset($filtros['marca']) && $filtros['marca'] != ''){
+	if(isset($filtros['marca']) && $filtros['marca'] != '' && $filtros['descricao'] == ''){
 
-		$sql.= "WHERE marca = '{$filtros['marca']}'";
-
+		$sql.= " WHERE marca = '{$filtros['marca']}' ";
 	}
+	if (isset($filtros['descricao']) && $filtros['descricao'] != '' && isset($filtros['marca']) && $filtros['marca'] != ''){
+
+		$sql.= " WHERE descricao = '{$filtros['descricao']}' and marca = '{$filtros['marca']}' "; 
+	}
+
 	$sql.= " LIMIT $inicio ,10";
 
 	$result = $conn->query($sql);
