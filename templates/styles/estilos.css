@@ -1,0 +1,55 @@
+table, th, td {
+	  text-align: center;
+	}
+	
+	form .campo {
+		border: 1px solid black;
+	}
+	.coluna {
+		float: left;
+		padding-right: 20px;
+	}
+	.coluna input {
+		width: 100%;
+
+	}
+	.colunac {
+		float: left;
+	}
+	.linha {
+		float: left;
+		width: 100%;
+	}
+	.botao {
+		text-align: center;
+		display: inline-block;
+	}
+	.wh6 {
+		width: 50%;
+	}	
+	.wh5 {
+		width: 45%;
+	}
+	.wh4{
+		width: 16.66%;
+	}
+	.wh3 {
+		width: 25%;
+	}
+	.wh2 {
+		width: 20%;
+	}
+	.wh1 {
+		width: 12%;
+	}
+	.wh0 {
+		width: 15%;
+	}
+	select {
+		display: block;
+	}
+	.table .thead-dark th {
+	  color: #fff;
+	  background-color: #620000;
+	  border-color: #FF8888;
+	}
