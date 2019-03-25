@@ -53,3 +53,6 @@ table, th, td {
 	  background-color: #620000;
 	  border-color: #FF8888;
 	}
+	.campo_erro{
+		border: 2px solid red;
+	}

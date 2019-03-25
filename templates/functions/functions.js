@@ -319,68 +319,80 @@ function vincularEventos() {
 
 			listar();
 		}
-		// $('#menubusca').show();
+		
 	});
 }
 
 function validaCampos(){
 
-	
 	$('#descricao').on("blur", function(){
 		if($(this).val() == ""){
 			$("#erros_form").show();
 			$("#erros_form_descricao").show();
-			// $(this).class.val("campo_erro");
+			$(this).attr('class', "campo_erro");
 		}if($(this).val() != ""){
 			$("#erros_form_descricao").hide();
+			$(this).attr('class', "campo");
 		}
 	});
 	$('#placa').on("blur", function(){
 		if(	$(this).val() == "" || $(this).val().length < 8 || $(this).val().length > 8 ){
 			$("#erros_form").show();
 			$("#erros_form_placa").show();
+			$(this).attr('class', "campo_erro");
 		}if($(this).val() != ""){
 			$("#erros_form_placa").hide();
+			$(this).attr('class', "campo");
 		}
 	});
 	$('#renavam').on("blur", function(){
 		if(	$(this).val() == "" || $(this).val().length < 10 || $(this).val().length > 10 ){
 			$("#erros_form").show();
 			$("#erros_form_renavam").show();
+			$(this).attr('class', "campo_erro");
 		}if($(this).val() != ""){
 			$("#erros_form_renavam").hide();
+			$(this).attr('class', "campo");
 		}
 	});
 	$('#cor').on("blur", function(){
 		if(	$(this).val() == "" ){
 			$("#erros_form").show();
 			$("#erros_form_cor").show();
+			$(this).attr('class', "campo_erro");
 		}if($(this).val() != ""){
 			$("#erros_form_cor").hide();
+			$(this).attr('class', "campo");
 		}
 	});
 	$('#km').on("blur", function(){
 		if(	$(this).val() == "" || $(this).val() < 0 ){
 			$("#erros_form").show();
 			$("#erros_form_km").show();
+			$(this).attr('class', "campo_erro");
 		}if($(this).val() != ""){
 			$("#erros_form_km").hide();
+			$(this).attr('class', "campo");
 		}
 	});
 	$('#preco').on("blur", function(){
 		if(	$(this).val() == "" || $(this).val() <= 0 ){
 			$("#erros_form").show();
 			$("#erros_form_preco").show();
+			$(this).attr('class', "campo_erro");
 		}if($(this).val() != ""){
 			$("#erros_form_preco").hide();
+			$(this).attr('class', "campo");
 		}
 	});
 	$('#precofipe').on("blur", function(){
 		if(	$(this).val() == "" || $(this).val() <= 0 ){
 			$("#erros_form").show();
 			$("#erros_form_precofipe").show();
+			$(this).attr('class', "campo_erro");
 		}if($(this).val() != ""){
 			$("#erros_form_precofipe").hide();
+			$(this).attr('class', "campo");
 		}
 	});
 
