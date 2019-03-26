@@ -9,7 +9,11 @@ if($action == 'alterar'){
 	echo json_encode(alteraDados($data));
 }if($action == 'novo'){
 	echo json_encode(insereDados($data));
-}if($excluir == 'excluir'){
+}
+// if($action == 'validar'){
+// 	echo json_encode(validarCampos($data));
+// }
+if($excluir == 'excluir'){
 	echo json_encode(removeDados($_GET));
 }if($action == 'geradadosadicionais'){
 	echo json_encode(listarAdicionais($data));
@@ -18,7 +22,6 @@ if($action == 'alterar'){
 }else if($listar == 'listar') {
 	echo json_encode(listar($_GET));
 }
-
 
 function connectionFactory(){
 
@@ -223,5 +226,35 @@ function listarAdicionais($veiculos){
 	return $response;
 
 }
+
+// function validarCampos($campos){
+
+// 	if($campos['descricao'] == ""){
+// 		$camposInvalidos++;
+// 	}
+// 	if($campos['placa'] == "" || strlen($campos['placa']) != 7){
+// 		$camposInvalidos++;
+// 	}
+// 	if($campos['renavam'] == "" || strlen($campos['renavam']) != 9){
+// 		$camposInvalidos++;
+// 	}
+// 	if($campos['cor'] == "" ){
+// 		$camposInvalidos++;
+// 	}
+// 	if($campos['km'] == "" || $campos['km'] < 0){
+// 		$camposInvalidos++;
+// 	}
+// 	if($campos['preco'] == ""|| $campos['preco'] < 1){
+// 		$camposInvalidos++;
+// 	}
+// 	if($campos['precofpe'] == ""|| $campos['precofipe'] < 1){
+// 		$camposInvalidos++;
+// 	}
+
+// 	error_log($camposInvalidos);
+
+// 	return $camposInvalidos;
+
+// }
 
 ?>

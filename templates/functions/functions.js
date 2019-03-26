@@ -13,10 +13,8 @@ function vincularEventos() {
 	});
 
 	routie('cadastro', function() {
-
 		$('#menuprincipal').hide();
 		$('#alterar-tela').show();	
-
 	});
 
 	routie('editar/?:id', function(id){
@@ -39,8 +37,6 @@ function vincularEventos() {
 		$('#idAutomovel').val(id);
 		$('#menuprincipal').hide();
 		$('#alterar-tela').show();
-
-
 		$('#descricao').val(veiculo[id-1].descricao);
 		$('#placa').val(veiculo[id-1].placa).mask("AAA-0000");
 		$('#renavam').val(veiculo[id-1].renavam).mask("00000000-0");
@@ -67,8 +63,7 @@ function vincularEventos() {
 			dataType: 'json',
 			data: {'data': data ,'action': 'geradadosadicionais'},
 			async: false,
-			success: function(result) {
-				
+			success: function(result) {	
 				veiculos = result;
 			},
 			error: function(error) {
@@ -94,12 +89,10 @@ function vincularEventos() {
 		$('#alterar_menu').hide();
 		$('#novo_menu').show();
 		$('#menubusca').hide();
-
 		$('#placa').mask("AAA-0000");
 		$('#renavam').mask("00000000-0");
 		$('#preco').mask('R$ #########');
 		$('#precofipe').mask('R$ #########');
-
 		validaCampos();
 
 	});
@@ -119,7 +112,6 @@ function vincularEventos() {
 
 			success: function(result) {
 				veiculos = result;
-
 				listar();
 			},
 			error: function(error) {}
@@ -144,7 +136,6 @@ function vincularEventos() {
 
 				success: function(result) {
 					veiculos = result;
-
 					listar();
 				},
 				error: function(error) {}
@@ -169,13 +160,11 @@ function vincularEventos() {
 		var id = parseInt($('#idAutomovel').val());
 		var adicionais = [];
 		var i = 0;
-
-		var value = "alterar";
-		var erro = validaCampos(value);
+		var erro = validaCampos();
 
 		if(erro == true){
 
-			var erro = validaCampos(value);
+			var erro = validaCampos();
 			alert('Por favor preencha todos os campos para continuar')
 
 		}
@@ -185,6 +174,7 @@ function vincularEventos() {
 				if($("input[value="+ j +"]").is(':checked')){
 					adicionais[i] = j ; 
 					i++;
+
 				}
 			}
 
@@ -200,7 +190,6 @@ function vincularEventos() {
 				marca: $("#marca").val(),
 				preco: $("#preco").unmask().val(),
 				precofipe: $("#precofipe").unmask().val(),
-
 				veiculo_id: id,
 				adicionais: adicionais
 			};
@@ -222,7 +211,6 @@ function vincularEventos() {
 			listar();
 			alert('Veiculo modificado com sucesso');
 		}
-
 	});
 	
 
@@ -263,7 +251,6 @@ function vincularEventos() {
 		var ultimoid = obterUltimoIndice();
 		var idatual = parseInt(ultimoid.id) + 1;
 		var i = 0;
-
 		var erro = validaCampos();
 
 
@@ -295,7 +282,6 @@ function vincularEventos() {
 				marca: $("#marca").val() == "" ? "" : $("#marca").val(),
 				preco: $("#preco").unmask().val() == "" ? 0 : $("#preco").unmask().val(),
 				precofipe: $("#precofipe").unmask().val() == "" ? 0 : $("#precofipe").unmask().val(),
-
 				veiculo_id: idatual,
 				adicionais: adicionais
 			};
@@ -308,7 +294,6 @@ function vincularEventos() {
 
 				success: function(result) {
 					veiculos = result;
-
 				},
 				error: function(error) {
 
@@ -316,23 +301,29 @@ function vincularEventos() {
 			});			
 			alert('Veiculo cadastrado com sucesso');
 			window.location.href="menuprincipal.html"
-
 			listar();
 		}
 		
 	});
 }
 
-function validaCampos(){
+function validaCampos() {
+
+	var qtd_erros = 0;
 
 	$('#descricao').on("blur", function(){
 		if($(this).val() == ""){
 			$("#erros_form").show();
 			$("#erros_form_descricao").show();
 			$(this).attr('class', "campo_erro");
+			qtd_erros++;
 		}if($(this).val() != ""){
 			$("#erros_form_descricao").hide();
 			$(this).attr('class', "campo");
+			qtd_erros--;
+			if(qtd_erros == 0){
+				$("#erros_form").hide();
+			}
 		}
 	});
 	$('#placa').on("blur", function(){
@@ -340,9 +331,14 @@ function validaCampos(){
 			$("#erros_form").show();
 			$("#erros_form_placa").show();
 			$(this).attr('class', "campo_erro");
+			qtd_erros++;
 		}if($(this).val() != ""){
 			$("#erros_form_placa").hide();
 			$(this).attr('class', "campo");
+			qtd_erros--;
+			if(qtd_erros == 0){
+				$("#erros_form").hide();
+			}
 		}
 	});
 	$('#renavam').on("blur", function(){
@@ -350,9 +346,14 @@ function validaCampos(){
 			$("#erros_form").show();
 			$("#erros_form_renavam").show();
 			$(this).attr('class', "campo_erro");
+			qtd_erros++;
 		}if($(this).val() != ""){
 			$("#erros_form_renavam").hide();
 			$(this).attr('class', "campo");
+			qtd_erros--;
+			if(qtd_erros == 0){
+				$("#erros_form").hide();
+			}
 		}
 	});
 	$('#cor').on("blur", function(){
@@ -360,9 +361,14 @@ function validaCampos(){
 			$("#erros_form").show();
 			$("#erros_form_cor").show();
 			$(this).attr('class', "campo_erro");
+			qtd_erros++;
 		}if($(this).val() != ""){
 			$("#erros_form_cor").hide();
 			$(this).attr('class', "campo");
+			qtd_erros--;
+			if(qtd_erros == 0){
+				$("#erros_form").hide();
+			}
 		}
 	});
 	$('#km').on("blur", function(){
@@ -370,9 +376,14 @@ function validaCampos(){
 			$("#erros_form").show();
 			$("#erros_form_km").show();
 			$(this).attr('class', "campo_erro");
+			qtd_erros++;
 		}if($(this).val() != ""){
 			$("#erros_form_km").hide();
 			$(this).attr('class', "campo");
+			qtd_erros--;
+			if(qtd_erros == 0){
+				$("#erros_form").hide();
+			}
 		}
 	});
 	$('#preco').on("blur", function(){
@@ -380,9 +391,14 @@ function validaCampos(){
 			$("#erros_form").show();
 			$("#erros_form_preco").show();
 			$(this).attr('class', "campo_erro");
+			qtd_erros++;
 		}if($(this).val() != ""){
 			$("#erros_form_preco").hide();
 			$(this).attr('class', "campo");
+			qtd_erros--;
+			if(qtd_erros == 0){
+				$("#erros_form").hide();
+			}
 		}
 	});
 	$('#precofipe').on("blur", function(){
@@ -390,18 +406,24 @@ function validaCampos(){
 			$("#erros_form").show();
 			$("#erros_form_precofipe").show();
 			$(this).attr('class', "campo_erro");
+			qtd_erros++;
 		}if($(this).val() != ""){
 			$("#erros_form_precofipe").hide();
 			$(this).attr('class', "campo");
+			qtd_erros--;
+			if(qtd_erros == 0){
+				$("#erros_form").hide();
+			}
 		}
 	});
 
 	var erro = validaFormulario();
+	// var erro = testaCampos();
 
 	return erro;
 }
 
-function validaFormulario(){
+function validaFormulario() {
 
 	var erro = false;
 
@@ -534,5 +556,37 @@ function editar(veiculo) {
 
 
 	routie('editar/' +veiculo.id);
+
+}
+
+function testaCampos() {
+
+	var data = {
+
+		descricao: $("#descricao").val(),
+		placa: $("#placa").unmask().val(),
+		renavam: $("#renavam").unmask().val(),
+		cor: $("#cor").val(),
+		km: $("#km").val(),
+		preco: $("#preco").unmask().val(),
+		precofipe: $("#precofipe").unmask().val()
+	};
+
+	$.ajax({
+		url: 'http://localhost/projeto-automoveis/server/teste_banco.php',
+		type: 'POST',
+		dataType: 'json',
+		data: {'data': data, 'action': 'validar'},
+		async: false,
+		success: function(result) {
+			qtd_erros = result;
+
+		},
+		error: function(error) {
+
+		}
+	});		
+
+	return qtd_erros;
 
 }
