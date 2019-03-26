@@ -50,7 +50,7 @@ function vincularEventos() {
 
 		validaCampos();
 
-		var data ={
+		var data = {
 
 			id: id
 
@@ -145,7 +145,6 @@ function vincularEventos() {
 		listar();
 	});
 
-
 	 $('#buscarapidadescricao').keypress(function(e){
       if(e.keyCode==13)
       $('#botaobuscardescricao').click();
@@ -213,7 +212,6 @@ function vincularEventos() {
 		}
 	});
 	
-
 	$('#page1, #page2, #page3').on('click', function() {
 		pagina = parseInt($(this).text());
 		listar();
@@ -262,14 +260,11 @@ function vincularEventos() {
 		}
 
 		if(erro == false){
-
-			for (var j = 1; j < 10; j++) {
-				if($("input[value="+ j +"]").is(':checked')){
-					adicionais[i] = j; 
-					i++;
-				}
-			}
-
+			$('#form_adicionais input:checked').each(function() {
+				console.log($(this).val())
+				adicionais.push($(this).val());
+			});
+			
 			var data = {
 
 				descricao: $("#descricao").val() == "" ? "" : $("#descricao").val(),
@@ -293,7 +288,13 @@ function vincularEventos() {
 				data: {'data': data, 'action': 'novo'},
 
 				success: function(result) {
+					if (result['erro']) {
+
+						$('#campo_erros_texto')+= result['erro'];
+
+					}
 					veiculos = result;
+					
 				},
 				error: function(error) {
 
@@ -303,7 +304,6 @@ function vincularEventos() {
 			window.location.href="menuprincipal.html"
 			listar();
 		}
-		
 	});
 }
 
@@ -559,6 +559,7 @@ function editar(veiculo) {
 
 }
 
+
 function testaCampos() {
 
 	var data = {
@@ -579,6 +580,7 @@ function testaCampos() {
 		data: {'data': data, 'action': 'validar'},
 		async: false,
 		success: function(result) {
+		
 			qtd_erros = result;
 
 		},

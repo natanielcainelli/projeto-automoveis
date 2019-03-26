@@ -217,7 +217,7 @@
 	<br> <br>
 	<p align="left" > <font size="6"> Componentes Adicionais</font></p>
 	<HR ALIGN=center WIDTH=100% SIZE=2 COLOR=black NOSHADE>
-	<form>
+	<form id="form_adicionais">
 		<div class="linha">
 			<div class="colunac wh1">
 				<input type="checkbox" name="preco" value="1" id="arcondicionado">
@@ -260,7 +260,7 @@
 				<label for="alarme">Alarme</label>
 			</div>
 		</div>
-		<br> <br>
+		<br> <br> <br> <br>
 		<div>
 			<div id="erros_form" style="display: none;"><h3> Os seguintes campos são inválidos:  </h3></div>
 			<div id="erros_form_descricao" style="display: none;"> Descrição </div>
@@ -270,6 +270,16 @@
 			<div id="erros_form_km" style="display: none;"> KM </div>
 			<div id="erros_form_preco" style="display: none;"> Preço </div>
 			<div id="erros_form_precofipe" style="display: none;"> Preço FIPE </div>
+		</div>
+		<div id="campo_erros_aviso" style="display: none;" >
+			<div class="panel-group">
+			  <div class="panel panel-danger">
+			    <div align="center" id="campo_erros_titulo" class="panel-body">Os seguintes campos possuem erros:</div>
+			  </div>
+			  <div class="panel panel-danger">
+			    <div id="campo_erros_texto" class="panel-body"></div>
+			  </div>
+			</div> 
 		</div>
 		<br> <br><br> <br><br> <br>
 		<div div align="center">

@@ -9,11 +9,7 @@ if($action == 'alterar'){
 	echo json_encode(alteraDados($data));
 }if($action == 'novo'){
 	echo json_encode(insereDados($data));
-}
-// if($action == 'validar'){
-// 	echo json_encode(validarCampos($data));
-// }
-if($excluir == 'excluir'){
+}if($excluir == 'excluir'){
 	echo json_encode(removeDados($_GET));
 }if($action == 'geradadosadicionais'){
 	echo json_encode(listarAdicionais($data));
@@ -22,6 +18,7 @@ if($excluir == 'excluir'){
 }else if($listar == 'listar') {
 	echo json_encode(listar($_GET));
 }
+
 
 function connectionFactory(){
 
@@ -48,6 +45,11 @@ function connectionKill($conn){
 function insereDados($veiculo){
 
 	$conn = connectionFactory();
+
+	$erros = validarCampos($veiculo);
+	if (! empty($erros)) {
+		return ['erro' => true, 'mensagens' => $erros];
+	}
 
 	$veiculo = validaDados($veiculo);
 
@@ -227,34 +229,41 @@ function listarAdicionais($veiculos){
 
 }
 
-// function validarCampos($campos){
+function validarCampos($campos){
 
-// 	if($campos['descricao'] == ""){
-// 		$camposInvalidos++;
-// 	}
-// 	if($campos['placa'] == "" || strlen($campos['placa']) != 7){
-// 		$camposInvalidos++;
-// 	}
-// 	if($campos['renavam'] == "" || strlen($campos['renavam']) != 9){
-// 		$camposInvalidos++;
-// 	}
-// 	if($campos['cor'] == "" ){
-// 		$camposInvalidos++;
-// 	}
-// 	if($campos['km'] == "" || $campos['km'] < 0){
-// 		$camposInvalidos++;
-// 	}
-// 	if($campos['preco'] == ""|| $campos['preco'] < 1){
-// 		$camposInvalidos++;
-// 	}
-// 	if($campos['precofpe'] == ""|| $campos['precofipe'] < 1){
-// 		$camposInvalidos++;
-// 	}
+	$erros = [];
 
-// 	error_log($camposInvalidos);
+	if($campos['descricao'] == ""){
+		$erros['descricao'] = 'Descricao vazia';
+		$camposInvalidos++;
+	}
+	if($campos['placa'] == "" || strlen($campos['placa']) != 7){
+		$erros['placa'] = 'Placa vazia';
+		$camposInvalidos++;
+	}
+	if($campos['renavam'] == "" || strlen($campos['renavam']) != 9){
+		$erros['renavam'] = 'Renavam vazio';
+		$camposInvalidos++;
+	}
+	if($campos['cor'] == "" ){
+		$erros['cor'] = 'Cor vazia';
+		$camposInvalidos++;
+	}
+	if($campos['km'] == "" || $campos['km'] < 0){
+		$erros['km'] = 'Km vazia';
+		$camposInvalidos++;
+	}
+	if($campos['preco'] == ""|| $campos['preco'] < 1){
+		$erros['preco'] = 'Preço vazia';
+		$camposInvalidos++;
+	}
+	if($campos['precofipe'] == ""|| $campos['precofipe'] < 1){
+		$erros['precofipe'] = 'Preço FIPE vazia';
+		$camposInvalidos++;
+	}
 
-// 	return $camposInvalidos;
+	return $erros;
 
-// }
+}
 
 ?>
