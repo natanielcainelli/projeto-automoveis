@@ -160,7 +160,7 @@ function vincularEventos() {
 		var adicionais = [];
 		var i = 0;
 		var erro = validaCampos();
-
+		var tipo = 'alterar';
 		if(erro == true){
 
 			var erro = validaCampos();
@@ -169,13 +169,9 @@ function vincularEventos() {
 		}
 		if(erro == false){
 
-			for (var j = 1; j < 10; j++) {
-				if($("input[value="+ j +"]").is(':checked')){
-					adicionais[i] = j ; 
-					i++;
-
-				}
-			}
+			$('#form_adicionais input:checked').each(function() {
+				adicionais.push($(this).val());
+			});
 
 			var data = {
 				id: id,
@@ -193,17 +189,7 @@ function vincularEventos() {
 				adicionais: adicionais
 			};
 
-			$.ajax({
-				url: 'http://localhost/projeto-automoveis/server/teste_banco.php',
-				type: 'POST',
-				dataType: 'json',
-				data: {'data': data, 'action': 'alterar'},
-
-				success: function(result) {
-					veiculos = result;
-				},
-				error: function(error) {}
-			});			
+		recebeParametros(tipo, data);
 
 			$('#alterar-tela').hide();	
 			$('#menuprincipal').show();
@@ -250,7 +236,7 @@ function vincularEventos() {
 		var idatual = parseInt(ultimoid.id) + 1;
 		var i = 0;
 		var erro = validaCampos();
-
+		var tipo = 'novo';
 
 		if(erro == true){
 
@@ -261,7 +247,6 @@ function vincularEventos() {
 
 		if(erro == false){
 			$('#form_adicionais input:checked').each(function() {
-				console.log($(this).val())
 				adicionais.push($(this).val());
 			});
 			
@@ -281,25 +266,7 @@ function vincularEventos() {
 				adicionais: adicionais
 			};
 
-			$.ajax({
-				url: 'http://localhost/projeto-automoveis/server/teste_banco.php',
-				type: 'POST',
-				dataType: 'json',
-				data: {'data': data, 'action': 'novo'},
-
-				success: function(result) {
-					if (result['erro']) {
-
-						$('#campo_erros_texto')+= result['erro'];
-
-					}
-					veiculos = result;
-					
-				},
-				error: function(error) {
-
-				}
-			});			
+			recebeParametros(tipo, data);	
 			alert('Veiculo cadastrado com sucesso');
 			window.location.href="menuprincipal.html"
 			listar();
@@ -419,7 +386,7 @@ function validaCampos() {
 
 	var erro = validaFormulario();
 	// var erro = testaCampos();
-
+	
 	return erro;
 }
 
@@ -554,7 +521,6 @@ function montarTabelaRelatorio() {
 
 function editar(veiculo) {
 
-
 	routie('editar/' +veiculo.id);
 
 }
@@ -591,4 +557,40 @@ function testaCampos() {
 
 	return qtd_erros;
 
+}
+
+function recebeParametros ($tipo,$data){
+
+	if($tipo == 'alterar'){
+
+		$.ajax({
+		url: 'http://localhost/projeto-automoveis/server/teste_banco.php',
+		type: 'POST',
+		dataType: 'json',
+		data: {'data': $data, 'action': 'alterar'},
+
+		success: function(result) {
+			veiculos = result;
+		},
+		error: function(error) {}
+		});	
+
+	}
+	if($tipo == 'novo'){
+
+		$.ajax({
+			url: 'http://localhost/projeto-automoveis/server/teste_banco.php',
+			type: 'POST',
+			dataType: 'json',
+			data: {'data': $data, 'action': 'novo'},
+			success: function(result) {
+				if (result['erro']) {
+					$('#campo_erros_texto')+= result['erro'];
+				}
+				veiculos = result;
+			},
+			error: function(error) {
+			}
+		});		
+	}
 }
