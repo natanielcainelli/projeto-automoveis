@@ -73,7 +73,7 @@ function vincularEventos() {
 		}
 		if(erro == false){
 
-			var data = montarObjetoAlterar();
+			var data = montarObjeto();
 			recebeParametros(tipo, data);
 			$('#alterar-tela').hide();	
 			$('#menuprincipal').show();
@@ -127,7 +127,7 @@ function vincularEventos() {
 
 		if(erro == false){
 
-			var data = montarObjetoNovo();
+			var data = montarObjeto();
 			recebeParametros(tipo, data);	
 			alert('Veiculo cadastrado com sucesso');
 			window.location.href="menuprincipal.html"
@@ -418,15 +418,14 @@ function testaCampos() {
 
 }
 
-
-function montarObjetoAlterar() {
+function montarObjeto(){
 
 	var id = parseInt($('#idAutomovel').val());
 	var adicionais = [];
 
 	$('#form_adicionais input:checked').each(function() {
-			adicionais.push($(this).val());
-		});
+		adicionais.push($(this).val());
+	});
 
 	var data = {
 		id: id,
@@ -441,35 +440,6 @@ function montarObjetoAlterar() {
 		preco: $("#preco").unmask().val(),
 		precofipe: $("#precofipe").unmask().val(),
 		veiculo_id: id,
-		adicionais: adicionais
-	};
-
-	return data;
-
-}
-
-function montarObjetoNovo() {
-
-	var adicionais = [];
-	var ultimoid = obterUltimoIndice();
-	var idatual = parseInt(ultimoid.id) + 1;
-	$('#form_adicionais input:checked').each(function() {
-		adicionais.push($(this).val());
-	});
-			
-	var data = {
-
-		descricao: $("#descricao").val() == "" ? "" : $("#descricao").val(),
-		placa: $("#placa").unmask().val() == "" ? "" : $("#placa").unmask().val(),
-		renavam: $("#renavam").unmask().val() == "" ? 0 : $("#renavam").unmask().val(),
-		anomodelo: $("#anomodelo").val() == "" ? 0 : $("#anomodelo").val(),
-		anofabrica: $("#anofabricacao").val()== "" ? 0 : $("#anofabricacao").val(),
-		cor: $("#cor").val() == "" ? "" : $("#cor").val(),
-		km: $("#km").val() == "" ? 0 : $("#km").val(),
-		marca: $("#marca").val() == "" ? "" : $("#marca").val(),
-		preco: $("#preco").unmask().val() == "" ? 0 : $("#preco").unmask().val(),
-		precofipe: $("#precofipe").unmask().val() == "" ? 0 : $("#precofipe").unmask().val(),
-		veiculo_id: idatual,
 		adicionais: adicionais
 	};
 

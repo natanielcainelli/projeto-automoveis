@@ -1,9 +1,5 @@
-table, th, td {
+	table, th, td {
 	  text-align: center;
-	}
-	
-	form .campo {
-		border: 1px solid black;
 	}
 	.coluna {
 		float: left;
@@ -24,11 +20,51 @@ table, th, td {
 		text-align: center;
 		display: inline-block;
 	}
+	.btn-salvar{
+
+		background-color: #4CAF50;
+		border: none;
+		color: white;
+		padding: 5px 25px;
+		text-align: center;
+		text-decoration: none;
+		display: inline-block;
+		font-family: Arial;
+
+	}
+	.btn-cancelar{
+
+		background-color: #FFFFFF; 
+		border: 0.5px solid #A9A9A9;
+		padding: 4.5px 20px;
+		text-align: center;
+		text-decoration: none;
+		display: inline-block;
+		font-family: Arial;
+
+	}
+	.btn-buscar{
+
+		background-color: #FFFFFF; 
+		border: 0.5px solid #A9A9A9;
+		padding: 3px 25px;
+		text-align: center;
+		text-decoration: none;
+		display: inline-block;
+		font-family: Arial;
+
+	}
+	.form {
+		background-color: #FFFFFF;  
+		width: 100%;
+		padding: 3px;
+		font-family: inherit;
+	}
 	.wh6 {
 		width: 50%;
 	}	
 	.wh5 {
-		width: 48%;
+		width: 47%;
 	}
 	.wh4{
 		width: 16.66%;
@@ -45,6 +81,9 @@ table, th, td {
 	.wh0 {
 		width: 15%;
 	}
+	.checkbox {
+		padding: 3px;
+	}
 	select {
 		display: block;
 	}
@@ -54,5 +93,8 @@ table, th, td {
 	  border-color: #FF8888;
 	}
 	.campo_erro{
-		border: 2px solid red;
+		border: 1px solid red;
 	}
+	tr:hover {
+          background-color: #F5F5F5;
+    }
