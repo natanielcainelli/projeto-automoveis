@@ -235,31 +235,24 @@ function validarCampos($campos){
 
 	if($campos['descricao'] == ""){
 		$erros['descricao'] = 'Descricao vazia';
-		$camposInvalidos++;
 	}
 	if($campos['placa'] == "" || strlen($campos['placa']) != 7){
 		$erros['placa'] = 'Placa vazia';
-		$camposInvalidos++;
 	}
 	if($campos['renavam'] == "" || strlen($campos['renavam']) != 9){
 		$erros['renavam'] = 'Renavam vazio';
-		$camposInvalidos++;
 	}
 	if($campos['cor'] == "" ){
-		$erros['cor'] = 'Cor vazia';
-		$camposInvalidos++;
+		$erros['cor'] = 'Cor vazio';
 	}
 	if($campos['km'] == "" || $campos['km'] < 0){
-		$erros['km'] = 'Km vazia';
-		$camposInvalidos++;
+		$erros['km'] = 'Km vazio';
 	}
 	if($campos['preco'] == ""|| $campos['preco'] < 1){
-		$erros['preco'] = 'Preço vazia';
-		$camposInvalidos++;
+		$erros['preco'] = 'Preço vazio';
 	}
 	if($campos['precofipe'] == ""|| $campos['precofipe'] < 1){
-		$erros['precofipe'] = 'Preço FIPE vazia';
-		$camposInvalidos++;
+		$erros['precofipe'] = 'Preço FIPE vazio';
 	}
 
 	return $erros;
