@@ -75,10 +75,9 @@ function vincularEventos() {
 
 			var data = montarObjeto();
 			recebeParametros(tipo, data);
-			$('#alterar-tela').hide();	
-			$('#menuprincipal').show();
-			listar();
+			
 			alert('Veiculo modificado com sucesso');
+			window.location.href="menuprincipal.html"
 		}
 	});
 	
