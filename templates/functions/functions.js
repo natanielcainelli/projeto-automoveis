@@ -96,6 +96,7 @@ function vincularEventos() {
 		}
 
 	});
+
 	$('#pagenext').on('click', function() {
 
 		if(pagina<3){
@@ -104,6 +105,7 @@ function vincularEventos() {
 		}
 
 	});
+
 	$('#gerarrelatorio').on('click', function() {
 
 			listarRelatorio();
@@ -155,6 +157,7 @@ function validaCampos() {
 			}
 		}
 	});
+
 	$('#placa').on("blur", function() {
 		if(	$(this).val() == "" || $(this).val().length < 8 || $(this).val().length > 8) {
 			$("#erros_form").show();
@@ -170,6 +173,7 @@ function validaCampos() {
 			}
 		}
 	});
+
 	$('#renavam').on("blur", function() {
 		if(	$(this).val() == "" || $(this).val().length < 10 || $(this).val().length > 10) {
 			$("#erros_form").show();
@@ -185,6 +189,7 @@ function validaCampos() {
 			}
 		}
 	});
+
 	$('#cor').on("blur", function() {
 		if(	$(this).val() == "") {
 			$("#erros_form").show();
@@ -200,6 +205,7 @@ function validaCampos() {
 			}
 		}
 	});
+
 	$('#km').on("blur", function() {
 		if(	$(this).val() == "" || $(this).val() < 0) {
 			$("#erros_form").show();
@@ -215,6 +221,7 @@ function validaCampos() {
 			}
 		}
 	});
+
 	$('#preco').on("blur", function() {
 		if(	$(this).val() == "" || $(this).val() <= 0) {
 			$("#erros_form").show();
@@ -230,6 +237,7 @@ function validaCampos() {
 			}
 		}
 	});
+
 	$('#precofipe').on("blur", function() {
 		if(	$(this).val() == "" || $(this).val() <= 0) {
 			$("#erros_form").show();
@@ -482,6 +490,7 @@ function recebeParametros ($tipo,$data) {
 		});		
 	}
 }
+
 function montaObjetoEditar(id){
 
 	veiculo = [];
@@ -497,19 +506,27 @@ function montaObjetoEditar(id){
 		error: function(error) {}
 	});
 
-	$('#idAutomovel').val(id);
-	$('#menuprincipal').hide();
-	$('#alterar-tela').show();
-	$('#descricao').val(veiculo[id-1].descricao);
-	$('#placa').val(veiculo[id-1].placa).mask("AAA-0000");
-	$('#renavam').val(veiculo[id-1].renavam).mask("00000000-0");
-	$('#anomodelo').val(veiculo[id-1].anomodelo);
-	$('#anofabricacao').val(veiculo[id-1].anofabrica);
-	$('#cor').val(veiculo[id-1].cor);
-	$('#km').val(veiculo[id-1].km);
-	$('#marca').val(veiculo[id-1].marca.toLowerCase());
-	$('#preco').val(veiculo[id-1].preco).mask('R$ #########');
-	$('#precofipe').val(veiculo[id-1].precofipe).mask('R$ #########');
+	veiculo.forEach(function(carro) {
+		if(carro.id == id){
+
+		  	$('#idAutomovel').val(id);
+			$('#menuprincipal').hide();
+			$('#alterar-tela').show();
+			$('#descricao').val(carro.descricao);
+			$('#placa').val(carro.placa).mask("AAA-0000");
+			$('#renavam').val(carro.renavam).mask("00000000-0");
+			$('#anomodelo').val(carro.anomodelo);
+			$('#anofabricacao').val(carro.anofabrica);
+			$('#cor').val(carro.cor);
+			$('#km').val(carro.km);
+			$('#marca').val(carro.marca.toLowerCase());
+			$('#preco').val(carro.preco).mask('R$ #########');
+			$('#precofipe').val(carro.precofipe).mask('R$ #########');
+
+		}
+	});
+
+	
 
 	validaCampos();
 
@@ -541,6 +558,7 @@ function montaObjetoEditar(id){
 
 
 }
+
 function montaObjetoExcluir(){
 
 	var ids = [];
