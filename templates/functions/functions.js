@@ -1,12 +1,12 @@
 window.onload = function() {
 	pagina = 1;
-	$('#relatoriodados').hide();
 	vincularEventos();
 }
 
 function vincularEventos() {
 
 	routie('', function() {
+		$('#relatoriodados').hide();
 		$('#alterar-tela').hide();
 		$('#menuprincipal').show();
 		listar();
@@ -34,7 +34,24 @@ function vincularEventos() {
 
 	$('#botaobuscardescricao, #botaobuscarmarca').on('click', function() {
 		
-			listar();
+		listar();
+
+	});
+
+	$('#filtrobutton').on('click', function() {
+		var filtro = "";
+		var adicionais =[]; 
+		
+		$('#form_adicionais_relatorio input:checked').each(function() {
+			adicionais.push($(this).val());
+		});
+
+		listarRelatorio(filtro,adicionais);
+
+		$('#menubuscarelatorio').hide();
+		$('#botaogerar').hide();
+		$('#relatoriodados').show();
+
 	});
 
 	$('#cadastrarnovo').on('click', function() {
@@ -106,11 +123,31 @@ function vincularEventos() {
 	});
 
 	$('#gerarrelatorio').on('click', function() {
-
-			listarRelatorio();
+			var filtro = "";
+			var adicionais= [];
+			listarRelatorio(filtro,adicionais);
 			$('#relatoriodados').show();
 			$('#botaogerar').hide();
+			$('#menubuscarelatorio').hide();
 
+	});
+
+	$('#gerarrelatoriopormarca').on('click', function() {
+			var filtro = "marca";
+			var adicionais= [];
+			listarRelatorio(filtro,adicionais);
+			$('#relatoriodados').show();
+			$('#botaogerar').hide();
+			$('#menubuscarelatorio').hide();
+	});
+
+	$('#gerarrelatorioporano').on('click', function() {
+			var filtro = "ano";
+			var adicionais= [];
+			listarRelatorio(filtro,adicionais);
+			$('#relatoriodados').show();
+			$('#botaogerar').hide();
+			$('#menubuscarelatorio').hide();
 	});
 
 	$('#confirmanovotelaprincipal').on('click', function() {
@@ -314,13 +351,13 @@ function listar() {
 	});
 }
 
-function listarRelatorio() {
-	
+function listarRelatorio(filtro, data) {
+
 	$.ajax({
 		url: 'http://localhost/projeto-automoveis/server/teste_banco.php',
 		type: 'GET',
 		dataType: 'json',
-		data: {'action': 'listarultimoid'},
+		data: {data: data, 'action': 'listarultimoid', filtro: filtro, marca: $('#buscarapidamarcarelatorio').val(), ano: $('#buscarapidaano').val()},
 		success: function(result) {
 			veiculos = result;
 			montarTabelaRelatorio();
@@ -390,7 +427,6 @@ function editar(veiculo) {
 	routie('editar/' +veiculo.id);
 
 }
-
 
 function testaCampos() {
 
@@ -497,7 +533,7 @@ function montaObjetoEditar(id){
 		url: 'http://localhost/projeto-automoveis/server/teste_banco.php',
 		type: 'GET',
 		dataType: 'json',
-		data: {'action': 'listarultimoid'},
+		data: {'action': 'listareditar'},
 		async: false,
 		success: function(result) {
 			veiculo = result;
@@ -524,9 +560,6 @@ function montaObjetoEditar(id){
 
 		}
 	});
-
-	
-
 	validaCampos();
 
 	var data = {
@@ -554,7 +587,6 @@ function montaObjetoEditar(id){
 		$("input[value="+ value.adicionais +"]").prop('checked', true);
 
 	});
-
 
 }
 
@@ -604,5 +636,4 @@ function montaObjetoExcluir(){
 		
 	});
 	listar();
-
 }

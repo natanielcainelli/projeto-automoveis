@@ -4,11 +4,14 @@
 	<title>Relatório</title>
 	<meta charset="UTF-8">
 	<script src="functions/functions.js"></script>
+
+	<link rel="stylesheet" href="http://localhost/projeto-automoveis/server/teste_banco.php">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<link rel="stylesheet" href="styles/estilos.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<script type="text/javascript" src="functions/routie.min.js"></script>
 	<script type="text/javascript" src="functions/jquery.mask.js"></script>
+	<script type="text/javascript" src="functions/functions.js"></script> 
 </head>
 <style type="text/css">
 
@@ -20,8 +23,11 @@
 		text-align: center;
 		padding: 150px;
 	}
+
 </style>
+
 <body>
+<div class="container-fluid">
 	<div id="relatoriodados">
 		<table class="table" style="width:100%">	
 			<thead class="thead-light">
@@ -42,16 +48,102 @@
 		</tbody>
 		</table>
 	</div>
-<form>
+
+		<div id="menubuscarelatorio">
+			<h1><p align="center"><strong> Filtros de Pesquisa </strong> </p></h1>	
+			<HR ALIGN=center WIDTH=100% SIZE=20 COLOR=black NOSHADE>
+			<div align="center">
+				<div class="linha">
+					<div class="coluna wh6" align="left">
+				          <input id="buscarapidaano" class="search_input" type="text" name="" placeholder="Digite o ano do veículo...">
+				    </div>
+				    <div class="coluna wh6" align="left">
+				          <input id="buscarapidamarcarelatorio" class="search_input" type="text" name="" placeholder="Digite a marca do veículo...">
+				    </div>
+				<form id="form_adicionais_relatorio">
+					
+				    <br><br><br><br>
+				    <div class="linha">
+						<div class="colunac wh3">
+							<input type="checkbox" name="preco" value="1" id="arcondicionado">
+							<label for="arcondicionado">Ar Condicionado</label>
+						</div>
+						<div class="colunac wh3">
+							<input type="checkbox" name="airbag" value="2" id="airbag">
+							<label for="airbag">Airbag</label>
+						</div>
+						<div class="colunac wh3">
+							<input type="checkbox" name="cdplayer" value="3" id="cdplayer">
+							<label for="cdplayer">CD player</label>
+						</div>
+						<div class="colunac wh3">
+							<input type="checkbox" name="direcaohidraulica" value="4" id="direcaohidraulica">
+							<label for="direcaohidraulica">Direção Hidráulica</label>
+						</div>
+					</div>
+					<br><br>
+					<br><br>
+					<div class="linha">
+						<div class="colunac wh3">
+							<input type="checkbox" name="vidro" value="5" id="vidro">
+							<label for="vidro">Vidro Elétrico</label>
+						</div>
+						<div class="colunac wh3">
+							<input type="checkbox" name="trava" value="6" id="trava">
+							<label for="trava">Trava Elétrica</label>
+						</div>
+						<div class="colunac wh3">
+							<input type="checkbox" name="cambio" value="7" id="cambio">
+							<label for="cambio">Câmbio Automático</label>
+						</div>
+						<div class="colunac wh3">
+							<input type="checkbox" name="rodas" value="8" id="rodas">
+							<label for="rodas">Rodas de Liga</label>
+						</div>
+					</div>
+					<br><br>
+					<br><br>
+					<div class="linha">
+						<div class="colunac wh3">	
+							<input type="checkbox" name="alarme" value="9" id="alarme">
+							<label for="alarme">Alarme</label>
+						</div>
+					</div>
+				</form>
+					<br><br>
+				    <div >
+				    	<br><br>
+				        <button id="filtrobutton"  class="btn-buscar" align="left"><i>Buscar</i></button>
+				        <br><br>
+						<br><br>
+				    </div>
+				</div>
+					<br><br>
+					<br><br>
+			</div>
+		</div>		
+
 		<div id="botaogerar" align="center">
-			<br><br><br><br>
-			<label align="right" for="excluir"> Imprimir Relatorio</label>
+
+			<br><br><br><br><br><br><br><br>
+			<label align="right" for="excluir"> Gerar Relatorio Geral</label>
 			<button id="gerarrelatorio" type="button" class="btn btn-dark" align="right" ><span class="glyphicon glyphicon-hdd"></span></button>	
-		</div>
-		<div class="botao" >
+			<br><br>
+			<label align="right" for="excluir"> Gerar Relatorio Agrupado por Marca</label>
+			<button id="gerarrelatoriopormarca" type="button" class="btn btn-dark" align="right" ><span class="glyphicon glyphicon-hdd"></span></button>	
+			<br><br>
+			<label align="right" for="excluir"> Gerar Relatorio Agrupado por Ano</label>
+			<button id="gerarrelatorioporano" type="button" class="btn btn-dark" align="right" ><span class="glyphicon glyphicon-hdd"></span></button>	
+			<br><br>
+		</div>	
+	</div>
+
+		<div align="center" >
+			<br> <br>
+			<br> <br>
 			<a name="menuprincipal.html" id="menuprincipal.html"></a>
-			<a href="menuprincipal.html"> <button type="button" class="btn btn-success">VOLTAR AO MENU PRINCIPAL</button> </a>
+			<a href="menuprincipal.html"> <button type="button" class="btn-salvar">VOLTAR AO MENU PRINCIPAL</button> </a>
 		</div>
-	</form>
+</div>
 </body>
 </html>

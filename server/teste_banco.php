@@ -5,6 +5,8 @@ $data = isset($_POST['data']) ? $_POST['data'] : '';
 $listar = isset($_GET['action']) ? $_GET['action'] : '';
 $excluir = isset($_GET['action']) ? $_GET['action'] : '';
 
+
+
 if($action == 'alterar'){
 	echo json_encode(alteraDados($data));
 }if($action == 'novo'){
@@ -14,11 +16,12 @@ if($action == 'alterar'){
 }if($action == 'geradadosadicionais'){
 	echo json_encode(listarAdicionais($data));
 }if($listar == 'listarultimoid'){
-	echo json_encode(listarID());
+	echo json_encode(listarID($_GET, $_GET['filtro']));
+}if($listar == 'listareditar'){
+	echo json_encode(listarEditar($_GET));
 }else if($listar == 'listar') {
 	echo json_encode(listar($_GET));
 }
-
 
 function connectionFactory(){
 
@@ -188,11 +191,93 @@ function listar($filtros){
 	return $response;
 }
 
-function listarID(){
+function listarEditar($filtros){
 
 	$conn = connectionFactory();
 
 	$sql = "SELECT id,descricao, placa, renavam, anomodelo, anofabrica, cor, km , marca, preco, precofipe FROM veiculo ";
+
+	$result = $conn->query($sql);
+	    
+    $response = [];
+
+    while($row = $result->fetch_assoc()) {
+    	$response[] = $row; 
+    }
+	
+	connectionKill($conn);
+
+	return $response;
+}
+
+function listarID($filtro){
+
+	$conn = connectionFactory();
+
+	$sql = "SELECT DISTINCT descricao, placa, renavam, anomodelo, anofabrica, cor, km , marca, preco, precofipe FROM veiculo ";
+
+	$adicionais = "";
+
+	$teste_adicionais = 2;
+
+	$count = 0;
+
+
+	if(!empty($filtro['data'])){
+		foreach ($filtro['data'] as $adicional) {
+			if($adicionais == ""){
+				$adicionais.= $adicional;
+			}else{
+				$adicionais.= " , ".$adicional;
+			}
+			$count++;
+		}
+	}
+	
+	if($count == 1){
+		$teste_adicionais = 1;
+	}
+	if($adicionais != ''){
+	
+		$sql.="WHERE (select count(*) from veiculo_adicionais va WHERE adicionais in (".$adicionais.") and veiculo.id = va.veiculo_id) = ".$teste_adicionais;
+
+	}	
+	if($adicionais == '' && ($filtro['marca'] != '' || $filtro['ano'] != '')){
+	
+		$sql.=" WHERE ";
+
+	} 
+	
+	if($filtro['marca'] != ''){
+		if($adicionais != ''){
+			$sql.=" AND ";
+		}
+		
+		$sql.=" veiculo.marca = '".$filtro['marca']."'";
+
+	}
+	if($filtro['ano'] != ''){
+
+		if($adicionais != '' || $filtro['marca'] != ''){
+			$sql.=" AND ";
+		}
+
+		$sql.=" veiculo.anomodelo = ".$filtro['ano'];
+
+	}
+	if($filtro['filtro'] == 'marca'){
+
+		$sql.= " ORDER BY marca " ;
+
+	}
+	if($filtro['filtro'] == 'ano'){
+
+		$sql.= " ORDER BY anomodelo " ;
+
+	}
+
+	error_log($sql);
+	
 
 	$result = $conn->query($sql);
 	    
