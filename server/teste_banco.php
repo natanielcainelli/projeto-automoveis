@@ -4,7 +4,7 @@ $action = isset($_POST['action']) ? $_POST['action'] : '';
 $data = isset($_POST['data']) ? $_POST['data'] : '';
 $listar = isset($_GET['action']) ? $_GET['action'] : '';
 $excluir = isset($_GET['action']) ? $_GET['action'] : '';
-
+$login = isset($_GET['action']) ? $_GET['action'] : '';
 
 
 if($action == 'alterar'){
@@ -19,11 +19,13 @@ if($action == 'alterar'){
 	echo json_encode(listarID($_GET, $_GET['filtro']));
 }if($listar == 'listareditar'){
 	echo json_encode(listarEditar($_GET));
+}if($login == 'verificalogin'){
+	echo json_encode(verificalogin($_GET));
 }else if($listar == 'listar') {
 	echo json_encode(listar($_GET));
 }
 
-function connectionFactory(){
+function connectionFactory() {
 
 	$servername = "localhost";
 	$database = "automoveis";
@@ -39,13 +41,13 @@ function connectionFactory(){
 
 }
 
-function connectionKill($conn){
+function connectionKill($conn) {
 
 	mysqli_close($conn);
 
 }
 
-function insereDados($veiculo){
+function insereDados($veiculo) {
 
 	$conn = connectionFactory();
 
@@ -70,7 +72,7 @@ function insereDados($veiculo){
 
 }
 
-function validaDados($veiculo){
+function validaDados($veiculo) {
 	
 	$veiculo['descricao'] = filter_var($veiculo['descricao'],FILTER_SANITIZE_STRING);
 	$veiculo['placa'] = filter_var($veiculo['placa'],FILTER_SANITIZE_STRING);
@@ -95,7 +97,7 @@ function insereAdicionais($idVeiculo, $adicionais) {
 	}
 }
 	
-function removeDados($id){
+function removeDados($id) {
 
 	$conn = connectionFactory();
 
@@ -114,7 +116,7 @@ function removeDados($id){
 
 }
 
-function removeAdicionais($idVeiculo){
+function removeAdicionais($idVeiculo) {
 
 	$conn = connectionFactory();
 
@@ -130,7 +132,7 @@ function removeAdicionais($idVeiculo){
 
 }
 
-function alteraDados($veiculos){
+function alteraDados($veiculos) {
 
 	$conn = connectionFactory();
 
@@ -147,7 +149,7 @@ function alteraDados($veiculos){
 
 }
 
-function alteraAdicionais($veiculos,$adicionais){
+function alteraAdicionais($veiculos,$adicionais) {
 
 	removeAdicionais($veiculos['veiculo_id']);
 
@@ -155,7 +157,7 @@ function alteraAdicionais($veiculos,$adicionais){
 
 }
 
-function listar($filtros){
+function listar($filtros) {
 
 	$inicio = ($filtros['pagina'] -1)*10;
 
@@ -163,15 +165,15 @@ function listar($filtros){
 
 	$sql = "SELECT id,descricao, placa, renavam, anomodelo, anofabrica, cor, km , marca, preco, precofipe FROM veiculo ";
 
-	if(isset($filtros['descricao']) && $filtros['descricao'] != '' &&$filtros['marca'] == ''){
+	if(isset($filtros['descricao']) && $filtros['descricao'] != '' &&$filtros['marca'] == '') {
 
 		$sql.= " WHERE descricao = '{$filtros['descricao']}' ";
 	}
-	if(isset($filtros['marca']) && $filtros['marca'] != '' && $filtros['descricao'] == ''){
+	if(isset($filtros['marca']) && $filtros['marca'] != '' && $filtros['descricao'] == '') {
 
 		$sql.= " WHERE marca = '{$filtros['marca']}' ";
 	}
-	if (isset($filtros['descricao']) && $filtros['descricao'] != '' && isset($filtros['marca']) && $filtros['marca'] != ''){
+	if (isset($filtros['descricao']) && $filtros['descricao'] != '' && isset($filtros['marca']) && $filtros['marca'] != '') {
 
 		$sql.= " WHERE descricao = '{$filtros['descricao']}' and marca = '{$filtros['marca']}' "; 
 	}
@@ -190,8 +192,8 @@ function listar($filtros){
 
 	return $response;
 }
-
-function listarEditar($filtros){
+ 
+function listarEditar($filtros) {
 
 	$conn = connectionFactory();
 
@@ -210,7 +212,7 @@ function listarEditar($filtros){
 	return $response;
 }
 
-function listarID($filtro){
+function listarID($filtro) {
 
 	$conn = connectionFactory();
 
@@ -223,7 +225,7 @@ function listarID($filtro){
 	$count = 0;
 
 
-	if(!empty($filtro['data'])){
+	if(!empty($filtro['data'])) {
 		foreach ($filtro['data'] as $adicional) {
 			if($adicionais == ""){
 				$adicionais.= $adicional;
@@ -234,43 +236,43 @@ function listarID($filtro){
 		}
 	}
 	
-	if($count == 1){
+	if($count == 1) {
 		$teste_adicionais = 1;
 	}
-	if($adicionais != ''){
+	if($adicionais != '') {
 	
 		$sql.="WHERE (select count(*) from veiculo_adicionais va WHERE adicionais in (".$adicionais.") and veiculo.id = va.veiculo_id) = ".$teste_adicionais;
 
 	}	
-	if($adicionais == '' && ($filtro['marca'] != '' || $filtro['ano'] != '')){
+	if($adicionais == '' && ($filtro['marca'] != '' || $filtro['ano'] != '')) { 
 	
 		$sql.=" WHERE ";
 
 	} 
 	
-	if($filtro['marca'] != ''){
-		if($adicionais != ''){
+ 	if($filtro['marca'] != '') {
+		if($adicionais != '') {
 			$sql.=" AND ";
 		}
 		
 		$sql.=" veiculo.marca = '".$filtro['marca']."'";
 
 	}
-	if($filtro['ano'] != ''){
+	if($filtro['ano'] != '') {
 
-		if($adicionais != '' || $filtro['marca'] != ''){
+		if($adicionais != '' || $filtro['marca'] != '') {
 			$sql.=" AND ";
 		}
 
 		$sql.=" veiculo.anomodelo = ".$filtro['ano'];
 
 	}
-	if($filtro['filtro'] == 'marca'){
+	if($filtro['filtro'] == 'marca') {
 
 		$sql.= " ORDER BY marca " ;
 
 	}
-	if($filtro['filtro'] == 'ano'){
+	if($filtro['filtro'] == 'ano') {
 
 		$sql.= " ORDER BY anomodelo " ;
 
@@ -293,7 +295,7 @@ function listarID($filtro){
 
 }
 
-function listarAdicionais($veiculos){
+function listarAdicionais($veiculos) {
 
 
 	$conn = connectionFactory();
@@ -314,33 +316,60 @@ function listarAdicionais($veiculos){
 
 }
 
-function validarCampos($campos){
+function validarCampos($campos) {
 
 	$erros = [];
 
-	if($campos['descricao'] == ""){
+	if($campos['descricao'] == "") {
 		$erros['descricao'] = 'Descricao vazia';
 	}
-	if($campos['placa'] == "" || strlen($campos['placa']) != 7){
+	if($campos['placa'] == "" || strlen($campos['placa']) != 7) {
 		$erros['placa'] = 'Placa vazia';
 	}
-	if($campos['renavam'] == "" || strlen($campos['renavam']) != 9){
+	if($campos['renavam'] == "" || strlen($campos['renavam']) != 9) {
 		$erros['renavam'] = 'Renavam vazio';
 	}
-	if($campos['cor'] == "" ){
+	if($campos['cor'] == "" ) {
 		$erros['cor'] = 'Cor vazio';
 	}
-	if($campos['km'] == "" || $campos['km'] < 0){
+	if($campos['km'] == "" || $campos['km'] < 0) {
 		$erros['km'] = 'Km vazio';
 	}
-	if($campos['preco'] == ""|| $campos['preco'] < 1){
+	if($campos['preco'] == ""|| $campos['preco'] < 1) {
 		$erros['preco'] = 'Preço vazio';
 	}
-	if($campos['precofipe'] == ""|| $campos['precofipe'] < 1){
+	if($campos['precofipe'] == ""|| $campos['precofipe'] < 1) {
 		$erros['precofipe'] = 'Preço FIPE vazio';
 	}
 
 	return $erros;
+
+}
+
+function verificaLogin($login, $senha) {
+	$conn = connectionFactory();
+	
+	$senhaHash = sha256($senha . '+251n');
+	
+	$sql = "SELECT login,senha,permissao,email FROM cadastro where login = '" . $login . "' and senha = '" . $senhaHash . "'";
+
+	$result = $conn->query($sql);
+	
+	$row = $result->fetch_assoc();
+
+	session_start();
+	
+	$_SESSION['usuario'] = $row;
+
+	// error_log($_SESSION);
+	    
+	connectionKill($conn);
+
+    if (is_null($row)) {
+    	return ['erro' => true, 'msg' => 'Usuario ou senha invalido'];
+    }
+
+	return ['erro' => false];
 
 }
 

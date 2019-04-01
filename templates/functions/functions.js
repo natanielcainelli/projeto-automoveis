@@ -1,5 +1,6 @@
 window.onload = function() {
 	pagina = 1;
+	atual_usuario = "";
 	vincularEventos();
 }
 
@@ -46,12 +47,16 @@ function vincularEventos() {
 			adicionais.push($(this).val());
 		});
 
+		$('#filtradobuscar').show();
+
+		montaCabecalho(adicionais);
+
 		listarRelatorio(filtro,adicionais);
 
 		$('#menubuscarelatorio').hide();
 		$('#botaogerar').hide();
 		$('#relatoriodados').show();
-
+		
 	});
 
 	$('#cadastrarnovo').on('click', function() {
@@ -65,13 +70,13 @@ function vincularEventos() {
 		montaObjetoExcluir();
 	});
 
-	$('#buscarapidadescricao').keypress(function(e){
+	$('#buscarapidadescricao').keypress(function(e) {
     	if(e.keyCode==13){
     		$('#botaobuscardescricao').click();
   		}
     });
 
-	$('#buscarapidamarca').keypress(function(e){
+	$('#buscarapidamarca').keypress(function(e) {
     	if(e.keyCode==13){
       		$('#botaobuscardescricao').click();
     	}
@@ -94,7 +99,7 @@ function vincularEventos() {
 			recebeParametros(tipo, data);
 			
 			alert('Veiculo modificado com sucesso');
-			window.location.href="menuprincipal.html"
+			window.location.href="menuprincipal.html";
 		}
 	});
 	
@@ -129,6 +134,7 @@ function vincularEventos() {
 			$('#relatoriodados').show();
 			$('#botaogerar').hide();
 			$('#menubuscarelatorio').hide();
+			$('#filtradogeral').show();
 
 	});
 
@@ -139,6 +145,7 @@ function vincularEventos() {
 			$('#relatoriodados').show();
 			$('#botaogerar').hide();
 			$('#menubuscarelatorio').hide();
+			$('#filtradopormarca').show();
 	});
 
 	$('#gerarrelatorioporano').on('click', function() {
@@ -148,6 +155,7 @@ function vincularEventos() {
 			$('#relatoriodados').show();
 			$('#botaogerar').hide();
 			$('#menubuscarelatorio').hide();
+			$('#filtradoporano').show();
 	});
 
 	$('#confirmanovotelaprincipal').on('click', function() {
@@ -156,14 +164,14 @@ function vincularEventos() {
 		var erro = validaCampos();
 		var tipo = 'novo';
 
-		if(erro == true){
+		if(erro == true) {
 
 			var erro = validaCampos();
 			alert('Por favor preencha todos os campos para continuar');
 
 		}
 
-		if(erro == false){
+		if(erro == false) {
 
 			var data = montarObjeto();
 			recebeParametros(tipo, data);	
@@ -172,6 +180,20 @@ function vincularEventos() {
 			listar();
 		}
 	});
+
+	$('#loginbtn').on('click', function() {
+			
+
+
+	});
+
+	$('#cadastrobtn').on('click', function() {
+			
+			
+	});
+
+
+
 }
 
 function validaCampos() {
@@ -280,11 +302,11 @@ function validaCampos() {
 			$("#erros_form_precofipe").show();
 			$(this).attr('class', "campo_erro");
 			qtd_erros++;
-		}if($(this).val() != ""){
+		}if($(this).val() != "") {
 			$("#erros_form_precofipe").hide();
 			$(this).attr('class', "campo");
 			qtd_erros--;
-			if(qtd_erros == 0){
+			if(qtd_erros == 0) {
 				$("#erros_form").hide();
 			}
 		}
@@ -526,7 +548,7 @@ function recebeParametros ($tipo,$data) {
 	}
 }
 
-function montaObjetoEditar(id){
+function montaObjetoEditar(id) {
 
 	veiculo = [];
 	$.ajax({
@@ -542,7 +564,7 @@ function montaObjetoEditar(id){
 	});
 
 	veiculo.forEach(function(carro) {
-		if(carro.id == id){
+		if(carro.id == id) {
 
 		  	$('#idAutomovel').val(id);
 			$('#menuprincipal').hide();
@@ -590,7 +612,7 @@ function montaObjetoEditar(id){
 
 }
 
-function montaObjetoExcluir(){
+function montaObjetoExcluir() {
 
 	var ids = [];
 	$('input[type=checkbox]:checked').each(function(key, value) {
@@ -610,7 +632,7 @@ function montaObjetoExcluir(){
 		error: function(error) {}
 	});	
 
-	if(ids > 0){
+	if(ids > 0) {
 		alert('Veiculos excluídos com sucesso');
 	}
 
@@ -636,4 +658,71 @@ function montaObjetoExcluir(){
 		
 	});
 	listar();
+}
+
+function montaCabecalho(adicionais) {
+
+	adicionais.forEach(function(adicional) {
+
+		if(adicional == 1){
+			$('#filtradoar').show();
+		}if(adicional == 2){
+			$('#filtradoairbag').show();
+		}if(adicional == 3){
+			$('#filtradocd').show();
+		}if(adicional == 4){
+			$('#filtradodirecao').show();
+		}if(adicional == 5){
+			$('#filtradovidro').show();
+		}if(adicional == 6){
+			$('#filtradotrava').show();
+		}if(adicional == 7){
+			$('#filtradocambio').show();
+		}if(adicional == 8){
+			$('#filtradorodas').show();
+		}if(adicional == 9){
+			$('#filtradoalarme').show();
+		}
+	});
+
+	if($('#buscarapidaano').val() != ''){
+		$('#filtradoano').show();
+	}
+	if($('#buscarapidamarca').val() != ''){
+		$('#filtradomarca').show();
+	}
+
+}
+
+function verificarLogin() {
+
+	var login = [];
+
+	$.ajax({
+		url: 'http://localhost/projeto-automoveis/server/teste_banco.php',
+		type: 'GET',
+		dataType: 'json',
+		data: {'action': 'verificalogin'},
+		async: false,
+		success: function(result) {
+			login = result;
+			console.table(login);
+		},
+		error: function(error) {}
+	});
+
+	login.forEach(function(login){
+
+		if(login.login == $('#loginusr').val() && login.senha == $('#passwordusr').val()){
+			atual_usuario = $('#loginusr').val();
+		}
+
+	});
+
+	if(atual_usuario == ''){
+
+	} else if (atual_usuario != ''){
+		window.location.href="menuprincipal.html";
+	}
+	
 }

@@ -23,11 +23,42 @@
 		text-align: center;
 		padding: 150px;
 	}
-
+	.impressaoadicionais {
+		display: none;
+	}
 </style>
-
+<style media="print">
+	.btn-salvar {
+		display: none;
+	}
+	.impressaoadicionais{
+		display: inline-block;
+	}
+</style>
 <body>
 <div class="container-fluid">
+
+	<div align="center">
+		<div id="impressaoadic" class="impressaoadicionais" >
+			<div id="cabecalhoimpressao" align="center" > 
+			    <h3 id="filtradobuscar" style="display: none;"> Relatório Buscar </h3>
+			    <h3 id="filtradogeral" style="display: none;"> Relatório Geral </h3>
+			    <h3 id="filtradopormarca" style="display: none;"> Relatório Agrupado por Marca </h3>
+			    <h3 id="filtradoporano" style="display: none;"> Relatório Agrupado por Ano </h3>
+				<h5 id="filtradoano" style="display: none;">Filtrado por Ano</h5>
+				<h5 id="filtradomarca" style="display: none;">Filtrado por Marca</h5>
+				<h5 id="filtradoar" style="display: none;">Filtrado por Ar Condicionado</h5>
+				<h5 id="filtradoairbag" style="display: none;">Filtrado por Airbag</h5>
+				<h5 id="filtradocd" style="display: none;">Filtrado por CD Player</h5>
+				<h5 id="filtradodirecao" style="display: none;">Filtrado por Direcao</h5>
+				<h5 id="filtradovidro" style="display: none;">Filtrado por Vidro Elétrico</h5>
+				<h5 id="filtradotrava" style="display: none;">Filtrado por Trava Elétrica</h5>
+				<h5 id="filtradocambio" style="display: none;">Filtrado por Câmbio Automático</h5>
+				<h5 id="filtradorodas" style="display: none;">Filtrado por Rodas de Liga</h5>
+				<h5 id="filtradoalarme" style="display: none;">Filtrado por Alarme</h5>
+			</div>
+		</div>
+	</div>
 	<div id="relatoriodados">
 		<table class="table" style="width:100%">	
 			<thead class="thead-light">
@@ -137,12 +168,11 @@
 			<br><br>
 		</div>	
 	</div>
-
+	
 		<div align="center" >
 			<br> <br>
 			<br> <br>
-			<a name="menuprincipal.html" id="menuprincipal.html"></a>
-			<a href="menuprincipal.html"> <button type="button" class="btn-salvar">VOLTAR AO MENU PRINCIPAL</button> </a>
+			<a href="menuprincipal.html" class="btn-salvar"> <button type="button" class="btn-salvar">VOLTAR AO MENU PRINCIPAL</button> </a>
 		</div>
 </div>
 </body>
