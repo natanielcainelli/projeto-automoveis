@@ -1,6 +1,7 @@
 window.onload = function() {
 	pagina = 1;
-	atual_usuario = "";
+	var usuario = getUsuario();
+	$('#nomeusuario').text(usuario);
 	vincularEventos();
 }
 
@@ -181,18 +182,28 @@ function vincularEventos() {
 		}
 	});
 
-	$('#loginbtn').on('click', function() {
+	$('#buttonlogin').on('click', function() {
 			
-
+		verificarLogin();
 
 	});
 
-	$('#cadastrobtn').on('click', function() {
+
+	$('#buttoncadastrar').on('click', function() {
 			
 			
 	});
 
-
+	$('#loginusr').keypress(function(e) {
+    	if(e.keyCode==13){
+    		$('#buttonlogin').click();
+  		}
+    });
+    $('#passwordusr').keypress(function(e) {
+    	if(e.keyCode==13){
+    		$('#buttonlogin').click();
+  		}
+    });
 
 }
 
@@ -696,33 +707,44 @@ function montaCabecalho(adicionais) {
 
 function verificarLogin() {
 
-	var login = [];
+	var login =[];
 
 	$.ajax({
 		url: 'http://localhost/projeto-automoveis/server/teste_banco.php',
 		type: 'GET',
 		dataType: 'json',
-		data: {'action': 'verificalogin'},
+		data: {'action': 'verificalogin', login: $('#loginusr').val(), senha: $('#passwordusr').val()},
 		async: false,
 		success: function(result) {
 			login = result;
-			console.table(login);
 		},
 		error: function(error) {}
 	});
 
-	login.forEach(function(login){
 
-		if(login.login == $('#loginusr').val() && login.senha == $('#passwordusr').val()){
-			atual_usuario = $('#loginusr').val();
-		}
+	if(login.erro == false){		
+		window.location.href="menuprincipal.html";
+	} else{
+		alert('Login ou usuário invalidos, por favor tente novamente');
+	}
 
+	
+}
+function getUsuario(){
+
+	$.ajax({
+		url: 'http://localhost/projeto-automoveis/server/teste_banco.php',
+		type: 'GET',
+		dataType: 'json',
+		data: {'action': 'getusuario'},
+		async: false,
+		success: function(result) {
+			login = result;
+			
+		},
+		error: function(error) {}
 	});
 
-	if(atual_usuario == ''){
 
-	} else if (atual_usuario != ''){
-		window.location.href="menuprincipal.html";
-	}
-	
+	return login;
 }

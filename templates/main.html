@@ -38,10 +38,8 @@
 </body>
 
 <div class="container-fluid">
-
+<div id='logintela'>
 	<div align="center">
-		
-
 		<div>
 			<h1> Sistema de Automóveis </h1>	
 		</div>
@@ -49,12 +47,12 @@
 		<div align="center">
 			<div class="linha" align="center">
 				<div class="wh4">
-					<label for="loginusr">Usuário</label>
+					<label for="loginusr">Login  :</label>
 					<input type="text" name="loginusr" placeholder="Digite o Login..." class="campo" id="loginusr">
 				</div>
 				<br>
 				<div class="wh4">
-					<label for="passwordusr">Senha :  </label> 
+					<label for="passwordusr">Senha:  </label> 
 					<input type="password" name="passwordusr" placeholder="Digite a Senha..." class="campo" id="passwordusr">
 				</div>
 			</div>
@@ -64,9 +62,40 @@
 			<input id="buttonlogin" class="btn-salvar" value="Login" type="button">
 		</div>
 		<div class="botao" >
-			<input id="buttonlogin" class="btn-buscar" value="Cadastrar" type="button">
+			<input id="buttoncadastrar" class="btn-buscar" value="Cadastrar" type="button">
 		</div>
-		
 	</div> 
+</div>
+<br><br><br><br>	<br><br>
+<div id="usrcadastro" align="center" style="display: none;">
+	<h1> Cadastro </h1>
+	<br><br>
+	<div class="linha" align="center">
+		<div class="wh4">
+			<label for="newloginusr">Login  :</label>
+			<input type="text" name="newloginusr" placeholder="Digite o Login..." class="campo" id="newloginusr">
+		</div>
+		<br>
+			<div class="wh4">
+				<label for="newpasswordusr">Senha:  </label> 
+				<input type="password" name="newpasswordusr" placeholder="Digite a Senha..." class="campo" id="newpasswordusr">
+			</div>
+		
+		<br>
+		<div class="linha" align="center">
+			<div class="wh4">
+				<label for="newemailusr">E-mail:</label>
+				<input type="text" name="newemailusr" placeholder="Digite o Email..." class="campo" id="newemailusr">
+			</div>
+			<br>
+		</div>
+		<br><br><br>			
+		<div class="botao" >
+			<input id="newbuttoncadastrar" class="btn-salvar" value="Cadastrar" type="button">
+		</div>
+		<div class="botao" >
+			<input id="newbuttoncancelar" class="btn-buscar" value="Cancelar" type="button">
+		</div>
+	</div>
 </div>
 </html>

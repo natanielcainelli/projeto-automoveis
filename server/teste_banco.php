@@ -7,6 +7,7 @@ $excluir = isset($_GET['action']) ? $_GET['action'] : '';
 $login = isset($_GET['action']) ? $_GET['action'] : '';
 
 
+
 if($action == 'alterar'){
 	echo json_encode(alteraDados($data));
 }if($action == 'novo'){
@@ -20,7 +21,9 @@ if($action == 'alterar'){
 }if($listar == 'listareditar'){
 	echo json_encode(listarEditar($_GET));
 }if($login == 'verificalogin'){
-	echo json_encode(verificalogin($_GET));
+	echo json_encode(verificaLogin($_GET));
+}if($login == 'getusuario'){
+	echo json_encode(getUser($_GET));
 }else if($listar == 'listar') {
 	echo json_encode(listar($_GET));
 }
@@ -47,6 +50,34 @@ function connectionKill($conn) {
 
 }
 
+function verificaLogin($data) {
+
+	$conn = connectionFactory();
+
+	$senhaHash = hash('sha256',$data['senha']);
+	
+	$sql = "SELECT id,login,senha,email,nome FROM cadastro WHERE login = '" . $data['login'] . "' and senha = '" . $senhaHash . "'";
+
+	error_log($sql);
+
+	$result = $conn->query($sql);
+	
+	$row = $result->fetch_assoc();
+
+	session_start();
+	
+	$_SESSION['usuario'] = $row;
+
+	connectionKill($conn);
+
+    if (is_null($row)) {
+    	return ['erro' => true, 'msg' => 'Usuario ou senha invalido'];
+    }
+
+	return ['erro' => false];
+
+}
+
 function insereDados($veiculo) {
 
 	$conn = connectionFactory();
@@ -56,9 +87,13 @@ function insereDados($veiculo) {
 		return ['erro' => true, 'mensagens' => $erros];
 	}
 
+	session_start();
+
+	$id = $_SESSION['usuario']['id'];
+
 	$veiculo = validaDados($veiculo);
 
-	$sql = "INSERT INTO veiculo (descricao, placa, renavam, anomodelo, anofabrica, cor, km, marca, preco, precofipe) VALUES ('{$veiculo['descricao']}','{$veiculo['placa']}',{$veiculo['renavam']},{$veiculo['anomodelo']},{$veiculo['anofabrica']},'{$veiculo['cor']}',{$veiculo['km']},'{$veiculo['marca']}',{$veiculo['preco']},{$veiculo['precofipe']});";
+	$sql = "INSERT INTO veiculo (descricao, placa, renavam, anomodelo, anofabrica, cor, km, marca, preco, precofipe, id_usuario) VALUES ('{$veiculo['descricao']}','{$veiculo['placa']}',{$veiculo['renavam']},{$veiculo['anomodelo']},{$veiculo['anofabrica']},'{$veiculo['cor']}',{$veiculo['km']},'{$veiculo['marca']}',{$veiculo['preco']},{$veiculo['precofipe']}, ".$id.");";
 
 	error_log($sql);
 
@@ -136,7 +171,11 @@ function alteraDados($veiculos) {
 
 	$conn = connectionFactory();
 
-	$sql = "UPDATE veiculo SET descricao = '{$veiculos['descricao']}' ,placa = '{$veiculos['placa']}' ,renavam = {$veiculos['renavam']} ,anomodelo = {$veiculos['anomodelo']} ,anofabrica = {$veiculos['anofabrica']} ,cor = '{$veiculos['cor']}' ,km = {$veiculos['km']} ,marca = '{$veiculos['marca']}' ,preco = {$veiculos['preco']}, precofipe = {$veiculos['precofipe']} WHERE id = {$veiculos['id']};";
+	session_start();
+
+	$id = $_SESSION['usuario']['id'];
+
+	$sql = "UPDATE veiculo SET descricao = '{$veiculos['descricao']}' ,placa = '{$veiculos['placa']}' ,renavam = {$veiculos['renavam']} ,anomodelo = {$veiculos['anomodelo']} ,anofabrica = {$veiculos['anofabrica']} ,cor = '{$veiculos['cor']}' ,km = {$veiculos['km']} ,marca = '{$veiculos['marca']}' ,preco = {$veiculos['preco']}, precofipe = {$veiculos['precofipe']}, id_usuario = ".$id." WHERE id = {$veiculos['id']};";
 	error_log($sql);
 
 	$result = $conn->multi_query($sql);
@@ -346,31 +385,15 @@ function validarCampos($campos) {
 
 }
 
-function verificaLogin($login, $senha) {
-	$conn = connectionFactory();
-	
-	$senhaHash = sha256($senha . '+251n');
-	
-	$sql = "SELECT login,senha,permissao,email FROM cadastro where login = '" . $login . "' and senha = '" . $senhaHash . "'";
 
-	$result = $conn->query($sql);
-	
-	$row = $result->fetch_assoc();
+
+function getUser(){
 
 	session_start();
-	
-	$_SESSION['usuario'] = $row;
 
-	// error_log($_SESSION);
-	    
-	connectionKill($conn);
+	$nome = $_SESSION['usuario']['nome'];
 
-    if (is_null($row)) {
-    	return ['erro' => true, 'msg' => 'Usuario ou senha invalido'];
-    }
-
-	return ['erro' => false];
-
+	return $nome;
 }
 
 ?>
