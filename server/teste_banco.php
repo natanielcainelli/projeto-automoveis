@@ -20,10 +20,12 @@ if($action == 'alterar'){
 	echo json_encode(listarID($_GET, $_GET['filtro']));
 }if($listar == 'listareditar'){
 	echo json_encode(listarEditar($_GET));
-}if($login == 'verificalogin'){
-	echo json_encode(verificaLogin($_GET));
+}if($action == 'verificalogin'){
+	echo json_encode(verificaLogin($data));
 }if($login == 'getusuario'){
 	echo json_encode(getUser($_GET));
+}if($action == 'cadastrausuario'){
+	echo json_encode(cadastraUser($data));
 }else if($listar == 'listar') {
 	echo json_encode(listar($_GET));
 }
@@ -54,7 +56,7 @@ function verificaLogin($data) {
 
 	$conn = connectionFactory();
 
-	$senhaHash = hash('sha256',$data['senha']);
+	$senhaHash = hash('sha256', $data['senha']);
 	
 	$sql = "SELECT id,login,senha,email,nome FROM cadastro WHERE login = '" . $data['login'] . "' and senha = '" . $senhaHash . "'";
 
@@ -202,19 +204,26 @@ function listar($filtros) {
 
 	$conn = connectionFactory();
 
+	session_start();
+
+	$id = $_SESSION['usuario']['id'];
+
 	$sql = "SELECT id,descricao, placa, renavam, anomodelo, anofabrica, cor, km , marca, preco, precofipe FROM veiculo ";
 
 	if(isset($filtros['descricao']) && $filtros['descricao'] != '' &&$filtros['marca'] == '') {
 
-		$sql.= " WHERE descricao = '{$filtros['descricao']}' ";
+		$sql.= " WHERE descricao = '{$filtros['descricao']}' and id_usuario =".$id;
 	}
 	if(isset($filtros['marca']) && $filtros['marca'] != '' && $filtros['descricao'] == '') {
 
-		$sql.= " WHERE marca = '{$filtros['marca']}' ";
+		$sql.= " WHERE marca = '{$filtros['marca']}' and id_usuario =".$id;
 	}
 	if (isset($filtros['descricao']) && $filtros['descricao'] != '' && isset($filtros['marca']) && $filtros['marca'] != '') {
 
-		$sql.= " WHERE descricao = '{$filtros['descricao']}' and marca = '{$filtros['marca']}' "; 
+		$sql.= " WHERE descricao = '{$filtros['descricao']}' and marca = '{$filtros['marca']}' and id_usuario =".$id; 
+	} else if( $filtros['descricao'] == '' && $filtros['marca'] == ''){
+
+		$sql.=" WHERE id_usuario =".$id." ";
 	}
 
 	$sql.= " LIMIT $inicio ,10";
@@ -263,6 +272,9 @@ function listarID($filtro) {
 
 	$count = 0;
 
+	session_start();
+
+	$id = $_SESSION['usuario']['id'];
 
 	if(!empty($filtro['data'])) {
 		foreach ($filtro['data'] as $adicional) {
@@ -280,7 +292,7 @@ function listarID($filtro) {
 	}
 	if($adicionais != '') {
 	
-		$sql.="WHERE (select count(*) from veiculo_adicionais va WHERE adicionais in (".$adicionais.") and veiculo.id = va.veiculo_id) = ".$teste_adicionais;
+		$sql.="WHERE (select count(*) from veiculo_adicionais va WHERE adicionais in (".$adicionais.") and veiculo.id = va.veiculo_id) = ".$teste_adicionais." and id_usuario = ".$id;
 
 	}	
 	if($adicionais == '' && ($filtro['marca'] != '' || $filtro['ano'] != '')) { 
@@ -294,7 +306,7 @@ function listarID($filtro) {
 			$sql.=" AND ";
 		}
 		
-		$sql.=" veiculo.marca = '".$filtro['marca']."'";
+		$sql.=" veiculo.marca = '".$filtro['marca']."' and id_usuario = ".$id;
 
 	}
 	if($filtro['ano'] != '') {
@@ -303,7 +315,13 @@ function listarID($filtro) {
 			$sql.=" AND ";
 		}
 
-		$sql.=" veiculo.anomodelo = ".$filtro['ano'];
+		$sql.=" veiculo.anomodelo = ".$filtro['ano']."and id_usuario = ".$id;
+
+
+	}
+	if($adicionais == '' && $filtro['marca'] == '' && $filtro['ano'] == ''){
+
+		$sql.=" WHERE id_usuario = ".$id." ";
 
 	}
 	if($filtro['filtro'] == 'marca') {
@@ -394,6 +412,25 @@ function getUser(){
 	$nome = $_SESSION['usuario']['nome'];
 
 	return $nome;
+}
+
+function cadastraUser($data){
+
+	$conn = connectionFactory();
+
+	$senhaHash = hash('sha256',$data['senha']);
+
+
+	$sql = "INSERT INTO cadastro (login, senha, email, nome) VALUES ('{$data['login']}', '".$senhaHash."', '{$data['email']}', '{$data['nome']}');";
+
+	error_log($sql);
+
+	$result = $conn->query($sql);
+
+	connectionKill($conn);
+
+	return $result;
+
 }
 
 ?>

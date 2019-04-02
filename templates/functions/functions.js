@@ -2,6 +2,7 @@ window.onload = function() {
 	pagina = 1;
 	var usuario = getUsuario();
 	$('#nomeusuario').text(usuario);
+
 	vincularEventos();
 }
 
@@ -177,7 +178,7 @@ function vincularEventos() {
 			var data = montarObjeto();
 			recebeParametros(tipo, data);	
 			alert('Veiculo cadastrado com sucesso');
-			window.location.href="menuprincipal.html"
+			window.location.href="menuprincipal.html";
 			listar();
 		}
 	});
@@ -191,8 +192,32 @@ function vincularEventos() {
 
 	$('#buttoncadastrar').on('click', function() {
 			
-			
+		$('#logintela').hide();
+		$('#usrcadastro').show();
+
 	});
+
+	$('#newbuttoncadastrar').on('click', function() {
+			
+		cadastrarUsuario();
+		$('#usrcadastro').hide();
+		$('#logintela').show();	
+	    $('#newloginusr').val("");
+    	$('#newpasswordusr').val("");
+    	$('#newemailusr').val("");
+    	$('#newnomeusr').val("");
+
+	});
+
+	$('#newbuttoncancelar').on('click', function() {
+			
+		$('#usrcadastro').hide();
+		$('#logintela').show();
+
+	});
+	
+
+
 
 	$('#loginusr').keypress(function(e) {
     	if(e.keyCode==13){
@@ -707,13 +732,18 @@ function montaCabecalho(adicionais) {
 
 function verificarLogin() {
 
-	var login =[];
+	var data ={
+
+		login: $('#loginusr').val(), 
+		senha: $('#passwordusr').val()
+
+	};
 
 	$.ajax({
 		url: 'http://localhost/projeto-automoveis/server/teste_banco.php',
-		type: 'GET',
+		type: 'POST',
 		dataType: 'json',
-		data: {'action': 'verificalogin', login: $('#loginusr').val(), senha: $('#passwordusr').val()},
+		data: {data: data, 'action': 'verificalogin'},
 		async: false,
 		success: function(result) {
 			login = result;
@@ -730,7 +760,8 @@ function verificarLogin() {
 
 	
 }
-function getUsuario(){
+
+function getUsuario() {
 
 	$.ajax({
 		url: 'http://localhost/projeto-automoveis/server/teste_banco.php',
@@ -747,4 +778,29 @@ function getUsuario(){
 
 
 	return login;
+}
+
+function cadastrarUsuario() {
+
+    var	data = {
+
+    	login: $('#newloginusr').val(),
+    	senha: $('#newpasswordusr').val(),
+    	email: $('#newemailusr').val(),
+    	nome: $('#newnomeusr').val()
+
+    };
+
+	$.ajax({
+		url: 'http://localhost/projeto-automoveis/server/teste_banco.php',
+		type: 'POST',
+		dataType: 'json',
+		data: {data: data, 'action': 'cadastrausuario'},
+		async: false,
+		success: function(result) {
+			login = result;
+		},
+		error: function(error) {}
+	});
+
 }
