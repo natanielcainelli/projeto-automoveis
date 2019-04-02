@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Menu Principal</title>
+	<meta charset="UTF-8">
+	<script src="http://localhost/projeto-automoveis/persistence/functions.js"></script>
+
+	<link rel="stylesheet" href="http://localhost/projeto-automoveis/model/teste_banco.php">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+	<link rel="stylesheet" href="http://localhost/projeto-automoveis/view/styles/estilos.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script type="text/javascript" src="http://localhost/projeto-automoveis/persistence/routie.min.js"></script>
+	<script type="text/javascript" src="http://localhost/projeto-automoveis/persistence/jquery.mask.js"></script>
+	<script type="text/javascript" src="http://localhost/projeto-automoveis/persistence/functions.js"></script> 
+	
+</head>
+<body>
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" class="active" href="menuprincipal.html">Sistema de Automóveis</a>
+    </div>
+    <ul class="nav navbar-nav">
+      <a name="relatorio.html" id="relatoriopesquisa"></a>
+      <li><a  href="relatorio.html">Gerar Relatórios</a></li>
+    </ul>
+    
+    <ul class="nav navbar-nav">
+      <a name="main.html" id="main"></a>
+      <li><a  href="main.html">Trocar Usuário</a></li>
+    </ul>
+    <div align="right">
+    	<p>Seja bem vindo <b><span id="nomeusuario" type="text"></span></b></p>
+    </div>
+  </div>
+</nav>
+<div class="container-fluid">
+
+<div id="menubusca">
+	<h1><p align="center"><strong> Busca Rápida </strong> </p></h1>	
+	<div align="center">
+		<div class="linha">
+			<div class="coluna wh5" align="left">
+		          <input id="buscarapidadescricao" class="search_input" type="text" name="" placeholder="Digite a descrição do veículo...">
+		    </div>
+		    <div class="coluna wh5" align="left">
+		          <input id="buscarapidamarca" class="search_input" type="text" name="" placeholder="Digite a marca do veículo...">
+		    </div>
+		    <div >
+		          <button id="botaobuscardescricao" type="submit" class="btn-buscar" align="left"><i>Buscar</i></button>
+		    </div>
+		</div>
+	</div>
+</div>
+
+<div id="menuprincipal">
+	<br><br><br>
+	<input id="idAutomovel" type="hidden" value="0" />
+	<table class="table" align="center" style="width:100%">	
+		<thead>
+			<tr>
+				<th>Descrição</th>
+				<th>Placa</th>
+			    <th>Marca</th>
+			    <th>Selecionar</th>
+			</tr>
+		</thead>
+		<tbody>
+		</tbody>
+	</table>
+	<div align="center">
+		<br><br>
+			<label align="right" for="cadastrarnovo"></label> <button id="cadastrarnovo" class="btn-buscar" type="button" > Cadastrar</button></a>
+			<label align="right" for="excluir"> </label><button id="excluirveiculoid" class="btn-buscar" type="button">Excluir Selecionados</button>	
+	</div>
+	<br>
+    <br><br> 
+	<div align="center">
+		<nav aria-label="Navegação de página">
+		  <ul class="pagination justify-content-end">
+		    <li class="page-item">
+		      <a class="page-link" id="pageant" tabindex="-1">Anterior</a>
+		    </li>
+		    <li class="page-item"><a id="page1" class="page-link" href="#">1</a></li>
+		    <li class="page-item"><a id="page2" class="page-link" href="#">2</a></li>
+		    <li class="page-item"><a id="page3" class="page-link" href="#">3</a></li>
+		    <li class="page-item">
+		      <a class="page-link" id="pagenext">Próximo</a>
+		    </li>
+		  </ul>
+		</nav>
+	</div>
+</div>
+
+<div id="alterar-tela" style="display: none;">
+	<p align="left" > <font size="6" > Dados Cadastrais</font></p>
+	<HR ALIGN=center WIDTH=100% SIZE=20 COLOR=black NOSHADE>
+	<form>
+		<div class="linha">
+			<div class="coluna wh6">
+				<label for="descricao">Descrição</label>
+				<input type="text" name="descricao" placeholder="Nome do Veículo" class="campo" id="descricao">
+			</div>
+			<div class="coluna wh3">
+				<label for="placa">Placa</label>
+				<input type="text" name="placa" placeholder="XXX-XXXX" class="campo" id="placa">
+			</div>
+			<div class="coluna wh3">
+				<label for="renavam">Código RENAVAM</label>
+				<input type="text" name="renavam" placeholder="XXXXXXXX-X"class="campo" id="renavam">
+			</div>
+		</div>
+		<br><br><br><br>
+		<div class="linha">
+			<div class="coluna wh4">
+			<label for="sel1">Ano Modelo</label>
+	  		<select class="form" id="anomodelo">
+  				<option value="1990">1990</option>
+				<option value="1991">1991</option>
+				<option value="1992">1992</option>
+				<option value="1993">1993</option>
+				<option value="1994">1994</option>
+				<option value="1995">1995</option>
+				<option value="1996">1996</option>
+				<option value="1997">1997</option>
+				<option value="1998">1998</option>
+				<option value="1999">1999</option>
+	  			<option value="2000">2000</option>
+	  			<option value="2001">2001</option>
+	  			<option value="2002">2002</option>
+	  			<option value="2003">2003</option>
+	  			<option value="2004">2004</option>
+	  			<option value="2005">2005</option>
+	  			<option value="2006">2006</option>
+	  			<option value="2007">2007</option>
+	  			<option value="2008">2008</option>
+	  			<option value="2009">2009</option>
+				<option value="2010">2010</option>
+				<option value="2011">2011</option>
+				<option value="2012">2012</option>
+				<option value="2013">2013</option>
+				<option value="2014">2014</option>
+				<option value="2015">2015</option>
+				<option value="2016">2016</option>
+				<option value="2017">2017</option>
+				<option value="2018">2018</option>
+				<option value="2019">2019</option>
+			</select>
+			</div>
+			<div class="coluna wh4">
+				<label for="sel1">Ano Fabricação</label>
+	  			<select class="form" id="anofabricacao">
+	  				<option value="1990">1990</option>
+					<option value="1991">1991</option>
+					<option value="1992">1992</option>
+					<option value="1993">1993</option>
+					<option value="1994">1994</option>
+					<option value="1995">1995</option>
+					<option value="1996">1996</option>
+					<option value="1997">1997</option>
+					<option value="1998">1998</option>
+					<option value="1999">1999</option>
+					<option value="2000">2000</option>
+		  			<option value="2001">2001</option>
+		  			<option value="2002">2002</option>
+		  			<option value="2003">2003</option>
+		  			<option value="2004">2004</option>
+		  			<option value="2005">2005</option>
+		  			<option value="2006">2006</option>
+		  			<option value="2007">2007</option>
+		  			<option value="2008">2008</option>
+		  			<option value="2009">2009</option>
+					<option value="2010">2010</option>
+					<option value="2011">2011</option>
+					<option value="2012">2012</option>
+					<option value="2013">2013</option>
+					<option value="2014">2014</option>
+					<option value="2015">2015</option>
+					<option value="2016">2016</option>
+					<option value="2017">2017</option>
+					<option value="2018">2018</option>
+					<option value="2019">2019</option>
+				</select>
+			</div>
+			<div class="coluna wh4">
+				<label for="sel1">Marca</label>
+	  			<select class="form" id="marca">
+	  				<option value="renault">Renault</option>
+					<option value="fiat">Fiat</option>
+					<option value="chevrolet">Chevrolet</option>
+					<option value="volkswagem">Volkswagem</option>
+					<option value="ford">Ford</option>
+					<option value="nissan">Nissan</option>
+					<option value="hyundai">Hyundai</option>
+					<option value="toyota">Toyota</option>
+					<option value="mitsubishi">Mitubishi</option>
+					<option value="kia">Kia</option>
+					<option value="honda">Honda</option>
+				</select>
+			</div>		
+			<div class="coluna wh3">
+				<label for="cor">Cor</label>
+				<input type="text" name="cor" placeholder="Ex: Preto" class="campo" id="cor">
+			</div>
+			<div class="coluna wh3">
+				<label for="km">Km</label>
+				<input type="text" name="km" placeholder="0 km" class="campo" id="km">
+			</div>	
+		</div>
+		<br><br><br><br>
+		<div class="linha">
+			<div class="coluna wh6">
+				<label for="preco">Preço</label>
+				<input type="text" name="preco" placeholder="R$" class="campo" id="preco">
+			</div>
+
+			<div class="coluna wh6">
+				<label for="precofipe">Preço FIPE</label>
+				<input type="text" name="precofipe" placeholder="R$" class="campo" id="precofipe">
+			</div>
+		</div>
+	</form>
+	<br><br><br><br>
+	<p align="left" > <font size="6"> Componentes Adicionais</font></p>
+	<HR ALIGN=center WIDTH=100% SIZE=2 COLOR=black NOSHADE>
+	<form id="form_adicionais">
+		<div class="linha">
+			<div class="colunac wh3">
+				<input type="checkbox" name="preco" value="1" id="arcondicionado">
+				<label for="arcondicionado">Ar Condicionado</label>
+			</div>
+			<div class="colunac wh3">
+				<input type="checkbox" name="airbag" value="2" id="airbag">
+				<label for="airbag">Airbag</label>
+			</div>
+			<div class="colunac wh3">
+				<input type="checkbox" name="cdplayer" value="3" id="cdplayer">
+				<label for="cdplayer">CD player</label>
+			</div>
+			<div class="colunac wh3">
+				<input type="checkbox" name="direcaohidraulica" value="4" id="direcaohidraulica">
+				<label for="direcaohidraulica">Direção Hidráulica</label>
+			</div>
+			
+		</div>
+		<br><br><br><br>
+		<div class="linha">
+			<div class="colunac wh3">
+				<input type="checkbox" name="vidro" value="5" id="vidro">
+				<label for="vidro">Vidro Elétrico</label>
+			</div>
+			<div class="colunac wh3">
+				<input type="checkbox" name="trava" value="6" id="trava">
+				<label for="trava">Trava Elétrica</label>
+			</div>
+			<div class="colunac wh3">
+				<input type="checkbox" name="cambio" value="7" id="cambio">
+				<label for="cambio">Câmbio Automático</label>
+			</div>
+			<div class="colunac wh3">
+				<input type="checkbox" name="rodas" value="8" id="rodas">
+				<label for="rodas">Rodas de Liga</label>
+			</div>
+		</div>
+		<br><br><br><br>
+		<div class="linha">
+			<div class="colunac wh3">	
+				<input type="checkbox" name="alarme" value="9" id="alarme">
+				<label for="alarme">Alarme</label>
+			</div>
+		</div>
+		<br><br> 
+		<div>
+			<div id="erros_form" style="display: none;"><h3> Os seguintes campos são inválidos:  </h3></div>
+			<div id="erros_form_descricao" style="display: none;"> Descrição </div>
+			<div id="erros_form_placa" style="display: none;"> Placa </div>
+			<div id="erros_form_renavam" style="display: none;"> Renavam </div>
+			<div id="erros_form_cor" style="display: none;"> Cor </div>
+			<div id="erros_form_km" style="display: none;"> KM </div>
+			<div id="erros_form_preco" style="display: none;"> Preço </div>
+			<div id="erros_form_precofipe" style="display: none;"> Preço FIPE </div>
+		</div>
+		<div id="campo_erros_aviso" style="display: none;" >
+			<div class="panel-group">
+			  <div class="panel panel-danger">
+			    <div align="center" id="campo_erros_titulo" class="panel-body">Os seguintes campos possuem erros:</div>
+			  </div>
+			  <div class="panel panel-danger">
+			    <div id="campo_erros_texto" class="panel-body"></div>
+			  </div>
+			</div> 
+		</div>
+		<br><br><br> 
+		<div div align="center">
+		<div id="alterar_menu" class="linha">
+			<div class="botao" >
+				<input id="confirmaalteracaotelaprincipal" class="btn-salvar" value="Salvar" type="button">
+			</div>
+			<div class="botao">
+				<a id="menuprincipal.html" href="menuprincipal.html"> <button type="button" class="btn-cancelar">  Cancelar</button>  </a>
+			</div>
+		</div>
+		<div id="novo_menu" class="linha">
+			<div class="botao" >
+				<input id="confirmanovotelaprincipal" class="btn-salvar" value="Salvar" type="button">
+			</div>
+			<div class="botao">
+				<a id="menuprincipal.html" href="menuprincipal.html"> <button type="button" class="btn-cancelar">  Cancelar</button>  </a>
+			</div>
+		</div>
+		</div>
+	</form>
+</div>
+</div>
+</body>
+</html>
+
