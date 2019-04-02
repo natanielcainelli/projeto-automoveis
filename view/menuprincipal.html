@@ -3,13 +3,16 @@
 <head>
 	<title>Menu Principal</title>
 	<meta charset="UTF-8">
-	<link rel="stylesheet" href="http://localhost/projeto-automoveis/server/teste_banco.php">
+	<script src="http://localhost/projeto-automoveis/persistence/functions.js"></script>
+
+	<link rel="stylesheet" href="http://localhost/projeto-automoveis/model/teste_banco.php">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
-	<link rel="stylesheet" href="styles/estilos.css">
+	<link rel="stylesheet" href="http://localhost/projeto-automoveis/view/styles/estilos.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-	<script type="text/javascript" src="functions/routie.min.js"></script>
-	<script type="text/javascript" src="functions/jquery.mask.js"></script>
-	<script type="text/javascript" src="functions/functions.js"></script> 
+	<script type="text/javascript" src="http://localhost/projeto-automoveis/persistence/routie.min.js"></script>
+	<script type="text/javascript" src="http://localhost/projeto-automoveis/persistence/jquery.mask.js"></script>
+	<script type="text/javascript" src="http://localhost/projeto-automoveis/persistence/functions.js"></script> 
+	
 </head>
 <body>
 <nav class="navbar navbar-default">
@@ -21,6 +24,7 @@
       <a name="relatorio.html" id="relatoriopesquisa"></a>
       <li><a  href="relatorio.html">Gerar Relatórios</a></li>
     </ul>
+    
     <ul class="nav navbar-nav">
       <a name="main.html" id="main"></a>
       <li><a  href="main.html">Trocar Usuário</a></li>
@@ -97,7 +101,6 @@
 				<label for="descricao">Descrição</label>
 				<input type="text" name="descricao" placeholder="Nome do Veículo" class="campo" id="descricao">
 			</div>
-
 			<div class="coluna wh3">
 				<label for="placa">Placa</label>
 				<input type="text" name="placa" placeholder="XXX-XXXX" class="campo" id="placa">
@@ -107,8 +110,7 @@
 				<input type="text" name="renavam" placeholder="XXXXXXXX-X"class="campo" id="renavam">
 			</div>
 		</div>
-		<br> <br>
-		<br> <br>
+		<br><br><br><br>
 		<div class="linha">
 			<div class="coluna wh4">
 			<label for="sel1">Ano Modelo</label>
@@ -205,8 +207,7 @@
 				<input type="text" name="km" placeholder="0 km" class="campo" id="km">
 			</div>	
 		</div>
-		<br> <br>
-		<br> <br>
+		<br><br><br><br>
 		<div class="linha">
 			<div class="coluna wh6">
 				<label for="preco">Preço</label>
@@ -219,8 +220,7 @@
 			</div>
 		</div>
 	</form>
-	<br> <br>
-	<br> <br>
+	<br><br><br><br>
 	<p align="left" > <font size="6"> Componentes Adicionais</font></p>
 	<HR ALIGN=center WIDTH=100% SIZE=2 COLOR=black NOSHADE>
 	<form id="form_adicionais">
@@ -243,8 +243,7 @@
 			</div>
 			
 		</div>
-		<br> <br>
-		<br> <br>
+		<br><br><br><br>
 		<div class="linha">
 			<div class="colunac wh3">
 				<input type="checkbox" name="vidro" value="5" id="vidro">
@@ -262,17 +261,15 @@
 				<input type="checkbox" name="rodas" value="8" id="rodas">
 				<label for="rodas">Rodas de Liga</label>
 			</div>
-			
 		</div>
-		<br> <br>
-		<br> <br>
+		<br><br><br><br>
 		<div class="linha">
 			<div class="colunac wh3">	
 				<input type="checkbox" name="alarme" value="9" id="alarme">
 				<label for="alarme">Alarme</label>
 			</div>
 		</div>
-		<br> <br> 
+		<br><br> 
 		<div>
 			<div id="erros_form" style="display: none;"><h3> Os seguintes campos são inválidos:  </h3></div>
 			<div id="erros_form_descricao" style="display: none;"> Descrição </div>
@@ -293,7 +290,7 @@
 			  </div>
 			</div> 
 		</div>
-		<br> <br><br> 
+		<br><br><br> 
 		<div div align="center">
 		<div id="alterar_menu" class="linha">
 			<div class="botao" >

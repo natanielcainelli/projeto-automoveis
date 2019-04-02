@@ -189,7 +189,6 @@ function vincularEventos() {
 
 	});
 
-
 	$('#buttoncadastrar').on('click', function() {
 			
 		$('#logintela').hide();
@@ -215,21 +214,18 @@ function vincularEventos() {
 		$('#logintela').show();
 
 	});
-	
-
-
 
 	$('#loginusr').keypress(function(e) {
     	if(e.keyCode==13){
     		$('#buttonlogin').click();
   		}
     });
+
     $('#passwordusr').keypress(function(e) {
     	if(e.keyCode==13){
     		$('#buttonlogin').click();
   		}
     });
-
 }
 
 function validaCampos() {
@@ -379,7 +375,7 @@ function validaFormulario() {
 function obterUltimoIndice() {
 	var veiculos = [];
 	$.ajax({
-		url: 'http://localhost/projeto-automoveis/server/teste_banco.php',
+		url: 'http://localhost/projeto-automoveis/model/teste_banco.php',
 		type: 'GET',
 		dataType: 'json',
 		data: {'action': 'listarultimoid'},
@@ -397,7 +393,7 @@ function obterUltimoIndice() {
 
 function listar() {
 	$.ajax({
-		url: 'http://localhost/projeto-automoveis/server/teste_banco.php?pagina='+ pagina+'&marca='+ $('#buscarapidamarca').val()+ '&descricao='+ $('#buscarapidadescricao').val(),
+		url: 'http://localhost/projeto-automoveis/model/teste_banco.php?pagina='+ pagina+'&marca='+ $('#buscarapidamarca').val()+ '&descricao='+ $('#buscarapidadescricao').val(),
 		type: 'GET',
 		dataType: 'json',
 		data: {'action': 'listar'},
@@ -412,7 +408,7 @@ function listar() {
 function listarRelatorio(filtro, data) {
 
 	$.ajax({
-		url: 'http://localhost/projeto-automoveis/server/teste_banco.php',
+		url: 'http://localhost/projeto-automoveis/model/teste_banco.php',
 		type: 'GET',
 		dataType: 'json',
 		data: {data: data, 'action': 'listarultimoid', filtro: filtro, marca: $('#buscarapidamarcarelatorio').val(), ano: $('#buscarapidaano').val()},
@@ -500,7 +496,7 @@ function testaCampos() {
 	};
 
 	$.ajax({
-		url: 'http://localhost/projeto-automoveis/server/teste_banco.php',
+		url: 'http://localhost/projeto-automoveis/model/teste_banco.php',
 		type: 'POST',
 		dataType: 'json',
 		data: {'data': data, 'action': 'validar'},
@@ -553,7 +549,7 @@ function recebeParametros ($tipo,$data) {
 	if($tipo == 'alterar') {
 
 		$.ajax({
-		url: 'http://localhost/projeto-automoveis/server/teste_banco.php',
+		url: 'http://localhost/projeto-automoveis/model/teste_banco.php',
 		type: 'POST',
 		dataType: 'json',
 		data: {'data': $data, 'action': 'alterar'},
@@ -568,7 +564,7 @@ function recebeParametros ($tipo,$data) {
 	if($tipo == 'novo') {
 
 		$.ajax({
-			url: 'http://localhost/projeto-automoveis/server/teste_banco.php',
+			url: 'http://localhost/projeto-automoveis/model/teste_banco.php',
 			type: 'POST',
 			dataType: 'json',
 			data: {'data': $data, 'action': 'novo'},
@@ -588,7 +584,7 @@ function montaObjetoEditar(id) {
 
 	veiculo = [];
 	$.ajax({
-		url: 'http://localhost/projeto-automoveis/server/teste_banco.php',
+		url: 'http://localhost/projeto-automoveis/model/teste_banco.php',
 		type: 'GET',
 		dataType: 'json',
 		data: {'action': 'listareditar'},
@@ -628,7 +624,7 @@ function montaObjetoEditar(id) {
 
 	var veiculos = [];
 	$.ajax({
-		url: 'http://localhost/projeto-automoveis/server/teste_banco.php',
+		url: 'http://localhost/projeto-automoveis/model/teste_banco.php',
 		type: 'POST',
 		dataType: 'json',
 		data: {'data': data ,'action': 'geradadosadicionais'},
@@ -656,7 +652,7 @@ function montaObjetoExcluir() {
 	})
 
 	$.ajax({
-		url: 'http://localhost/projeto-automoveis/server/teste_banco.php',
+		url: 'http://localhost/projeto-automoveis/model/teste_banco.php',
 		type: 'POST',
 		dataType: 'json',
 		data: {'data': ids, 'action': 'excluir'},
@@ -680,7 +676,7 @@ function montaObjetoExcluir() {
 		}
 		
 		$.ajax({
-			url: 'http://localhost/projeto-automoveis/server/teste_banco.php?id='+ id,
+			url: 'http://localhost/projeto-automoveis/model/teste_banco.php?id='+ id,
 			type: 'GET',
 			dataType: 'json',
 			data: {'action': 'excluir'},
@@ -740,7 +736,7 @@ function verificarLogin() {
 	};
 
 	$.ajax({
-		url: 'http://localhost/projeto-automoveis/server/teste_banco.php',
+		url: 'http://localhost/projeto-automoveis/model/teste_banco.php',
 		type: 'POST',
 		dataType: 'json',
 		data: {data: data, 'action': 'verificalogin'},
@@ -764,7 +760,7 @@ function verificarLogin() {
 function getUsuario() {
 
 	$.ajax({
-		url: 'http://localhost/projeto-automoveis/server/teste_banco.php',
+		url: 'http://localhost/projeto-automoveis/model/teste_banco.php',
 		type: 'GET',
 		dataType: 'json',
 		data: {'action': 'getusuario'},
@@ -792,7 +788,7 @@ function cadastrarUsuario() {
     };
 
 	$.ajax({
-		url: 'http://localhost/projeto-automoveis/server/teste_banco.php',
+		url: 'http://localhost/projeto-automoveis/model/teste_banco.php',
 		type: 'POST',
 		dataType: 'json',
 		data: {data: data, 'action': 'cadastrausuario'},

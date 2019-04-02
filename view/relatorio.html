@@ -3,15 +3,15 @@
 <head>
 	<title>Relatório</title>
 	<meta charset="UTF-8">
-	<script src="functions/functions.js"></script>
+	<script src="http://localhost/projeto-automoveis/persistence/functions.js"></script>
 
-	<link rel="stylesheet" href="http://localhost/projeto-automoveis/server/teste_banco.php">
+	<link rel="stylesheet" href="http://localhost/projeto-automoveis/model/teste_banco.php">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
-	<link rel="stylesheet" href="styles/estilos.css">
+	<link rel="stylesheet" href="http://localhost/projeto-automoveis/view/styles/estilos.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-	<script type="text/javascript" src="functions/routie.min.js"></script>
-	<script type="text/javascript" src="functions/jquery.mask.js"></script>
-	<script type="text/javascript" src="functions/functions.js"></script> 
+	<script type="text/javascript" src="http://localhost/projeto-automoveis/persistence/routie.min.js"></script>
+	<script type="text/javascript" src="http://localhost/projeto-automoveis/persistence/jquery.mask.js"></script>
+	<script type="text/javascript" src="http://localhost/projeto-automoveis/persistence/functions.js"></script> 
 </head>
 <style type="text/css">
 
@@ -39,10 +39,9 @@
 	}
 </style>
 <body>
-
 <div class="container-fluid">
 <div align="right" id="usuariologado" class="usuariologado">
-    	<p>Seja bem vindo <b><span id="nomeusuario" type="text"></span></b></p>
+    <p>Seja bem vindo <b><span id="nomeusuario" type="text"></span></b></p>
     </div>
 	<div align="center">
 		<div id="impressaoadic" class="impressaoadicionais" >
@@ -85,7 +84,6 @@
 		</tbody>
 		</table>
 	</div>
-
 		<div id="menubuscarelatorio">
 			<h1><p align="center"><strong> Filtros de Pesquisa </strong> </p></h1>	
 			<HR ALIGN=center WIDTH=100% SIZE=20 COLOR=black NOSHADE>
@@ -98,7 +96,6 @@
 				          <input id="buscarapidamarcarelatorio" class="search_input" type="text" name="" placeholder="Digite a marca do veículo...">
 				    </div>
 				<form id="form_adicionais_relatorio">
-					
 				    <br><br><br><br>
 				    <div class="linha">
 						<div class="colunac wh3">
@@ -118,8 +115,7 @@
 							<label for="direcaohidraulica">Direção Hidráulica</label>
 						</div>
 					</div>
-					<br><br>
-					<br><br>
+					<br><br><br><br>
 					<div class="linha">
 						<div class="colunac wh3">
 							<input type="checkbox" name="vidro" value="5" id="vidro">
@@ -138,8 +134,7 @@
 							<label for="rodas">Rodas de Liga</label>
 						</div>
 					</div>
-					<br><br>
-					<br><br>
+					<br><br><br><br>
 					<div class="linha">
 						<div class="colunac wh3">	
 							<input type="checkbox" name="alarme" value="9" id="alarme">
@@ -151,17 +146,13 @@
 				    <div >
 				    	<br><br>
 				        <button id="filtrobutton"  class="btn-buscar" align="left"><i>Buscar</i></button>
-				        <br><br>
-						<br><br>
+				        <br><br><br><br>
 				    </div>
 				</div>
-					<br><br>
-					<br><br>
+					<br><br><br><br>
 			</div>
 		</div>		
-
 		<div id="botaogerar" align="center">
-
 			<br><br><br><br><br><br><br><br>
 			<label align="right" for="excluir"> Gerar Relatorio Geral</label>
 			<button id="gerarrelatorio" type="button" class="btn btn-dark" align="right" ><span class="glyphicon glyphicon-hdd"></span></button>	
@@ -174,10 +165,8 @@
 			<br><br>
 		</div>	
 	</div>
-	
 		<div align="center" >
-			<br> <br>
-			<br> <br>
+			<br><br><br><br>
 			<a href="menuprincipal.html" class="btn-salvar"> <button type="button" class="btn-salvar">VOLTAR AO MENU PRINCIPAL</button> </a>
 		</div>
 </div>
