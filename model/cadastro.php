@@ -1,6 +1,6 @@
 <?php 
 
-public class Cadastro {
+class Cadastro {
 
 	private $id;
 	private $login;
@@ -55,4 +55,6 @@ public class Cadastro {
 	function getNome() {
 		return $this->nome;
 	}
+}
+
 ?>

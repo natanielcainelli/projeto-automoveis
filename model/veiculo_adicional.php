@@ -1,6 +1,6 @@
 <?php 
 
-public class VeiculoAdicional {
+class VeiculoAdicional {
 
 	private $id;
 	private $adicionais;
@@ -36,7 +36,6 @@ public class VeiculoAdicional {
 	function getVeiculoId() {
 		return $this->veiculo_id;
 	}
-
-
+}
 
 ?>

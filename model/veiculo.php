@@ -1,6 +1,6 @@
 <?php 
 
- public class Veiculo {
+ class Veiculo {
 
  	private $id;
  	private $descricao;
@@ -115,7 +115,5 @@
 	}
 
  }
-
-
 
 ?>
