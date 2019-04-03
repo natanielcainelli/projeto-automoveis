@@ -10,7 +10,7 @@ function verificarLogin() {
 	};
 
 	$.ajax({
-		url: 'http://localhost/projeto-automoveis/model/cadastro_query.php',
+		url: 'http://localhost/projeto-automoveis/controller/controller.php',
 		type: 'POST',
 		dataType: 'json',
 		data: {data: data, 'action': 'verificalogin'},
@@ -34,7 +34,7 @@ function verificarLogin() {
 function getUsuario() {
 
 	$.ajax({
-		url: 'http://localhost/projeto-automoveis/model/cadastro_query.php',
+		url: 'http://localhost/projeto-automoveis/controller/controller.php',
 		type: 'GET',
 		dataType: 'json',
 		data: {'action': 'getusuario'},
@@ -62,7 +62,7 @@ function cadastrarUsuario() {
     };
 
 	$.ajax({
-		url: 'http://localhost/projeto-automoveis/model/cadastro_query.php',
+		url: 'http://localhost/projeto-automoveis/controller/controller.php',
 		type: 'POST',
 		dataType: 'json',
 		data: {data: data, 'action': 'cadastrausuario'},

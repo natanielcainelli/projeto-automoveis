@@ -1,7 +1,184 @@
+function montarObjeto(){
+
+	var id = parseInt($('#idAutomovel').val());
+	var adicionais = [];
+
+	$('#form_adicionais input:checked').each(function() {
+		adicionais.push($(this).val());
+	});
+
+	var data = {
+		id: id,
+		descricao: $("#descricao").val(),
+		placa: $("#placa").unmask().val(),
+		renavam: $("#renavam").unmask().val(),
+		anomodelo: $("#anomodelo").val(),
+		anofabrica: $("#anofabricacao").val(),
+		cor: $("#cor").val(),
+		km: $("#km").val(),
+		marca: $("#marca").val(),
+		preco: $("#preco").unmask().val(),
+		precofipe: $("#precofipe").unmask().val(),
+		veiculo_id: id,
+		adicionais: adicionais
+	};
+
+	return data;
+
+}
+
+function recebeParametros ($tipo,$data) {
+
+	if($tipo == 'alterar') {
+
+		$.ajax({
+		url: 'http://localhost/projeto-automoveis/controller/controller.php',
+		type: 'POST',
+		dataType: 'json',
+		data: {'data': $data, 'action': 'alterar'},
+
+		success: function(result) {
+			veiculos = result;
+		},
+		error: function(error) {}
+		});	
+
+	}
+	if($tipo == 'novo') {
+
+		$.ajax({
+			url: 'http://localhost/projeto-automoveis/controller/controller.php',
+			type: 'POST',
+			dataType: 'json',
+			data: {'data': $data, 'action': 'novo'},
+			success: function(result) {
+				if (result['erro'].arr.length != 0) {
+					$('#campo_erros_texto')+= result['erro'];
+				}
+				veiculos = result;
+			},
+			error: function(error) {
+			}
+		});		
+	}
+}
+
+function montaObjetoEditar(id) {
+
+	veiculo = [];
+	$.ajax({
+		url: 'http://localhost/projeto-automoveis/controller/controller.php',
+		type: 'GET',
+		dataType: 'json',
+		data: {'action': 'listareditar'},
+		async: false,
+		success: function(result) {
+			veiculo = result;
+		},
+		error: function(error) {}
+	});
+
+	veiculo.forEach(function(carro) {
+		if(carro.id == id) {
+
+		  	$('#idAutomovel').val(id);
+			$('#menuprincipal').hide();
+			$('#alterar-tela').show();
+			$('#descricao').val(carro.descricao);
+			$('#placa').val(carro.placa).mask("AAA-0000");
+			$('#renavam').val(carro.renavam).mask("00000000-0");
+			$('#anomodelo').val(carro.anomodelo);
+			$('#anofabricacao').val(carro.anofabrica);
+			$('#cor').val(carro.cor);
+			$('#km').val(carro.km);
+			$('#marca').val(carro.marca.toLowerCase());
+			$('#preco').val(carro.preco).mask('R$ #########');
+			$('#precofipe').val(carro.precofipe).mask('R$ #########');
+
+		}
+	});
+	validaCampos();
+
+	var data = {
+
+		id: id
+
+	};	
+
+	var veiculos = [];
+	$.ajax({
+		url: 'http://localhost/projeto-automoveis/controller/controller.php',
+		type: 'POST',
+		dataType: 'json',
+		data: {'data': data ,'action': 'geradadosadicionais'},
+		async: false,
+		success: function(result) {	
+			veiculos = result;
+		},
+		error: function(error) {
+		}
+	});
+
+	$.each(veiculos, function(key, value) {
+
+		$("input[value="+ value.adicionais +"]").prop('checked', true);
+
+	});
+
+}
+
+function montaObjetoExcluir() {
+
+	var ids = [];
+	$('input[type=checkbox]:checked').each(function(key, value) {
+		ids.push($(this).attr('id'));
+	})
+
+	$.ajax({
+		url: 'http://localhost/projeto-automoveis/controller/controller.php',
+		type: 'POST',
+		dataType: 'json',
+		data: {'data': ids, 'action': 'excluir'},
+
+		success: function(result) {
+			veiculos = result;
+			listar();
+		},
+		error: function(error) {}
+	});	
+
+	if(ids > 0) {
+		alert('Veiculos excluídos com sucesso');
+	}
+
+	$('input[type=checkbox]').each(function(key, value) {
+		
+		if ($(this).is(':checked')) {
+			var id = $(this).attr('id');
+			$('#idAutomovel').val(id);
+		}
+		
+		$.ajax({
+			url: 'http://localhost/projeto-automoveis/controller/controller.php?id='+ id,
+			type: 'GET',
+			dataType: 'json',
+			data: {'action': 'excluir'},
+
+			success: function(result) {
+				veiculos = result;
+				listar();
+			},
+			error: function(error) {}
+		});	
+		
+	});
+	listar();
+}
+
 function obterUltimoIndice() {
 	var veiculos = [];
 	$.ajax({
-		url: 'http://localhost/projeto-automoveis/model/veiculo_query.php',
+		url: 'http://localhost/projeto-automoveis/controller/controller.php',
 		type: 'GET',
 		dataType: 'json',
 		data: {'action': 'listarultimoid'},
@@ -19,7 +196,7 @@ function obterUltimoIndice() {
 
 function listar() {
 	$.ajax({
-		url: 'http://localhost/projeto-automoveis/model/veiculo_query.php?pagina='+ pagina+'&marca='+ $('#buscarapidamarca').val()+ '&descricao='+ $('#buscarapidadescricao').val(),
+		url: 'http://localhost/projeto-automoveis/controller/controller.php?pagina='+ pagina+'&marca='+ $('#buscarapidamarca').val()+ '&descricao='+ $('#buscarapidadescricao').val(),
 		type: 'GET',
 		dataType: 'json',
 		data: {'action': 'listar'},
@@ -34,7 +211,7 @@ function listar() {
 function listarRelatorio(filtro, data) {
 
 	$.ajax({
-		url: 'http://localhost/projeto-automoveis/model/veiculo_query.php',
+		url: 'http://localhost/projeto-automoveis/controller/controller.php',
 		type: 'GET',
 		dataType: 'json',
 		data: {data: data, 'action': 'listarultimoid', filtro: filtro, marca: $('#buscarapidamarcarelatorio').val(), ano: $('#buscarapidaano').val()},
@@ -122,7 +299,7 @@ function testaCampos() {
 	};
 
 	$.ajax({
-		url: 'http://localhost/projeto-automoveis/model/veiculo_query.php',
+		url: 'http://localhost/projeto-automoveis/controller/controller.php',
 		type: 'POST',
 		dataType: 'json',
 		data: {'data': data, 'action': 'validar'},
@@ -139,183 +316,6 @@ function testaCampos() {
 
 	return qtd_erros;
 
-}
-
-function montarObjeto(){
-
-	var id = parseInt($('#idAutomovel').val());
-	var adicionais = [];
-
-	$('#form_adicionais input:checked').each(function() {
-		adicionais.push($(this).val());
-	});
-
-	var data = {
-		id: id,
-		descricao: $("#descricao").val(),
-		placa: $("#placa").unmask().val(),
-		renavam: $("#renavam").unmask().val(),
-		anomodelo: $("#anomodelo").val(),
-		anofabrica: $("#anofabricacao").val(),
-		cor: $("#cor").val(),
-		km: $("#km").val(),
-		marca: $("#marca").val(),
-		preco: $("#preco").unmask().val(),
-		precofipe: $("#precofipe").unmask().val(),
-		veiculo_id: id,
-		adicionais: adicionais
-	};
-
-	return data;
-
-}
-
-function recebeParametros ($tipo,$data) {
-
-	if($tipo == 'alterar') {
-
-		$.ajax({
-		url: 'http://localhost/projeto-automoveis/model/basic/basic.php',
-		type: 'POST',
-		dataType: 'json',
-		data: {'data': $data, 'action': 'alterar'},
-
-		success: function(result) {
-			veiculos = result;
-		},
-		error: function(error) {}
-		});	
-
-	}
-	if($tipo == 'novo') {
-
-		$.ajax({
-			url: 'http://localhost/projeto-automoveis/model/basic/basic.php',
-			type: 'POST',
-			dataType: 'json',
-			data: {'data': $data, 'action': 'novo'},
-			success: function(result) {
-				if (result['erro'].arr.length != 0) {
-					$('#campo_erros_texto')+= result['erro'];
-				}
-				veiculos = result;
-			},
-			error: function(error) {
-			}
-		});		
-	}
-}
-
-function montaObjetoEditar(id) {
-
-	veiculo = [];
-	$.ajax({
-		url: 'http://localhost/projeto-automoveis/model/veiculo_query.php',
-		type: 'GET',
-		dataType: 'json',
-		data: {'action': 'listareditar'},
-		async: false,
-		success: function(result) {
-			veiculo = result;
-		},
-		error: function(error) {}
-	});
-
-	veiculo.forEach(function(carro) {
-		if(carro.id == id) {
-
-		  	$('#idAutomovel').val(id);
-			$('#menuprincipal').hide();
-			$('#alterar-tela').show();
-			$('#descricao').val(carro.descricao);
-			$('#placa').val(carro.placa).mask("AAA-0000");
-			$('#renavam').val(carro.renavam).mask("00000000-0");
-			$('#anomodelo').val(carro.anomodelo);
-			$('#anofabricacao').val(carro.anofabrica);
-			$('#cor').val(carro.cor);
-			$('#km').val(carro.km);
-			$('#marca').val(carro.marca.toLowerCase());
-			$('#preco').val(carro.preco).mask('R$ #########');
-			$('#precofipe').val(carro.precofipe).mask('R$ #########');
-
-		}
-	});
-	validaCampos();
-
-	var data = {
-
-		id: id
-
-	};	
-
-	var veiculos = [];
-	$.ajax({
-		url: 'http://localhost/projeto-automoveis/model/veiculo_query.php',
-		type: 'POST',
-		dataType: 'json',
-		data: {'data': data ,'action': 'geradadosadicionais'},
-		async: false,
-		success: function(result) {	
-			veiculos = result;
-		},
-		error: function(error) {
-		}
-	});
-
-	$.each(veiculos, function(key, value) {
-
-		$("input[value="+ value.adicionais +"]").prop('checked', true);
-
-	});
-
-}
-
-function montaObjetoExcluir() {
-
-	var ids = [];
-	$('input[type=checkbox]:checked').each(function(key, value) {
-		ids.push($(this).attr('id'));
-	})
-
-	$.ajax({
-		url: 'http://localhost/projeto-automoveis/model/basic/basic.php',
-		type: 'POST',
-		dataType: 'json',
-		data: {'data': ids, 'action': 'excluir'},
-
-		success: function(result) {
-			veiculos = result;
-			listar();
-		},
-		error: function(error) {}
-	});	
-
-	if(ids > 0) {
-		alert('Veiculos excluídos com sucesso');
-	}
-
-	$('input[type=checkbox]').each(function(key, value) {
-		
-		if ($(this).is(':checked')) {
-			var id = $(this).attr('id');
-			$('#idAutomovel').val(id);
-		}
-		
-		$.ajax({
-			url: 'http://localhost/projeto-automoveis/model/basic/basic.php?id='+ id,
-			type: 'GET',
-			dataType: 'json',
-			data: {'action': 'excluir'},
-
-			success: function(result) {
-				veiculos = result;
-				listar();
-			},
-			error: function(error) {}
-		});	
-		
-	});
-	listar();
 }
 
 function montaCabecalho(adicionais) {

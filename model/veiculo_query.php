@@ -2,19 +2,6 @@
 
 require_once '/var/www/html/projeto-automoveis/model/connection.php';
 
-$action = isset($_POST['action']) ? $_POST['action'] : '';
-$listar = isset($_GET['action']) ? $_GET['action'] : '';
-$data = isset($_POST['data']) ? $_POST['data'] : '';
-
-if($action == 'geradadosadicionais'){
-	echo json_encode(listarAdicionais($data));
-}if($listar == 'listarultimoid'){
-	echo json_encode(listarID($_GET, $_GET['filtro']));
-}if($listar == 'listareditar'){
-	echo json_encode(listarEditar($_GET));
-}if($listar == 'listar') {
-	echo json_encode(listar($_GET));
-}
 
 function listar($filtros) {
 
@@ -190,8 +177,5 @@ function listarAdicionais($veiculos) {
 	return $response;
 
 }
-
-
-
 
 ?>

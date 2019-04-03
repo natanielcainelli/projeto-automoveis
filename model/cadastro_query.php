@@ -2,20 +2,6 @@
 
 require_once '/var/www/html/projeto-automoveis/model/connection.php';
 
-$action = isset($_POST['action']) ? $_POST['action'] : '';
-$login = isset($_GET['action']) ? $_GET['action'] : '';
-$data = isset($_POST['data']) ? $_POST['data'] : '';
-
-if($action == 'verificalogin'){
-	echo json_encode(verificaLogin($data));
-}if($login == 'getusuario'){
-	echo json_encode(getUser($_GET));
-}if($action == 'cadastrausuario'){
-	echo json_encode(cadastraUser($data));
-}
-
-
-
 function verificaLogin($data) {
 
 	$conn = connectionFactory();
