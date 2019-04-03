@@ -1,233 +1,3 @@
-window.onload = function() {
-	pagina = 1;
-	var usuario = getUsuario();
-	$('#nomeusuario').text(usuario);
-
-	vincularEventos();
-}
-
-function vincularEventos() {
-
-	routie('', function() {
-		$('#relatoriodados').hide();
-		$('#alterar-tela').hide();
-		$('#menuprincipal').show();
-		listar();
-	});
-
-	routie('cadastro', function() {
-		$('#menuprincipal').hide();
-		$('#alterar-tela').show();	
-		$('#alterar_menu').hide();
-		$('#novo_menu').show();
-		$('#menubusca').hide();
-		$('#placa').mask("AAA-0000");
-		$('#renavam').mask("00000000-0");
-		$('#preco').mask('R$ #########');
-		$('#precofipe').mask('R$ #########');
-		validaCampos();
-	});
-
-	routie('editar/?:id', function(id) {
-		$('#alterar_menu').show();
-		$('#novo_menu').hide();
-		$('#menubusca').hide();
-		montaObjetoEditar(id);
-	});
-
-	$('#botaobuscardescricao, #botaobuscarmarca').on('click', function() {
-		
-		listar();
-
-	});
-
-	$('#filtrobutton').on('click', function() {
-		var filtro = "";
-		var adicionais =[]; 
-		
-		$('#form_adicionais_relatorio input:checked').each(function() {
-			adicionais.push($(this).val());
-		});
-
-		$('#filtradobuscar').show();
-
-		montaCabecalho(adicionais);
-
-		listarRelatorio(filtro,adicionais);
-
-		$('#menubuscarelatorio').hide();
-		$('#botaogerar').hide();
-		$('#relatoriodados').show();
-		
-	});
-
-	$('#cadastrarnovo').on('click', function() {
-
-		routie('cadastro');
-
-	});
-
-	$('#excluirveiculoid').on('click', function() {
-
-		montaObjetoExcluir();
-	});
-
-	$('#buscarapidadescricao').keypress(function(e) {
-    	if(e.keyCode==13){
-    		$('#botaobuscardescricao').click();
-  		}
-    });
-
-	$('#buscarapidamarca').keypress(function(e) {
-    	if(e.keyCode==13){
-      		$('#botaobuscardescricao').click();
-    	}
-    });
-
-	$('#confirmaalteracaotelaprincipal').on('click', function() {
-		
-		var erro = validaCampos();
-		var tipo = 'alterar';
-
-		if(erro == true){
-
-			var erro = validaCampos();
-			alert('Por favor preencha todos os campos para continuar');
-
-		}
-		if(erro == false){
-
-			var data = montarObjeto();
-			recebeParametros(tipo, data);
-			
-			alert('Veiculo modificado com sucesso');
-			window.location.href="menuprincipal.html";
-		}
-	});
-	
-	$('#page1, #page2, #page3').on('click', function() {
-		pagina = parseInt($(this).text());
-		listar();
-
-	});
-
-	$('#pageant').on('click', function() {
-
-		if(pagina>1){
-			pagina=pagina-1;
-			listar();
-		}
-
-	});
-
-	$('#pagenext').on('click', function() {
-
-		if(pagina<3){
-			pagina=pagina+1;
-			listar();
-		}
-
-	});
-
-	$('#gerarrelatorio').on('click', function() {
-			var filtro = "";
-			var adicionais= [];
-			listarRelatorio(filtro,adicionais);
-			$('#relatoriodados').show();
-			$('#botaogerar').hide();
-			$('#menubuscarelatorio').hide();
-			$('#filtradogeral').show();
-
-	});
-
-	$('#gerarrelatoriopormarca').on('click', function() {
-			var filtro = "marca";
-			var adicionais= [];
-			listarRelatorio(filtro,adicionais);
-			$('#relatoriodados').show();
-			$('#botaogerar').hide();
-			$('#menubuscarelatorio').hide();
-			$('#filtradopormarca').show();
-	});
-
-	$('#gerarrelatorioporano').on('click', function() {
-			var filtro = "ano";
-			var adicionais= [];
-			listarRelatorio(filtro,adicionais);
-			$('#relatoriodados').show();
-			$('#botaogerar').hide();
-			$('#menubuscarelatorio').hide();
-			$('#filtradoporano').show();
-	});
-
-	$('#confirmanovotelaprincipal').on('click', function() {
-		
-		var i = 0;
-		var erro = validaCampos();
-		var tipo = 'novo';
-
-		if(erro == true) {
-
-			var erro = validaCampos();
-			alert('Por favor preencha todos os campos para continuar');
-
-		}
-
-		if(erro == false) {
-
-			var data = montarObjeto();
-			recebeParametros(tipo, data);	
-			alert('Veiculo cadastrado com sucesso');
-			window.location.href="menuprincipal.html";
-			listar();
-		}
-	});
-
-	$('#buttonlogin').on('click', function() {
-			
-		verificarLogin();
-
-	});
-
-	$('#buttoncadastrar').on('click', function() {
-			
-		$('#logintela').hide();
-		$('#usrcadastro').show();
-
-	});
-
-	$('#newbuttoncadastrar').on('click', function() {
-			
-		cadastrarUsuario();
-		$('#usrcadastro').hide();
-		$('#logintela').show();	
-	    $('#newloginusr').val("");
-    	$('#newpasswordusr').val("");
-    	$('#newemailusr').val("");
-    	$('#newnomeusr').val("");
-
-	});
-
-	$('#newbuttoncancelar').on('click', function() {
-			
-		$('#usrcadastro').hide();
-		$('#logintela').show();
-
-	});
-
-	$('#loginusr').keypress(function(e) {
-    	if(e.keyCode==13){
-    		$('#buttonlogin').click();
-  		}
-    });
-
-    $('#passwordusr').keypress(function(e) {
-    	if(e.keyCode==13){
-    		$('#buttonlogin').click();
-  		}
-    });
-}
-
 function validaCampos() {
 
 	var qtd_erros = 0;
@@ -375,7 +145,7 @@ function validaFormulario() {
 function obterUltimoIndice() {
 	var veiculos = [];
 	$.ajax({
-		url: 'http://localhost/projeto-automoveis/model/teste_banco.php',
+		url: 'http://localhost/projeto-automoveis/model/veiculo_query.php',
 		type: 'GET',
 		dataType: 'json',
 		data: {'action': 'listarultimoid'},
@@ -391,9 +161,10 @@ function obterUltimoIndice() {
 	return indice;
 }
 
+
 function listar() {
 	$.ajax({
-		url: 'http://localhost/projeto-automoveis/model/teste_banco.php?pagina='+ pagina+'&marca='+ $('#buscarapidamarca').val()+ '&descricao='+ $('#buscarapidadescricao').val(),
+		url: 'http://localhost/projeto-automoveis/model/veiculo_query.php?pagina='+ pagina+'&marca='+ $('#buscarapidamarca').val()+ '&descricao='+ $('#buscarapidadescricao').val(),
 		type: 'GET',
 		dataType: 'json',
 		data: {'action': 'listar'},
@@ -408,7 +179,7 @@ function listar() {
 function listarRelatorio(filtro, data) {
 
 	$.ajax({
-		url: 'http://localhost/projeto-automoveis/model/teste_banco.php',
+		url: 'http://localhost/projeto-automoveis/model/veiculo_query.php',
 		type: 'GET',
 		dataType: 'json',
 		data: {data: data, 'action': 'listarultimoid', filtro: filtro, marca: $('#buscarapidamarcarelatorio').val(), ano: $('#buscarapidaano').val()},
@@ -496,7 +267,7 @@ function testaCampos() {
 	};
 
 	$.ajax({
-		url: 'http://localhost/projeto-automoveis/model/teste_banco.php',
+		url: 'http://localhost/projeto-automoveis/model/veiculo_query.php',
 		type: 'POST',
 		dataType: 'json',
 		data: {'data': data, 'action': 'validar'},
@@ -549,7 +320,7 @@ function recebeParametros ($tipo,$data) {
 	if($tipo == 'alterar') {
 
 		$.ajax({
-		url: 'http://localhost/projeto-automoveis/model/teste_banco.php',
+		url: 'http://localhost/projeto-automoveis/model/veiculo_query.php',
 		type: 'POST',
 		dataType: 'json',
 		data: {'data': $data, 'action': 'alterar'},
@@ -564,7 +335,7 @@ function recebeParametros ($tipo,$data) {
 	if($tipo == 'novo') {
 
 		$.ajax({
-			url: 'http://localhost/projeto-automoveis/model/teste_banco.php',
+			url: 'http://localhost/projeto-automoveis/model/veiculo_query.php',
 			type: 'POST',
 			dataType: 'json',
 			data: {'data': $data, 'action': 'novo'},
@@ -584,7 +355,7 @@ function montaObjetoEditar(id) {
 
 	veiculo = [];
 	$.ajax({
-		url: 'http://localhost/projeto-automoveis/model/teste_banco.php',
+		url: 'http://localhost/projeto-automoveis/model/veiculo_query.php',
 		type: 'GET',
 		dataType: 'json',
 		data: {'action': 'listareditar'},
@@ -624,7 +395,7 @@ function montaObjetoEditar(id) {
 
 	var veiculos = [];
 	$.ajax({
-		url: 'http://localhost/projeto-automoveis/model/teste_banco.php',
+		url: 'http://localhost/projeto-automoveis/model/veiculo_query.php',
 		type: 'POST',
 		dataType: 'json',
 		data: {'data': data ,'action': 'geradadosadicionais'},
@@ -652,7 +423,7 @@ function montaObjetoExcluir() {
 	})
 
 	$.ajax({
-		url: 'http://localhost/projeto-automoveis/model/teste_banco.php',
+		url: 'http://localhost/projeto-automoveis/model/veiculo_query.php',
 		type: 'POST',
 		dataType: 'json',
 		data: {'data': ids, 'action': 'excluir'},
@@ -676,7 +447,7 @@ function montaObjetoExcluir() {
 		}
 		
 		$.ajax({
-			url: 'http://localhost/projeto-automoveis/model/teste_banco.php?id='+ id,
+			url: 'http://localhost/projeto-automoveis/model/veiculo_query.php?id='+ id,
 			type: 'GET',
 			dataType: 'json',
 			data: {'action': 'excluir'},
@@ -723,80 +494,5 @@ function montaCabecalho(adicionais) {
 	if($('#buscarapidamarca').val() != ''){
 		$('#filtradomarca').show();
 	}
-
-}
-
-function verificarLogin() {
-
-	var data ={
-
-		login: $('#loginusr').val(), 
-		senha: $('#passwordusr').val()
-
-	};
-
-	$.ajax({
-		url: 'http://localhost/projeto-automoveis/model/teste_banco.php',
-		type: 'POST',
-		dataType: 'json',
-		data: {data: data, 'action': 'verificalogin'},
-		async: false,
-		success: function(result) {
-			login = result;
-		},
-		error: function(error) {}
-	});
-
-
-	if(login.erro == false){		
-		window.location.href="menuprincipal.html";
-	} else{
-		alert('Login ou usuário invalidos, por favor tente novamente');
-	}
-
-	
-}
-
-function getUsuario() {
-
-	$.ajax({
-		url: 'http://localhost/projeto-automoveis/model/teste_banco.php',
-		type: 'GET',
-		dataType: 'json',
-		data: {'action': 'getusuario'},
-		async: false,
-		success: function(result) {
-			login = result;
-			
-		},
-		error: function(error) {}
-	});
-
-
-	return login;
-}
-
-function cadastrarUsuario() {
-
-    var	data = {
-
-    	login: $('#newloginusr').val(),
-    	senha: $('#newpasswordusr').val(),
-    	email: $('#newemailusr').val(),
-    	nome: $('#newnomeusr').val()
-
-    };
-
-	$.ajax({
-		url: 'http://localhost/projeto-automoveis/model/teste_banco.php',
-		type: 'POST',
-		dataType: 'json',
-		data: {data: data, 'action': 'cadastrausuario'},
-		async: false,
-		success: function(result) {
-			login = result;
-		},
-		error: function(error) {}
-	});
 
 }
