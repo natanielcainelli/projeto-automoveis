@@ -2,13 +2,13 @@
 
 require_once '/var/www/html/projeto-automoveis/model/connection.php';
 
-function verificaLogin($data) {
+function verificaLogin($cadastro) {
 
 	$conn = connectionFactory();
 
-	$senhaHash = hash('sha256', $data['senha']);
+	$senhaHash = hash('sha256', $cadastro->getSenha());
 	
-	$sql = "SELECT id,login,senha,email,nome FROM cadastro WHERE login = '" . $data['login'] . "' and senha = '" . $senhaHash . "'";
+	$sql = "SELECT id,login,senha,email,nome FROM cadastro WHERE login = '" . $cadastro->getLogin() . "' and senha = '" . $senhaHash . "'";
 
 	error_log($sql);
 
@@ -39,14 +39,14 @@ function getUser(){
 	return $nome;
 }
 
-function cadastraUser($data){
+function cadastraUser($cadastro){
 
 	$conn = connectionFactory();
 
-	$senhaHash = hash('sha256',$data['senha']);
+	$senhaHash = hash('sha256',$cadastro->getSenha());
 
 
-	$sql = "INSERT INTO cadastro (login, senha, email, nome) VALUES ('{$data['login']}', '".$senhaHash."', '{$data['email']}', '{$data['nome']}');";
+	$sql = "INSERT INTO cadastro (login, senha, email, nome) VALUES ('".$cadastro->getLogin()."', '".$senhaHash."', '".$cadastro->getEmail()."', '".$cadastro->getNome()."');";
 
 	error_log($sql);
 

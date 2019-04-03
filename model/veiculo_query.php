@@ -157,12 +157,12 @@ function listarID($filtro) {
 
 }
 
-function listarAdicionais($veiculos) {
+function listarAdicionais($veiculo) {
 
 
 	$conn = connectionFactory();
 
-	$sql = "SELECT id,adicionais,veiculo_id FROM veiculo_adicionais WHERE veiculo_id = {$veiculos['id']}";
+	$sql = "SELECT id,adicionais,veiculo_id FROM veiculo_adicionais WHERE veiculo_id = ". $veiculo->getId() ." ";
 
 	$result = $conn->query($sql);
 	    

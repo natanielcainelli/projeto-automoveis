@@ -8,16 +8,16 @@
 		private $email;
 		private $nome;
 
-		public function Cadastro($id, $login, $senha, $email, $nome) {
-		    $this->setId($id);
-		    $this->setLogin($login);
-		    $this->setSenha($senha);
-		    $this->setEmail($email);
-		    $this->setNome($nome);	    
-		}
+		// public function Cadastro($id, $login, $senha, $email, $nome) {
+		//     $this->setId($id);
+		//     $this->setLogin($login);
+		//     $this->setSenha($senha);
+		//     $this->setEmail($email);
+		//     $this->setNome($nome);	    
+		// }
 
 		function setId($id) {
-			$this->id = $id;
+			$this->id = intval($id);
 		}
 
 		function getId() {

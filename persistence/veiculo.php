@@ -14,19 +14,19 @@
  	private $preco;
  	private $precofipe;
 
- 	public function Veiculo($id, $descricao, $placa, $renavam, $anomodelo, $anofabrica, $cor, $km, $marca, $preco, $precofipe) {
-	    $this->setId($id);
-	    $this->setDescricao($descricao);
-	    $this->setPlaca($placa);
-	    $this->setRenavam($renavam);
-	    $this->setAnoModelo($anomodelo);
-	    $this->setAnoFabrica($anofabrica);
-	    $this->setCor($cor);
-	    $this->setKm($km);
-	    $this->setMarca($marca);
-	    $this->setPreco($preco);
-	    $this->setPrecoFipe($precofipe);
-	}
+ // 	public function Veiculo($id, $descricao, $placa, $renavam, $anomodelo, $anofabrica, $cor, $km, $marca, $preco, $precofipe) {
+	//     $this->setId($id);
+	//     $this->setDescricao($descricao);
+	//     $this->setPlaca($placa);
+	//     $this->setRenavam($renavam);
+	//     $this->setAnoModelo($anomodelo);
+	//     $this->setAnoFabrica($anofabrica);
+	//     $this->setCor($cor);
+	//     $this->setKm($km);
+	//     $this->setMarca($marca);
+	//     $this->setPreco($preco);
+	//     $this->setPrecoFipe($precofipe);
+	// }
 
  	function setId($id) {
 		$this->id = $id;
@@ -36,7 +36,7 @@
 		return $this->id;
 	}
 
-	function setDescricao($setDescricao) {
+	function setDescricao($descricao) {
 		$this->descricao = $descricao;
 	}
 

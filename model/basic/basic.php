@@ -2,7 +2,7 @@
 
 require_once '/var/www/html/projeto-automoveis/model/connection.php';
 
-function insereDados($veiculo) {
+function insereDados($veiculo,$adicionais) {
 
 	$conn = connectionFactory();
 
@@ -15,15 +15,15 @@ function insereDados($veiculo) {
 
 	$id = $_SESSION['usuario']['id'];
 
-	$veiculo = validaDados($veiculo);
+	validaDados($veiculo);
 
-	$sql = "INSERT INTO veiculo (descricao, placa, renavam, anomodelo, anofabrica, cor, km, marca, preco, precofipe, id_usuario) VALUES ('{$veiculo['descricao']}','{$veiculo['placa']}',{$veiculo['renavam']},{$veiculo['anomodelo']},{$veiculo['anofabrica']},'{$veiculo['cor']}',{$veiculo['km']},'{$veiculo['marca']}',{$veiculo['preco']},{$veiculo['precofipe']}, ".$id.");";
+	$sql = "INSERT INTO veiculo (descricao, placa, renavam, anomodelo, anofabrica, cor, km, marca, preco, precofipe, id_usuario) VALUES ('". $veiculo->getDescricao() ."','". $veiculo->getPlaca() ."', '". $veiculo->getRenavam() ."' , ". $veiculo->getAnoModelo() .", ". $veiculo->getAnoFabrica() ." , '". $veiculo->getCor() ."', ". $veiculo->getKm() .",'". $veiculo->getMarca() ."', ". $veiculo->getPreco() ." , ". $veiculo->getPrecoFipe() .", ".$id.");";
 
 	error_log($sql);
 
 	$result = $conn->query($sql);
 
-	insereAdicionais($conn->insert_id, $veiculo['adicionais']);
+	insereAdicionais($conn->insert_id, $adicionais);
 
 	connectionKill($conn);
 
@@ -42,11 +42,11 @@ function insereAdicionais($idVeiculo, $adicionais) {
 	}
 }
 	
-function removeDados($id) {
+function removeDados($veiculo) {
 
 	$conn = connectionFactory();
 
-	foreach ($id as $values) {
+	foreach ($veiculo->getId() as $values) {
 		
 		if($values > 0 ){
 			$sql = "DELETE FROM veiculo  WHERE (id = $values); DELETE FROM veiculo_adicionais WHERE (veiculo_id = $values);";
@@ -57,7 +57,7 @@ function removeDados($id) {
 	
 	connectionKill($conn);
 
-	return $id;
+	return $veiculo;
 
 }
 
@@ -77,7 +77,7 @@ function removeAdicionais($idVeiculo) {
 
 }
 
-function alteraDados($veiculos) {
+function alteraDados($veiculo,$veiculos) {
 
 	$conn = connectionFactory();
 
@@ -85,12 +85,12 @@ function alteraDados($veiculos) {
 
 	$id = $_SESSION['usuario']['id'];
 
-	$sql = "UPDATE veiculo SET descricao = '{$veiculos['descricao']}' ,placa = '{$veiculos['placa']}' ,renavam = {$veiculos['renavam']} ,anomodelo = {$veiculos['anomodelo']} ,anofabrica = {$veiculos['anofabrica']} ,cor = '{$veiculos['cor']}' ,km = {$veiculos['km']} ,marca = '{$veiculos['marca']}' ,preco = {$veiculos['preco']}, precofipe = {$veiculos['precofipe']}, id_usuario = ".$id." WHERE id = {$veiculos['id']};";
+	$sql = "UPDATE veiculo SET descricao = '". $veiculo->getDescricao() ."' ,placa = '". $veiculo->getPlaca() ."' ,renavam = '". $veiculo->getRenavam() ."' ,anomodelo = ". $veiculo->getAnoModelo() ." ,anofabrica = ". $veiculo->getAnoFabrica() ." ,cor = '". $veiculo->getCor() ."' ,km = ". $veiculo->getKm() ." ,marca = '". $veiculo->getMarca() ."' ,preco = ". $veiculo->getPreco() ." , precofipe = ". $veiculo->getPrecoFipe() ." , id_usuario = ".$id." WHERE id = ". $veiculo->getId() .";";
 	error_log($sql);
 
 	$result = $conn->multi_query($sql);
 
-	alteraAdicionais($veiculos,$veiculos['adicionais']);
+	alteraAdicionais($veiculo->getId() ,$veiculos['adicionais']);
 			
 	connectionKill($conn);
 
@@ -98,11 +98,11 @@ function alteraDados($veiculos) {
 
 }
 
-function alteraAdicionais($veiculos,$adicionais) {
+function alteraAdicionais($veiculo,$adicionais) {
 
-	removeAdicionais($veiculos['veiculo_id']);
+	removeAdicionais($veiculo);
 
-	insereAdicionais($veiculos['id'],$adicionais);
+	insereAdicionais($veiculo,$adicionais);
 
 }
 
@@ -110,25 +110,25 @@ function validarCampos($campos) {
 
 	$erros = [];
 
-	if($campos['descricao'] == "") {
+	if($campos->getDescricao() == "") {
 		$erros['descricao'] = 'Descricao vazia';
 	}
-	if($campos['placa'] == "" || strlen($campos['placa']) != 7) {
+	if($campos->getPlaca() == "" || strlen($campos->getPlaca()) != 7) {
 		$erros['placa'] = 'Placa vazia';
 	}
-	if($campos['renavam'] == "" || strlen($campos['renavam']) != 9) {
+	if($campos->getRenavam() == "" || strlen($campos->getRenavam()) != 9) {
 		$erros['renavam'] = 'Renavam vazio';
 	}
-	if($campos['cor'] == "" ) {
+	if($campos->getCor() == "" ) {
 		$erros['cor'] = 'Cor vazio';
 	}
-	if($campos['km'] == "" || $campos['km'] < 0) {
+	if($campos->getKm() == "" || $campos->getKm() < 0) {
 		$erros['km'] = 'Km vazio';
 	}
-	if($campos['preco'] == ""|| $campos['preco'] < 1) {
+	if($campos->getPreco() == ""|| $campos->getPreco() < 1) {
 		$erros['preco'] = 'Preço vazio';
 	}
-	if($campos['precofipe'] == ""|| $campos['precofipe'] < 1) {
+	if($campos->getPrecoFipe()== ""|| $campos->getPrecoFipe() < 1) {
 		$erros['precofipe'] = 'Preço FIPE vazio';
 	}
 
@@ -139,15 +139,13 @@ function validarCampos($campos) {
 
 function validaDados($veiculo) {
 	
-	$veiculo['descricao'] = filter_var($veiculo['descricao'],FILTER_SANITIZE_STRING);
-	$veiculo['placa'] = filter_var($veiculo['placa'],FILTER_SANITIZE_STRING);
-	$veiculo['renavam'] = filter_var($veiculo['renavam'],FILTER_SANITIZE_STRING);
-	$veiculo['cor'] = filter_var($veiculo['cor'],FILTER_SANITIZE_STRING);
-	$veiculo['km'] = filter_var($veiculo['km'],FILTER_SANITIZE_NUMBER_INT);
-	$veiculo['preco'] = filter_var($veiculo['preco'],FILTER_SANITIZE_NUMBER_FLOAT);
-	$veiculo['precofipe'] = filter_var($veiculo['precofipe'],FILTER_SANITIZE_NUMBER_FLOAT);
-
-	return $veiculo;
+	$veiculo->setDescricao(filter_var($veiculo->getDescricao(),FILTER_SANITIZE_STRING));
+	$veiculo->setPlaca(filter_var($veiculo->getPlaca(),FILTER_SANITIZE_STRING));
+	$veiculo->setRenavam(filter_var($veiculo->getRenavam(),FILTER_SANITIZE_STRING)); 
+	$veiculo->setCor(filter_var($veiculo->getCor(),FILTER_SANITIZE_STRING));
+	$veiculo->setKm(filter_var($veiculo->getKm(),FILTER_SANITIZE_NUMBER_INT));
+	$veiculo->setPreco(filter_var($veiculo->getPreco(),FILTER_SANITIZE_NUMBER_FLOAT));
+	$veiculo->setPrecoFipe(filter_var($veiculo->getPrecoFipe(),FILTER_SANITIZE_NUMBER_FLOAT));
 
 }
 
