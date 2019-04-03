@@ -175,7 +175,7 @@ function recebeParametros ($tipo,$data) {
 	if($tipo == 'alterar') {
 
 		$.ajax({
-		url: 'http://localhost/projeto-automoveis/model/veiculo_query.php',
+		url: 'http://localhost/projeto-automoveis/model/basic/basic.php',
 		type: 'POST',
 		dataType: 'json',
 		data: {'data': $data, 'action': 'alterar'},
@@ -190,7 +190,7 @@ function recebeParametros ($tipo,$data) {
 	if($tipo == 'novo') {
 
 		$.ajax({
-			url: 'http://localhost/projeto-automoveis/model/veiculo_query.php',
+			url: 'http://localhost/projeto-automoveis/model/basic/basic.php',
 			type: 'POST',
 			dataType: 'json',
 			data: {'data': $data, 'action': 'novo'},
@@ -278,7 +278,7 @@ function montaObjetoExcluir() {
 	})
 
 	$.ajax({
-		url: 'http://localhost/projeto-automoveis/model/veiculo_query.php',
+		url: 'http://localhost/projeto-automoveis/model/basic/basic.php',
 		type: 'POST',
 		dataType: 'json',
 		data: {'data': ids, 'action': 'excluir'},
@@ -302,7 +302,7 @@ function montaObjetoExcluir() {
 		}
 		
 		$.ajax({
-			url: 'http://localhost/projeto-automoveis/model/veiculo_query.php?id='+ id,
+			url: 'http://localhost/projeto-automoveis/model/basic/basic.php?id='+ id,
 			type: 'GET',
 			dataType: 'json',
 			data: {'action': 'excluir'},

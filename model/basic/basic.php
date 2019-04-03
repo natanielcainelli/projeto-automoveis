@@ -118,4 +118,49 @@ function alteraAdicionais($veiculos,$adicionais) {
 
 }
 
+function validarCampos($campos) {
+
+	$erros = [];
+
+	if($campos['descricao'] == "") {
+		$erros['descricao'] = 'Descricao vazia';
+	}
+	if($campos['placa'] == "" || strlen($campos['placa']) != 7) {
+		$erros['placa'] = 'Placa vazia';
+	}
+	if($campos['renavam'] == "" || strlen($campos['renavam']) != 9) {
+		$erros['renavam'] = 'Renavam vazio';
+	}
+	if($campos['cor'] == "" ) {
+		$erros['cor'] = 'Cor vazio';
+	}
+	if($campos['km'] == "" || $campos['km'] < 0) {
+		$erros['km'] = 'Km vazio';
+	}
+	if($campos['preco'] == ""|| $campos['preco'] < 1) {
+		$erros['preco'] = 'Preço vazio';
+	}
+	if($campos['precofipe'] == ""|| $campos['precofipe'] < 1) {
+		$erros['precofipe'] = 'Preço FIPE vazio';
+	}
+
+	return $erros;
+
+}
+
+
+function validaDados($veiculo) {
+	
+	$veiculo['descricao'] = filter_var($veiculo['descricao'],FILTER_SANITIZE_STRING);
+	$veiculo['placa'] = filter_var($veiculo['placa'],FILTER_SANITIZE_STRING);
+	$veiculo['renavam'] = filter_var($veiculo['renavam'],FILTER_SANITIZE_STRING);
+	$veiculo['cor'] = filter_var($veiculo['cor'],FILTER_SANITIZE_STRING);
+	$veiculo['km'] = filter_var($veiculo['km'],FILTER_SANITIZE_NUMBER_INT);
+	$veiculo['preco'] = filter_var($veiculo['preco'],FILTER_SANITIZE_NUMBER_FLOAT);
+	$veiculo['precofipe'] = filter_var($veiculo['precofipe'],FILTER_SANITIZE_NUMBER_FLOAT);
+
+	return $veiculo;
+
+}
+
 ?>
