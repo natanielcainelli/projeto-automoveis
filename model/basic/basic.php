@@ -2,18 +2,6 @@
 
 require_once '/var/www/html/projeto-automoveis/model/connection.php';
 
-$action = isset($_POST['action']) ? $_POST['action'] : '';
-$excluir = isset($_GET['action']) ? $_GET['action'] : '';
-$data = isset($_POST['data']) ? $_POST['data'] : '';
-
-if($action == 'alterar'){
-	echo json_encode(alteraDados($data));
-}if($action == 'novo'){
-	echo json_encode(insereDados($data));
-}if($excluir == 'excluir'){
-	echo json_encode(removeDados($_GET));
-}
-
 function insereDados($veiculo) {
 
 	$conn = connectionFactory();
