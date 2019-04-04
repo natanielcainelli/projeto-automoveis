@@ -1,7 +1,6 @@
 <?php
 
 require_once('router.php');
-
 require_once('../controller/veiculo_controller.php');
 require_once('../controller/cadastro_controller.php');
 

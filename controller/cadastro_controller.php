@@ -13,7 +13,6 @@ require_once '/var/www/html/projeto-automoveis/model/basic/basic.php';
 
 require_once '/var/www/html/projeto-automoveis/persistence/cadastro.php';
 
-
 class CadastroController {
 
 	function verificaLogin($params) {
@@ -46,7 +45,6 @@ class CadastroController {
 		return cadastraUser($cadastro);
 
 	}
-
 }
 
- ?>
+?>

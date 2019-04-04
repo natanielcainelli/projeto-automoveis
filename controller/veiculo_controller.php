@@ -10,7 +10,6 @@ require_once '/var/www/html/projeto-automoveis/model/veiculo_query.php';
 require_once '/var/www/html/projeto-automoveis/model/basic/basic.php';
 
 
-
 /* Chamadas de classes que instanciam objetos */
 
 require_once '/var/www/html/projeto-automoveis/persistence/veiculo.php';
@@ -84,7 +83,7 @@ class VeiculoController {
 
 	}
 
-	function listarUltimoid($data,$filtro) {
+	function listarUltimoId($data,$filtro) {
 
 		return listarID($data, $filtro);
 
@@ -97,5 +96,4 @@ class VeiculoController {
 	}
 }
 	
-
  ?>

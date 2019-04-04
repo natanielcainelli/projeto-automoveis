@@ -6,7 +6,6 @@
 		private $adicionais;
 		private $veiculo_id;
 
-
 		function setId($id) {
 			$this->id = $id;
 		}

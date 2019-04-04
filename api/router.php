@@ -1,7 +1,6 @@
 <?php
 
-class Router
-{
+class Router {
 	static private $routes = [];
 
 	static function register($route, $class, $method, $middlewares = []) {

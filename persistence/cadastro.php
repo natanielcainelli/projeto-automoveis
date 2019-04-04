@@ -8,7 +8,6 @@
 		private $email;
 		private $nome;
 
-
 		function setId($id) {
 			$this->id = intval($id);
 		}

@@ -1,5 +1,3 @@
-
-
 function verificarLogin() {
 
 	var data ={
@@ -10,7 +8,7 @@ function verificarLogin() {
 	};
 	$.ajax({
 		url: 'http://localhost/projeto-automoveis/api/',
-		type: 'post',
+		type: 'POST',
 		dataType: 'json',
 		data: {data: data, 'action': 'verificaLogin'},
 		success: function(result) {
@@ -27,10 +25,6 @@ function verificarLogin() {
 		},
 		error: function(error) {}
 	});
-
-
-	
-	
 }
 
 function getUsuario() {
@@ -49,7 +43,6 @@ function getUsuario() {
 		},
 		error: function(error) {}
 	});
-
 
 	return login;
 }
@@ -76,5 +69,4 @@ function cadastrarUsuario() {
 		},
 		error: function(error) {}
 	});
-
 }

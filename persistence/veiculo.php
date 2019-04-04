@@ -14,7 +14,6 @@
  	private $preco;
  	private $precofipe;
 
-
  	function setId($id) {
 		$this->id = $id;
 	}

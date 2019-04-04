@@ -7,7 +7,6 @@
 	}
 	.coluna input {
 		width: 100%;
-
 	}
 	.colunac {
 		float: left;
@@ -30,7 +29,6 @@
 		text-decoration: none;
 		display: inline-block;
 		font-family: Arial;
-
 	}
 	.btn-cancelar{
 
@@ -41,7 +39,6 @@
 		text-decoration: none;
 		display: inline-block;
 		font-family: Arial;
-
 	}
 	.btn-buscar{
 
