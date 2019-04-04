@@ -6,12 +6,6 @@
 		private $adicionais;
 		private $veiculo_id;
 
-		// public function VeiculoAdicional($id, $adicionais, $veiculo_id) {
-		//     $this->setId($id);
-		//     $this->setAdicionais($adicionais);
-		//     $this->setVeiculoId($veiculo_id);
-		    
-		// }
 
 		function setId($id) {
 			$this->id = $id;

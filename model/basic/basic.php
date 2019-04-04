@@ -1,6 +1,10 @@
 <?php 
 
+/* Chama a classe connection para poder abrir e fechar as conexões */
+
 require_once '/var/www/html/projeto-automoveis/model/connection.php';
+
+/* Insere um novo veículo e os seus adicionais */
 
 function insereDados($veiculo,$adicionais) {
 
@@ -31,6 +35,8 @@ function insereDados($veiculo,$adicionais) {
 
 }
 
+/* Insere os adicionais de um veículo, é chamada no método insereDados */
+
 function insereAdicionais($idVeiculo, $adicionais) {
 
 	foreach ($adicionais as $adicional) {
@@ -42,6 +48,8 @@ function insereAdicionais($idVeiculo, $adicionais) {
 	}
 }
 	
+/* Remove um ou varios veículos e seus adicionais */
+
 function removeDados($veiculo) {
 
 	$conn = connectionFactory();
@@ -61,6 +69,8 @@ function removeDados($veiculo) {
 
 }
 
+/* Remove os adicionais do veículo, é chamada no método removeDados()  */
+
 function removeAdicionais($idVeiculo) {
 
 	$conn = connectionFactory();
@@ -76,6 +86,8 @@ function removeAdicionais($idVeiculo) {
 	return $veiculos;
 
 }
+
+/* Altera um veículo e os seus adicionais */
 
 function alteraDados($veiculo,$veiculos) {
 
@@ -98,6 +110,8 @@ function alteraDados($veiculo,$veiculos) {
 
 }
 
+/* Remove todos os adicionais do veículo e após adiciona novamente para evitar duplicações no banco, é chamado em alteraDados()  */
+
 function alteraAdicionais($veiculo,$adicionais) {
 
 	removeAdicionais($veiculo);
@@ -105,6 +119,8 @@ function alteraAdicionais($veiculo,$adicionais) {
 	insereAdicionais($veiculo,$adicionais);
 
 }
+
+/* Valida se os campos cumprem os requisitos necessários */
 
 function validarCampos($campos) {
 
@@ -136,6 +152,7 @@ function validarCampos($campos) {
 
 }
 
+/* Usa a função sanitize para limpar possíveis ameaças nos campos do veículo, evitando injeções de SQL maliciosas */
 
 function validaDados($veiculo) {
 	

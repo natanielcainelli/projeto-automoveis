@@ -27,15 +27,15 @@ function montarObjeto(){
 
 }
 
-function recebeParametros ($tipo,$data) {
+function recebeParametros (tipo, data) {
 
-	if($tipo == 'alterar') {
+	if(tipo == 'alterar') {
 
 		$.ajax({
-		url: 'http://localhost/projeto-automoveis/controller/controller.php',
+		url: 'http://localhost/projeto-automoveis/api/',
 		type: 'POST',
 		dataType: 'json',
-		data: {'data': $data, 'action': 'alterar'},
+		data: {'data': data, 'action': 'alterarVeiculo'},
 
 		success: function(result) {
 			veiculos = result;
@@ -44,13 +44,13 @@ function recebeParametros ($tipo,$data) {
 		});	
 
 	}
-	if($tipo == 'novo') {
+	if(tipo == 'novo') {
 
 		$.ajax({
-			url: 'http://localhost/projeto-automoveis/controller/controller.php',
+			url: 'http://localhost/projeto-automoveis/api/',
 			type: 'POST',
 			dataType: 'json',
-			data: {'data': $data, 'action': 'novo'},
+			data: {'data': data, 'action': 'novoVeiculo'},
 			success: function(result) {
 				if (result['erro'].arr.length != 0) {
 					$('#campo_erros_texto')+= result['erro'];
@@ -67,10 +67,10 @@ function montaObjetoEditar(id) {
 
 	veiculo = [];
 	$.ajax({
-		url: 'http://localhost/projeto-automoveis/controller/controller.php',
+		url: 'http://localhost/projeto-automoveis/api/',
 		type: 'GET',
 		dataType: 'json',
-		data: {'action': 'listareditar'},
+		data: {'action': 'listarEditarVeiculo'},
 		async: false,
 		success: function(result) {
 			veiculo = result;
@@ -107,10 +107,10 @@ function montaObjetoEditar(id) {
 
 	var veiculos = [];
 	$.ajax({
-		url: 'http://localhost/projeto-automoveis/controller/controller.php',
+		url: 'http://localhost/projeto-automoveis/api/',
 		type: 'POST',
 		dataType: 'json',
-		data: {'data': data ,'action': 'geradadosadicionais'},
+		data: {'data': data ,'action': 'geraAdicionaisVeiculo'},
 		async: false,
 		success: function(result) {	
 			veiculos = result;
@@ -135,10 +135,10 @@ function montaObjetoExcluir() {
 	})
 
 	$.ajax({
-		url: 'http://localhost/projeto-automoveis/controller/controller.php',
+		url: 'http://localhost/projeto-automoveis/api/',
 		type: 'POST',
 		dataType: 'json',
-		data: {'data': ids, 'action': 'excluir'},
+		data: {'data': ids, 'action': 'excluirVeiculo'},
 
 		success: function(result) {
 			veiculos = result;
@@ -159,10 +159,10 @@ function montaObjetoExcluir() {
 		}
 		
 		$.ajax({
-			url: 'http://localhost/projeto-automoveis/controller/controller.php?id='+ id,
+			url: 'http://localhost/projeto-automoveis/api/?id='+ id,
 			type: 'GET',
 			dataType: 'json',
-			data: {'action': 'excluir'},
+			data: {'action': 'excluirVeiculo'},
 
 			success: function(result) {
 				veiculos = result;
@@ -178,10 +178,10 @@ function montaObjetoExcluir() {
 function obterUltimoIndice() {
 	var veiculos = [];
 	$.ajax({
-		url: 'http://localhost/projeto-automoveis/controller/controller.php',
+		url: 'http://localhost/projeto-automoveis/api/',
 		type: 'GET',
 		dataType: 'json',
-		data: {'action': 'listarultimoid'},
+		data: {'action': 'listarUltimoIdVeiculo'},
 		async: false,
 		success: function(result) {
 			veiculos = result;
@@ -196,10 +196,10 @@ function obterUltimoIndice() {
 
 function listar() {
 	$.ajax({
-		url: 'http://localhost/projeto-automoveis/controller/controller.php?pagina='+ pagina+'&marca='+ $('#buscarapidamarca').val()+ '&descricao='+ $('#buscarapidadescricao').val(),
+		url: 'http://localhost/projeto-automoveis/api/?pagina='+ pagina+'&marca='+ $('#buscarapidamarca').val()+ '&descricao='+ $('#buscarapidadescricao').val(),
 		type: 'GET',
 		dataType: 'json',
-		data: {'action': 'listar'},
+		data: {'action': 'listarVeiculo'},
 		success: function(result) {
 			veiculos = result;
 			montarTabela();
@@ -211,10 +211,10 @@ function listar() {
 function listarRelatorio(filtro, data) {
 
 	$.ajax({
-		url: 'http://localhost/projeto-automoveis/controller/controller.php',
+		url: 'http://localhost/projeto-automoveis/api/',
 		type: 'GET',
 		dataType: 'json',
-		data: {data: data, 'action': 'listarultimoid', filtro: filtro, marca: $('#buscarapidamarcarelatorio').val(), ano: $('#buscarapidaano').val()},
+		data: {data: data, 'action': 'listarUltimoIdVeiculo', filtro: filtro, marca: $('#buscarapidamarcarelatorio').val(), ano: $('#buscarapidaano').val()},
 		success: function(result) {
 			veiculos = result;
 			montarTabelaRelatorio();
@@ -285,38 +285,38 @@ function editar(veiculo) {
 
 }
 
-function testaCampos() {
+// function testaCampos() {
 
-	var data = {
+// 	var data = {
 
-		descricao: $("#descricao").val(),
-		placa: $("#placa").unmask().val(),
-		renavam: $("#renavam").unmask().val(),
-		cor: $("#cor").val(),
-		km: $("#km").val(),
-		preco: $("#preco").unmask().val(),
-		precofipe: $("#precofipe").unmask().val()
-	};
+// 		descricao: $("#descricao").val(),
+// 		placa: $("#placa").unmask().val(),
+// 		renavam: $("#renavam").unmask().val(),
+// 		cor: $("#cor").val(),
+// 		km: $("#km").val(),
+// 		preco: $("#preco").unmask().val(),
+// 		precofipe: $("#precofipe").unmask().val()
+// 	};
 
-	$.ajax({
-		url: 'http://localhost/projeto-automoveis/controller/controller.php',
-		type: 'POST',
-		dataType: 'json',
-		data: {'data': data, 'action': 'validar'},
-		async: false,
-		success: function(result) {
+// 	$.ajax({
+// 		url: 'http://localhost/projeto-automoveis/controller/controller.php',
+// 		type: 'POST',
+// 		dataType: 'json',
+// 		data: {'data': data, 'action': 'validar'},
+// 		async: false,
+// 		success: function(result) {
 		
-			qtd_erros = result;
+// 			qtd_erros = result;
 
-		},
-		error: function(error) {
+// 		},
+// 		error: function(error) {
 
-		}
-	});		
+// 		}
+// 	});		
 
-	return qtd_erros;
+// 	return qtd_erros;
 
-}
+// }
 
 function montaCabecalho(adicionais) {
 

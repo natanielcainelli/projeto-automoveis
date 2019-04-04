@@ -1,7 +1,10 @@
 <?php 
 
+/* Chamada de classe de conexão  */
+
 require_once '/var/www/html/projeto-automoveis/model/connection.php';
 
+/* Lista os automoveis na tela inicial (paginação de 10 veículos por pagina) */
 
 function listar($filtros) {
 
@@ -46,6 +49,8 @@ function listar($filtros) {
 	return $response;
 }
 
+/* busca todas as informações do veículo para ser editado */
+
 function listarEditar($filtros) {
 
 	$conn = connectionFactory();
@@ -64,6 +69,8 @@ function listarEditar($filtros) {
 
 	return $response;
 }
+
+/* Lista relatório */
 
 function listarID($filtro) {
 
@@ -156,6 +163,8 @@ function listarID($filtro) {
 	return $response;
 
 }
+
+/* Busca os adicionais dos veículos */
 
 function listarAdicionais($veiculo) {
 

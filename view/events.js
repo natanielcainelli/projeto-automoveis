@@ -2,7 +2,7 @@ window.onload = function() {
 	pagina = 1;
 	var usuario = getUsuario();
 	$('#nomeusuario').text(usuario);
-
+	
 	vincularEventos();
 }
 
@@ -12,6 +12,7 @@ function vincularEventos() {
 		$('#relatoriodados').hide();
 		$('#alterar-tela').hide();
 		$('#menuprincipal').show();
+
 		listar();
 	});
 

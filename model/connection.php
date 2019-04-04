@@ -1,5 +1,7 @@
 <?php 
 
+/* Fabrica a conexão */
+
 function connectionFactory() {
 
 	$servername = "localhost";
@@ -15,6 +17,8 @@ function connectionFactory() {
 	return $conn;
 
 }
+
+/* Encerra a conexão */
 
 function connectionKill($conn) {
 

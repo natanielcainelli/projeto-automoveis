@@ -8,40 +8,44 @@ function verificarLogin() {
 		senha: $('#passwordusr').val()
 
 	};
-
 	$.ajax({
-		url: 'http://localhost/projeto-automoveis/controller/controller.php',
-		type: 'POST',
+		url: 'http://localhost/projeto-automoveis/api/',
+		type: 'post',
 		dataType: 'json',
-		data: {data: data, 'action': 'verificalogin'},
-		async: false,
+		data: {data: data, 'action': 'verificaLogin'},
 		success: function(result) {
+
+			console.log(result);
+
 			login = result;
+			if(login.erro == false){		
+				window.location.href="menuprincipal.html";
+			} else{
+				alert('Login ou usuário invalidos, por favor tente novamente');
+			}
+
 		},
 		error: function(error) {}
 	});
 
 
-	if(login.erro == false){		
-		window.location.href="menuprincipal.html";
-	} else{
-		alert('Login ou usuário invalidos, por favor tente novamente');
-	}
-
+	
 	
 }
 
 function getUsuario() {
 
+	var login = "";
+
 	$.ajax({
-		url: 'http://localhost/projeto-automoveis/controller/controller.php',
+		url: 'http://localhost/projeto-automoveis/api/',
 		type: 'GET',
 		dataType: 'json',
-		data: {'action': 'getusuario'},
+		data: {'action': 'getUsuario'},
 		async: false,
 		success: function(result) {
 			login = result;
-			
+
 		},
 		error: function(error) {}
 	});
@@ -62,10 +66,10 @@ function cadastrarUsuario() {
     };
 
 	$.ajax({
-		url: 'http://localhost/projeto-automoveis/controller/controller.php',
+		url: 'http://localhost/projeto-automoveis/api/',
 		type: 'POST',
 		dataType: 'json',
-		data: {data: data, 'action': 'cadastrausuario'},
+		data: {data: data, 'action': 'cadastraUsuario'},
 		async: false,
 		success: function(result) {
 			login = result;

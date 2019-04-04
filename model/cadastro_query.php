@@ -1,6 +1,10 @@
 <?php 
 
+/* Chama a classe connection para abrir e fechas as conexões */
+
 require_once '/var/www/html/projeto-automoveis/model/connection.php';
+
+/* Verifica se o login é valido (usa a função hash para criptografar a senha e tornar a aplicação mais segura) */
 
 function verificaLogin($cadastro) {
 
@@ -30,7 +34,9 @@ function verificaLogin($cadastro) {
 
 }
 
-function getUser(){
+/* da um get no nome do usuario do $_SESSION */
+
+function getUser() {
 
 	session_start();
 
@@ -39,12 +45,13 @@ function getUser(){
 	return $nome;
 }
 
+/* Cadastra um usuário novo e criptografa a senha com o SHA256(SHA-2) */
+
 function cadastraUser($cadastro){
 
 	$conn = connectionFactory();
 
 	$senhaHash = hash('sha256',$cadastro->getSenha());
-
 
 	$sql = "INSERT INTO cadastro (login, senha, email, nome) VALUES ('".$cadastro->getLogin()."', '".$senhaHash."', '".$cadastro->getEmail()."', '".$cadastro->getNome()."');";
 
@@ -58,4 +65,4 @@ function cadastraUser($cadastro){
 
 }
 
- ?>
+?>
