@@ -34,7 +34,6 @@ class CadastroController {
 	}
 
 	function cadastraUsuario($params) {
-
 		$cadastro = new Cadastro();
 
 		$cadastro->setLogin($params['data']['login']);
@@ -43,8 +42,9 @@ class CadastroController {
 		$cadastro->setNome($params['data']['nome']);
 
 		return cadastraUser($cadastro);
-
+		
 	}
+	
 }
 
-?>
+?>	

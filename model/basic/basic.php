@@ -83,7 +83,7 @@ function removeAdicionais($idVeiculo) {
 			
 	connectionKill($conn);
 
-	return $veiculos;
+	return $idVeiculo;
 
 }
 
@@ -102,7 +102,7 @@ function alteraDados($veiculo,$veiculos) {
 
 	$result = $conn->multi_query($sql);
 
-	alteraAdicionais($veiculo->getId() ,$veiculos['adicionais']);
+	alteraAdicionais($veiculo->getId() ,$veiculos['data']['adicionais']);
 			
 	connectionKill($conn);
 

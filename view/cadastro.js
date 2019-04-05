@@ -29,8 +29,6 @@ function verificarLogin() {
 
 function getUsuario() {
 
-	var login = "";
-
 	$.ajax({
 		url: 'http://localhost/projeto-automoveis/api/',
 		type: 'GET',
@@ -69,4 +67,7 @@ function cadastrarUsuario() {
 		},
 		error: function(error) {}
 	});
+	
 }
+
+

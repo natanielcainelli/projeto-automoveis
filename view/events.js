@@ -76,12 +76,14 @@ function vincularEventos() {
 	$('#buscarapidadescricao').keypress(function(e) {
     	if(e.keyCode==13){
     		$('#botaobuscardescricao').click();
+    		$('#buscarapidadescricao').val("");
   		}
     });
 
 	$('#buscarapidamarca').keypress(function(e) {
     	if(e.keyCode==13){
       		$('#botaobuscardescricao').click();
+      		$('#buscarapidamarca').val("");
     	}
     });
 
@@ -185,8 +187,9 @@ function vincularEventos() {
 	});
 
 	$('#buttonlogin').on('click', function() {
-			
+		
 		verificarLogin();
+		$('#passwordusr').val("");
 
 	});
 
@@ -219,12 +222,14 @@ function vincularEventos() {
 	$('#loginusr').keypress(function(e) {
     	if(e.keyCode==13){
     		$('#buttonlogin').click();
+
   		}
     });
 
     $('#passwordusr').keypress(function(e) {
     	if(e.keyCode==13){
     		$('#buttonlogin').click();
+    		$('#passwordusr').val("");
   		}
     });
 }

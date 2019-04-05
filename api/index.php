@@ -1,26 +1,11 @@
 <?php
 
 require_once('router.php');
+// require_once('middleware.php');
 require_once('../controller/veiculo_controller.php');
 require_once('../controller/cadastro_controller.php');
 
-//IMPLEMENTAR UM SISTEMA DE MIDDLEWARE PARA CONTROLAR O ACESSO DO USUARIO
-
-// interface Middleware {
-// 	abstract function run();
-// }
-
-// class AuthMiddleware implements Middleware
-// {	
-// 	static function run() {
-// 		if (! isset($_SESSION['usuario'])) {
-// 			echo json_encode(['error' => 'Unautorized']);
-// 			exit();
-// 		}
-// 	}
-// }
-
-// Router::register('listarVeiculo', 'VeiculoController', 'listar', ['AuthMiddleware']);
+// Router::register('listarVeiculo', 'VeiculoController', 'listarVeiculo', ['AuthMiddleware']);
 
 Router::register('listarVeiculo', 'VeiculoController', 'listarVeiculo');
 Router::register('alterarVeiculo', 'VeiculoController', 'alterar');
@@ -34,4 +19,6 @@ Router::register('verificaLogin', 'CadastroController', 'verificaLogin');
 Router::register('getUsuario', 'CadastroController', 'getUsuario');
 Router::register('cadastraUsuario', 'CadastroController', 'cadastraUsuario');
 
-Router::call($_REQUEST['action'], $_REQUEST);
+Router::call($_REQUEST['action'], $_REQUEST); 
+
+?>

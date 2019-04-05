@@ -285,39 +285,6 @@ function editar(veiculo) {
 
 }
 
-// function testaCampos() {
-
-// 	var data = {
-
-// 		descricao: $("#descricao").val(),
-// 		placa: $("#placa").unmask().val(),
-// 		renavam: $("#renavam").unmask().val(),
-// 		cor: $("#cor").val(),
-// 		km: $("#km").val(),
-// 		preco: $("#preco").unmask().val(),
-// 		precofipe: $("#precofipe").unmask().val()
-// 	};
-
-// 	$.ajax({
-// 		url: 'http://localhost/projeto-automoveis/controller/controller.php',
-// 		type: 'POST',
-// 		dataType: 'json',
-// 		data: {'data': data, 'action': 'validar'},
-// 		async: false,
-// 		success: function(result) {
-		
-// 			qtd_erros = result;
-
-// 		},
-// 		error: function(error) {
-
-// 		}
-// 	});		
-
-// 	return qtd_erros;
-
-// }
-
 function montaCabecalho(adicionais) {
 
 	adicionais.forEach(function(adicional) {
