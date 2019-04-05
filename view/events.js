@@ -2,10 +2,9 @@ window.onload = function() {
 	pagina = 1;
 	var usuario = getUsuario();
 	$('#nomeusuario').text(usuario);
-	
 	vincularEventos();
 }
-
+/* Aqui ocorrem os eventos de ação de botões e campos de input */ 
 function vincularEventos() {
 
 	routie('', function() {
@@ -84,6 +83,20 @@ function vincularEventos() {
     	if(e.keyCode==13){
       		$('#botaobuscardescricao').click();
       		$('#buscarapidamarca').val("");
+    	}
+    });
+
+    $('#buscarapidamarcarelatorio').keypress(function(e) {
+    	if(e.keyCode==13){
+      		$('#filtrobutton').click();
+      		$('#buscarapidamarcarelatorio').val("");
+    	}
+    });
+
+    $('#buscarapidaano').keypress(function(e) {
+    	if(e.keyCode==13){
+      		$('#filtrobutton').click();
+      		$('#buscarapidaano').val("");
     	}
     });
 
@@ -170,14 +183,12 @@ function vincularEventos() {
 		var tipo = 'novo';
 
 		if(erro == true) {
-
 			var erro = validaCampos();
 			alert('Por favor preencha todos os campos para continuar');
 
 		}
 
 		if(erro == false) {
-
 			var data = montarObjeto();
 			recebeParametros(tipo, data);	
 			alert('Veiculo cadastrado com sucesso');
