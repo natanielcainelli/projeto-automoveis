@@ -34,17 +34,6 @@ function verificaLogin($cadastro) {
 
 }
 
-/* da um get no nome do usuario do $_SESSION */
-
-function getUser() {
-
-	session_start();
-
-	$nome = $_SESSION['usuario']['nome'];
-
-	return $nome;
-}
-
 /* Cadastra um usuário novo e criptografa a senha com o SHA256(SHA-2) */
 
 function cadastraUser($cadastro){

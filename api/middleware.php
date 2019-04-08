@@ -1,16 +1,17 @@
 <?php 
 
-interface Middleware {
-	abstract function run();
-}
+// interface Middleware {
+// 	abstract public function run();
+// }
 
-class AuthMiddleware implements Middleware {	
+class AuthMiddleware {	
 	static function run() {
+
+		session_start();
 		if (! isset($_SESSION['usuario'])) {
-			echo json_encode(['error' => 'Unautorized']);
-			exit();
+			return ['error' => true , 'redirect' => 'http://localhost/projeto-automoveis/view/main.html']; 
+		} else {
+			return ['error' => false];
 		}
 	}
 }
-
-?>	

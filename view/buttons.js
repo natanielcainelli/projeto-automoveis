@@ -1,13 +1,9 @@
 window.onload = function() {
 	pagina = 1;
-	var usuario = getUsuario();
-	$('#nomeusuario').text(usuario);
+
 	vincularEventos();
 
 }
-
-/* Aqui ocorrem os eventos de ação de botões e campos de input */ 
-
 function vincularEventos() {
 
 	routie('', function() {

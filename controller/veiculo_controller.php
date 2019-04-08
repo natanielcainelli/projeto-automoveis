@@ -9,12 +9,10 @@ require_once '/var/www/html/projeto-automoveis/model/connection.php';
 require_once '/var/www/html/projeto-automoveis/model/veiculo_query.php';
 require_once '/var/www/html/projeto-automoveis/model/basic/basic.php';
 
-
 /* Chamadas de classes que instanciam objetos */
 
 require_once '/var/www/html/projeto-automoveis/persistence/veiculo.php';
 require_once '/var/www/html/projeto-automoveis/persistence/veiculo_adicional.php';
-
 
 class VeiculoController {
 
@@ -48,13 +46,12 @@ class VeiculoController {
 		
 		$veiculo = new Veiculo();
 
-		$veiculo->setId($data);
+		$veiculo->setId($data['data']);
 
 		return removeDados($veiculo);
 	}
 
 	function novo($params) {
-		var_dump($params['data']);
 
 		$veiculo = new Veiculo();
 
@@ -96,4 +93,4 @@ class VeiculoController {
 	}
 }
 	
- ?>
+?>

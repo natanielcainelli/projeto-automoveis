@@ -28,9 +28,11 @@ class CadastroController {
 	}
 
 	function getUsuario() {
+		session_start();
+		
+		$nome = $_SESSION['usuario']['nome'];
 
-		return getUser();
-
+		return $nome;
 	}
 
 	function cadastraUsuario($params) {
@@ -46,5 +48,3 @@ class CadastroController {
 	}
 	
 }
-
-?>	
