@@ -6,10 +6,6 @@ require_once('../controller/veiculo_controller.php');
 require_once('../controller/cadastro_controller.php');
 
 
-	// error_log(print_r(['AuthMiddleware'],true));
-
-// Router::register('listarVeiculo', 'VeiculoController', 'listarVeiculo', ['AuthMiddleware']);
-
 Router::register('listarVeiculo', 'VeiculoController', 'listarVeiculo', ['AuthMiddleware']);
 Router::register('alterarVeiculo', 'VeiculoController', 'alterar');
 Router::register('novoVeiculo', 'VeiculoController', 'novo');
