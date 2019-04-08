@@ -1,11 +1,7 @@
 window.onload = function() {
-	pagina = 1;
-
 	vincularEventos();
-
 }
 function vincularEventos() {
-
 
 	$('#buttonlogin').on('click', function() {
 			
@@ -24,20 +20,20 @@ function vincularEventos() {
 	});
 
 	$('#newbuttoncadastrar').on('click', function() {
-		var email = $('#newemailusr').val();
-		var erro = isEmail(email);
-		if(erro = false) {
-			cadastrarUsuario();
-			$('#usrcadastro').hide();
-			$('#logintela').show();	
-		    $('#newloginusr').val("");
-	    	$('#newpasswordusr').val("");
-	    	$('#newemailusr').val("");
-	    	$('#newnomeusr').val("");
-		}else { 
-			$('#newemailusr').val("");
-			alert('Por favor digite um e-mail valido');
-		}
+		// var email = $('#newemailusr').val();
+		// var erro = isEmail(email);
+		// if(erro = false) {
+		cadastrarUsuario();
+		$('#usrcadastro').hide();
+		$('#logintela').show();	
+	    $('#newloginusr').val("");
+    	$('#newpasswordusr').val("");
+    	$('#newemailusr').val("");
+    	$('#newnomeusr').val("");
+		// }else { 
+		// 	$('#newemailusr').val("");
+		// 	alert('Por favor digite um e-mail valido');
+		// }
 	});
 
 	$('#newbuttoncancelar').on('click', function() {
@@ -63,6 +59,7 @@ function vincularEventos() {
 }
 
 function isEmail(email) {
-    var re = /\S+@\S+\.\S+/;
-    return re.test(email);
+    var ex = /\S+@\S+\.\S+/;
+    var erro = ex.test(email);
+    return erro;
 }

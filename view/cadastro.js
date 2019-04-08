@@ -6,20 +6,19 @@ function verificarLogin() {
 		senha: $('#passwordusr').val()
 
 	};
-	$.ajax({
+
+	requisicao({
 		url: 'http://localhost/projeto-automoveis/api/',
 		type: 'POST',
-		dataType: 'json',
 		data: {data: data, 'action': 'verificaLogin'},
-		success: function(result) {
+		fnSuccess: function(result) {
 			login = result;
 			if(login.erro == false){		
 				window.location.href="menuprincipal.html";
 			} else{
 				alert('Login ou usuário invalidos, por favor tente novamente');
 			}
-		},
-		error: function(error) {}
+		}
 	});
 }
 
@@ -51,7 +50,7 @@ function getUsuario() {
 			login = result;
 			$('#nomeusuario').text(login);
 		}
-	})
+	});
 }
 
 function cadastrarUsuario() {
@@ -65,16 +64,13 @@ function cadastrarUsuario() {
 
     };
 
-	$.ajax({
+    requisicao({
 		url: 'http://localhost/projeto-automoveis/api/',
 		type: 'POST',
-		dataType: 'json',
 		data: {data: data, 'action': 'cadastraUsuario'},
-		async: false,
-		success: function(result) {
+		fnSuccess: function(result) {
 			login = result;
-		},
-		error: function(error) {}
+		}
 	});
 	
 }

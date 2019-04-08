@@ -98,3 +98,7 @@
     button:hover {
 	  opacity: 0.8;
 	}
+	.anolabel {
+		color: #000;
+		background-color: #f3f3f3;
+	}

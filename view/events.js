@@ -162,7 +162,7 @@ function vincularEventos() {
 	$('#gerarrelatoriopormarca').on('click', function() {
 			var filtro = "marca";
 			var adicionais= [];
-			listarRelatorio(filtro,adicionais);
+			listarRelatorioMarca(filtro,adicionais);
 			$('#relatoriodados').show();
 			$('#botaogerar').hide();
 			$('#menubuscarelatorio').hide();
@@ -172,7 +172,7 @@ function vincularEventos() {
 	$('#gerarrelatorioporano').on('click', function() {
 			var filtro = "ano";
 			var adicionais= [];
-			listarRelatorio(filtro,adicionais);
+			listarRelatorioAno(filtro,adicionais);
 			$('#relatoriodados').show();
 			$('#botaogerar').hide();
 			$('#menubuscarelatorio').hide();

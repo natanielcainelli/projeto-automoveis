@@ -1,3 +1,23 @@
+
+function requisicao(params) {
+	$.ajax({
+		url: params.url,
+		type: params.type,
+		dataType: 'json',
+		data: params.data,
+		success: function(result) {
+
+			if (result['redirect']) {
+				window.location.href = result['redirect'];
+			}
+			params.fnSuccess(result);
+		},
+		error: function(error) {
+			alert('Erro na requisicao');
+		}
+	});
+}
+
 function montarObjeto(){
 
 	var id = parseInt($('#idAutomovel').val());
@@ -31,41 +51,36 @@ function recebeParametros (tipo, data) {
 
 	if(tipo == 'alterar') {
 
-		$.ajax({
-		url: 'http://localhost/projeto-automoveis/api/',
-		type: 'POST',
-		dataType: 'json',
-		data: {'data': data, 'action': 'alterarVeiculo'},
-
-		success: function(result) {
-			veiculos = result;
-		},
-		error: function(error) {}
-		});	
+		requisicao({
+			url: 'http://localhost/projeto-automoveis/api/',
+			type: 'POST',
+			data: {data: data, 'action': 'alterarVeiculo'},
+			fnSuccess: function(result) {
+				veiculos = result;
+			}
+		});
 
 	}
 	if(tipo == 'novo') {
 
-		$.ajax({
+		requisicao({
 			url: 'http://localhost/projeto-automoveis/api/',
 			type: 'POST',
-			dataType: 'json',
-			data: {'data': data, 'action': 'novoVeiculo'},
-			success: function(result) {
+			data: {data: data, 'action': 'novoVeiculo'},
+			fnSuccess: function(result) {
 				if (result['erro'].arr.length != 0) {
 					$('#campo_erros_texto')+= result['erro'];
 				}
 				veiculos = result;
-			},
-			error: function(error) {
 			}
-		});		
+		});	
 	}
 }
 
 function montaObjetoEditar(id) {
 
 	veiculo = [];
+
 	$.ajax({
 		url: 'http://localhost/projeto-automoveis/api/',
 		type: 'GET',
@@ -195,31 +210,52 @@ function obterUltimoIndice() {
 }
 
 function listar() {
-	$.ajax({
+
+	requisicao({
 		url: 'http://localhost/projeto-automoveis/api/?pagina='+ pagina+'&marca='+ $('#buscarapidamarca').val()+ '&descricao='+ $('#buscarapidadescricao').val(),
 		type: 'GET',
-		dataType: 'json',
 		data: {'action': 'listarVeiculo'},
-		success: function(result) {
+		fnSuccess: function(result) {
 			veiculos = result;
 			montarTabela();
-		},
-		error: function(error) {}
+		}
 	});
 }
 
 function listarRelatorio(filtro, data) {
 
-	$.ajax({
+	requisicao({
 		url: 'http://localhost/projeto-automoveis/api/',
 		type: 'GET',
-		dataType: 'json',
 		data: {data: data, 'action': 'listarUltimoIdVeiculo', filtro: filtro, marca: $('#buscarapidamarcarelatorio').val(), ano: $('#buscarapidaano').val()},
-		success: function(result) {
+		fnSuccess: function(result) {
 			veiculos = result;
 			montarTabelaRelatorio();
-		},
-		error: function(error) {}
+		}
+	});
+}
+function listarRelatorioAno(filtro, data) {
+
+	requisicao({
+		url: 'http://localhost/projeto-automoveis/api/',
+		type: 'GET',
+		data: {data: data, 'action': 'listarUltimoIdVeiculo', filtro: filtro, marca: $('#buscarapidamarcarelatorio').val(), ano: $('#buscarapidaano').val()},
+		fnSuccess: function(result) {
+			veiculos = result;
+			montarTabelaRelatorioAno();
+		}
+	});
+}
+function listarRelatorioMarca(filtro, data) {
+
+	requisicao({
+		url: 'http://localhost/projeto-automoveis/api/',
+		type: 'GET',
+		data: {data: data, 'action': 'listarUltimoIdVeiculo', filtro: filtro, marca: $('#buscarapidamarcarelatorio').val(), ano: $('#buscarapidaano').val()},
+		fnSuccess: function(result) {
+			veiculos = result;
+			montarTabelaRelatorioMarca();
+		}
 	});
 }
 
@@ -242,10 +278,9 @@ function montarTabela() {
 				).click(function(e) {
 					if ($(e.target).attr('type') != 'checkbox') {
 						editar(veiculo);
-
 					}
 				})
-			 )
+			)
 		}
 	})	
 }
@@ -274,7 +309,93 @@ function montarTabelaRelatorio() {
 					$('<td>').append(
 					)
 				)
-			 )
+			)
+		}
+	})	
+}
+
+function montarTabelaRelatorioAno() {
+
+	var table = document.querySelector('table tbody')
+	var tableHtml = ''
+	
+	var ano = '';
+
+	$('table tbody').html('')
+	veiculos.forEach(function(veiculo) {
+		if (!$.isEmptyObject(veiculo)) {
+			$('#relatoriodados table tr th:nth-child(5)').hide();
+
+			if (veiculo.anofabrica != ano) {
+				ano = veiculo.anofabrica;
+
+				$('table tbody').append(
+					$('<tr class="anolabel">').append(
+						$('<th>', {text: ano, colspan: '100%'})
+					)
+				);
+
+			}
+
+			$('table tbody').append(
+			 	
+				$('<tr>').append(
+					$('<td>', {text: veiculo.descricao.toUpperCase()}),
+					$('<td>', {text: veiculo.placa}).mask("AAA-0000"),
+					$('<td>', {text: veiculo.renavam}).mask("00000000-0"),
+					$('<td>', {text: veiculo.anomodelo}),
+					// $('<td>', {text: veiculo.anofabrica}),
+					$('<td>', {text: veiculo.cor}),
+					$('<td>', {text: veiculo.km}),
+					$('<td>', {text: veiculo.marca.toUpperCase()}),
+					$('<td>', {text: veiculo.preco}).mask('R$ #########'),
+					$('<td>', {text: veiculo.precofipe}).mask('R$ #########'),
+					$('<td>').append(
+					)
+				)
+			)
+		}
+	})	
+}
+
+function montarTabelaRelatorioMarca() {
+
+	var table = document.querySelector('table tbody')
+	var tableHtml = ''
+	
+	var marca = '';
+
+	$('table tbody').html('')
+	veiculos.forEach(function(veiculo) {
+		if (!$.isEmptyObject(veiculo)) {
+			$('#relatoriodados table tr th:nth-child(8)').hide();
+
+			if (veiculo.marca != marca) {
+				marca = veiculo.marca;
+
+				$('table tbody').append(
+					$('<tr class="anolabel">').append(
+						$('<th>', {text: marca.toUpperCase(), colspan: '100%'})
+					)
+				);
+
+			}	
+			 $('table tbody').append(
+				$('<tr>').append(
+					$('<td>', {text: veiculo.descricao.toUpperCase()}),
+					$('<td>', {text: veiculo.placa}).mask("AAA-0000"),
+					$('<td>', {text: veiculo.renavam}).mask("00000000-0"),
+					$('<td>', {text: veiculo.anomodelo}),
+					$('<td>', {text: veiculo.anofabrica}),
+					$('<td>', {text: veiculo.cor}),
+					$('<td>', {text: veiculo.km}),
+					// $('<td>', {text: veiculo.marca.toUpperCase()}),
+					$('<td>', {text: veiculo.preco}).mask('R$ #########'),
+					$('<td>', {text: veiculo.precofipe}).mask('R$ #########'),
+					$('<td>').append(
+					)
+				)
+			)
 		}
 	})	
 }
@@ -316,5 +437,4 @@ function montaCabecalho(adicionais) {
 	if($('#buscarapidamarca').val() != ''){
 		$('#filtradomarca').show();
 	}
-
 }
