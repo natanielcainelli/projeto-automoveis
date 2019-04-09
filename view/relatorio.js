@@ -55,36 +55,8 @@ function vincularEventos() {
 		
 	});
 }
-function requisicao(params) {
-	$.ajax({
-		url: params.url,
-		type: params.type,
-		dataType: 'json',
-		data: params.data,
-		success: function(result) {
 
-			if (result['redirect']) {
-				window.location.href = result['redirect'];
-			}
-			params.fnSuccess(result);
-		},
-		error: function(error) {
-			alert('Erro na requisicao');
-		}
-	});
-}
 
-function getUsuario() {
-	requisicao({
-		url: 'http://localhost/projeto-automoveis/api/',
-		type: 'GET',
-		data: {'action': 'getUsuario'},
-		fnSuccess: function(result) {
-			login = result;
-			$('#nomeusuario').text(login);
-		}
-	});
-}
 function montaCabecalho(adicionais) {
 
 	adicionais.forEach(function(adicional) {
@@ -117,3 +89,156 @@ function montaCabecalho(adicionais) {
 		$('#filtradomarca').show();
 	}
 }
+function listarRelatorio(filtro, data) {
+
+	requisicao({
+		url: 'http://localhost/projeto-automoveis/api/',
+		type: 'GET',
+		data: {data: data, 'action': 'listarUltimoIdVeiculo', filtro: filtro, marca: $('#buscarapidamarcarelatorio').val(), ano: $('#buscarapidaano').val()},
+		fnSuccess: function(result) {
+			veiculos = result;
+			montarTabelaRelatorio();
+		}
+	});
+}
+function listarRelatorioAno(filtro, data) {
+
+	requisicao({
+		url: 'http://localhost/projeto-automoveis/api/',
+		type: 'GET',
+		data: {data: data, 'action': 'listarUltimoIdVeiculo', filtro: filtro, marca: $('#buscarapidamarcarelatorio').val(), ano: $('#buscarapidaano').val()},
+		fnSuccess: function(result) {
+			veiculos = result;
+			montarTabelaRelatorioAno();
+		}
+	});
+}
+function listarRelatorioMarca(filtro, data) {
+
+	requisicao({
+		url: 'http://localhost/projeto-automoveis/api/',
+		type: 'GET',
+		data: {data: data, 'action': 'listarUltimoIdVeiculo', filtro: filtro, marca: $('#buscarapidamarcarelatorio').val(), ano: $('#buscarapidaano').val()},
+		fnSuccess: function(result) {
+			veiculos = result;
+			montarTabelaRelatorioMarca();
+		}
+	});
+}
+function montarTabelaRelatorio() {
+
+	var table = document.querySelector('table tbody')
+	var tableHtml = ''
+	
+	$('table tbody').html('')
+	veiculos.forEach(function(veiculo) {
+		if (!$.isEmptyObject(veiculo)) {
+				
+			 $('table tbody').append(
+				$('<tr>').append(
+					$('<td>', {text: veiculo.descricao.toUpperCase()}),
+					$('<td>', {text: veiculo.placa}).mask("AAA-0000"),
+					$('<td>', {text: veiculo.renavam}).mask("00000000-0"),
+					$('<td>', {text: veiculo.anomodelo}),
+					$('<td>', {text: veiculo.anofabrica}),
+					$('<td>', {text: veiculo.cor}),
+					$('<td>', {text: veiculo.km}),
+					$('<td>', {text: veiculo.marca.toUpperCase()}),
+					$('<td>', {text: veiculo.preco}).mask('R$ #########'),
+					$('<td>', {text: veiculo.precofipe}).mask('R$ #########'),
+					$('<td>').append(
+					)
+				)
+			)
+		}
+	})	
+}
+
+function montarTabelaRelatorioAno() {
+
+	var table = document.querySelector('table tbody')
+	var tableHtml = ''
+	
+	var ano = '';
+
+	$('table tbody').html('')
+	veiculos.forEach(function(veiculo) {
+		if (!$.isEmptyObject(veiculo)) {
+			$('#relatoriodados table tr th:nth-child(5)').hide();
+
+			if (veiculo.anofabrica != ano) {
+				ano = veiculo.anofabrica;
+
+				$('table tbody').append(
+					$('<tr class="anolabel">').append(
+						$('<th>', {text: ano, colspan: '100%'})
+					)
+				);
+
+			}
+
+			$('table tbody').append(
+			 	
+				$('<tr>').append(
+					$('<td>', {text: veiculo.descricao.toUpperCase()}),
+					$('<td>', {text: veiculo.placa}).mask("AAA-0000"),
+					$('<td>', {text: veiculo.renavam}).mask("00000000-0"),
+					$('<td>', {text: veiculo.anomodelo}),
+					// $('<td>', {text: veiculo.anofabrica}),
+					$('<td>', {text: veiculo.cor}),
+					$('<td>', {text: veiculo.km}),
+					$('<td>', {text: veiculo.marca.toUpperCase()}),
+					$('<td>', {text: veiculo.preco}).mask('R$ #########'),
+					$('<td>', {text: veiculo.precofipe}).mask('R$ #########'),
+					$('<td>').append(
+					)
+				)
+			)
+		}
+	})	
+}
+
+function montarTabelaRelatorioMarca() {
+
+	var table = document.querySelector('table tbody')
+	var tableHtml = ''
+	
+	var marca = '';
+
+	$('table tbody').html('')
+	veiculos.forEach(function(veiculo) {
+		if (!$.isEmptyObject(veiculo)) {
+			$('#relatoriodados table tr th:nth-child(8)').hide();
+
+			if (veiculo.marca != marca) {
+				marca = veiculo.marca;
+
+				$('table tbody').append(
+					$('<tr class="anolabel">').append(
+						$('<th>', {text: marca.toUpperCase(), colspan: '100%'})
+					)
+				);
+
+			}
+
+			$('table tbody').append(
+				$('<tr>').append(
+					$('<td>', {text: veiculo.descricao.toUpperCase()}),
+					$('<td>', {text: veiculo.placa}).mask("AAA-0000"),
+					$('<td>', {text: veiculo.renavam}).mask("00000000-0"),
+					$('<td>', {text: veiculo.anomodelo}),
+					$('<td>', {text: veiculo.anofabrica}),
+					$('<td>', {text: veiculo.cor}),
+					$('<td>', {text: veiculo.km}),
+					// $('<td>', {text: veiculo.marca.toUpperCase()}),
+					$('<td>', {text: veiculo.preco}).mask('R$ #########'),
+					$('<td>', {text: veiculo.precofipe}).mask('R$ #########'),
+					$('<td>').append(
+					)
+				)
+			)
+		}
+	})	
+}
+
+

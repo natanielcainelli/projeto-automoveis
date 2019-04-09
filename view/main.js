@@ -85,7 +85,7 @@ function verificarLogin() {
 		fnSuccess: function(result) {
 			login = result;
 			if(login.erro == false){		
-				window.location.href="menuprincipal.html";
+				window.location.href="veiculos.html";
 			} else{
 				alert('Email ou usuário invalidos, por favor tente novamente');
 			}
@@ -93,36 +93,6 @@ function verificarLogin() {
 	});
 }
 
-function requisicao(params) {
-	$.ajax({
-		url: params.url,
-		type: params.type,
-		dataType: 'json',
-		data: params.data,
-		success: function(result) {
-
-			if (result['redirect']) {
-				window.location.href = result['redirect'];
-			}
-			params.fnSuccess(result);
-		},
-		error: function(error) {
-			alert('Erro na requisicao');
-		}
-	});
-}
-
-function getUsuario() {
-	requisicao({
-		url: 'http://localhost/projeto-automoveis/api/',
-		type: 'GET',
-		data: {'action': 'getUsuario'},
-		fnSuccess: function(result) {
-			login = result;
-			$('#nomeusuario').text(login);
-		}
-	});
-}
 
 function verificaCadastro(dados) {
 
