@@ -20,20 +20,19 @@ function vincularEventos() {
 	});
 
 	$('#newbuttoncadastrar').on('click', function() {
-		// var email = $('#newemailusr').val();
-		// var erro = isEmail(email);
-		// if(erro = false) {
-		cadastrarUsuario();
-		$('#usrcadastro').hide();
-		$('#logintela').show();	
-	    $('#newloginusr').val("");
-    	$('#newpasswordusr').val("");
-    	$('#newemailusr').val("");
-    	$('#newnomeusr').val("");
-		// }else { 
-		// 	$('#newemailusr').val("");
-		// 	alert('Por favor digite um e-mail valido');
-		// }
+		var email = $('#newemailusr').val();
+		var valid = isEmail(email);
+		if(valid == true) {
+			cadastrarUsuario();
+			$('#usrcadastro').hide();
+			$('#logintela').show();	
+	    	$('#newemailusr').val("");
+	    	$('#newpasswordusr').val("");
+	    	$('#newnomeusr').val("");
+		}else { 
+			$('#newemailusr').val("");
+			alert('Por favor digite um e-mail valido');
+		}
 	});
 
 	$('#newbuttoncancelar').on('click', function() {
@@ -43,7 +42,7 @@ function vincularEventos() {
 
 	});
 
-	$('#loginusr').keypress(function(e) {
+	$('#emailusr').keypress(function(e) {
     	if(e.keyCode==13){
     		$('#buttonlogin').click();
 
@@ -60,16 +59,19 @@ function vincularEventos() {
 }
 
 function isEmail(email) {
-    var ex = /\S+@\S+\.\S+/;
-    var erro = ex.test(email);
-    return erro;
+	er = /^[a-zA-Z0-9][a-zA-Z0-9\._-]+@([a-zA-Z0-9\._-]+\.)[a-zA-Z-0-9]{2,3}/; 
+	if(!er.exec(email)) {
+		return false;
+	}else {
+		return true;
+	}
 }
 
 function verificarLogin() {
 
 	var data ={
 
-		login: $('#loginusr').val(), 
+		email: $('#emailusr').val(), 
 		senha: $('#passwordusr').val()
 
 	};
@@ -83,7 +85,7 @@ function verificarLogin() {
 			if(login.erro == false){		
 				window.location.href="menuprincipal.html";
 			} else{
-				alert('Login ou usuário invalidos, por favor tente novamente');
+				alert('Email ou usuário invalidos, por favor tente novamente');
 			}
 		}
 	});
@@ -120,24 +122,56 @@ function getUsuario() {
 	});
 }
 
+function verificaCadastro(dados) {
+
+	var cadastro = [];
+	var data = {
+
+    	email: $('#newemailusr').val()
+
+	}
+
+	$.ajax({
+		url: 'http://localhost/projeto-automoveis/api/',
+		type: 'POST',
+		dataType: 'json',
+		data: {data: data, 'action': 'verificaCadastro'},
+		async: false,
+		success: function(result) {
+			cadastro = result;
+		},
+		error: function(error) {}
+	});
+
+	return cadastro;
+
+}
 function cadastrarUsuario() {
 
     var	data = {
 
-    	login: $('#newloginusr').val(),
     	senha: $('#newpasswordusr').val(),
     	email: $('#newemailusr').val(),
     	nome: $('#newnomeusr').val()
 
     };
 
-    requisicao({
-		url: 'http://localhost/projeto-automoveis/api/',
-		type: 'POST',
-		data: {data: data, 'action': 'cadastraUsuario'},
-		fnSuccess: function(result) {
-			login = result;
-		}
-	});
+    var cadastro =[];
+
+    cadastro = verificaCadastro(data);
+
+    if(cadastro.length === 0){
+    	requisicao({
+			url: 'http://localhost/projeto-automoveis/api/',
+			type: 'POST',
+			data: {data: data, 'action': 'cadastraUsuario'},
+			fnSuccess: function(result) {
+				login = result;
+			}
+		});
+    }else {
+    	alert('O email escolhido ja está em uso, por favor digite outro');
+    }
+    
 	
 }

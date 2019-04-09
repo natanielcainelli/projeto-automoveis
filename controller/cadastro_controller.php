@@ -19,7 +19,7 @@ class CadastroController {
 
 		$cadastro = new Cadastro();
 
-		$cadastro->setLogin($params['data']['login']);
+		$cadastro->setEmail($params['data']['email']);
 		$cadastro->setSenha($params['data']['senha']);
 
 		$erro = verificaLogin($cadastro);
@@ -38,13 +38,23 @@ class CadastroController {
 	function cadastraUsuario($params) {
 		$cadastro = new Cadastro();
 
-		$cadastro->setLogin($params['data']['login']);
 		$cadastro->setSenha($params['data']['senha']);
 		$cadastro->setEmail($params['data']['email']);
 		$cadastro->setNome($params['data']['nome']);
 
 		return cadastraUser($cadastro);
 		
+	}
+	function verificaCadastro($params) {
+
+		$cadastro = new Cadastro();
+
+		$cadastro->setLogin($params['data']['login']);
+		$cadastro->setEmail($params['data']['email']);
+
+		return verificaCadastro($cadastro);
+
+
 	}
 	
 }

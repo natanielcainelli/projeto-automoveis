@@ -16,6 +16,7 @@ Router::register('listarEditarVeiculo', 'VeiculoController', 'listarEditar', ['A
 
 Router::register('verificaLogin', 'CadastroController', 'verificaLogin');
 Router::register('getUsuario', 'CadastroController', 'getUsuario', ['AuthMiddleware']);
+Router::register('verificaCadastro', 'CadastroController', 'verificaCadastro');
 Router::register('cadastraUsuario', 'CadastroController', 'cadastraUsuario');
 
 Router::call($_REQUEST['action'], $_REQUEST);

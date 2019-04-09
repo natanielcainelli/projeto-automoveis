@@ -12,7 +12,7 @@ function verificaLogin($cadastro) {
 
 	$senhaHash = hash('sha256', $cadastro->getSenha());
 	
-	$sql = "SELECT id,login,senha,email,nome FROM cadastro WHERE login = '" . $cadastro->getLogin() . "' and senha = '" . $senhaHash . "'";
+	$sql = "SELECT id,senha,email,nome FROM cadastro WHERE email = '" . $cadastro->getEmail() . "' and senha = '" . $senhaHash . "'";
 
 	error_log($sql);
 
@@ -27,11 +27,39 @@ function verificaLogin($cadastro) {
 	connectionKill($conn);
 
     if (is_null($row)) {
-    	return ['erro' => true, 'msg' => 'Usuario ou senha invalido'];
+    	return ['erro' => true, 'msg' => 'Email ou senha invalido'];
     }
 
 	return ['erro' => false];
 
+}
+
+function verificaCadastro($cadastro) {
+
+	$conn = connectionFactory();
+	
+	$sql = "SELECT id,senha,email,nome FROM cadastro WHERE email = '". $cadastro->getEmail(). "' ";
+
+	error_log($sql);
+
+	$result = $conn->query($sql);
+	
+
+	if($result->num_rows == 0){
+		
+		connectionKill($conn);
+		return [];
+
+	} else{
+		
+		while($row = $result->fetch_assoc()) {
+	    	$response[] = $row; 
+	    }
+		
+		connectionKill($conn);
+		return $response;
+	}
+	
 }
 
 /* Cadastra um usuário novo e criptografa a senha com o SHA256(SHA-2) */
@@ -42,7 +70,7 @@ function cadastraUser($cadastro){
 
 	$senhaHash = hash('sha256',$cadastro->getSenha());
 
-	$sql = "INSERT INTO cadastro (login, senha, email, nome) VALUES ('".$cadastro->getLogin()."', '".$senhaHash."', '".$cadastro->getEmail()."', '".$cadastro->getNome()."');";
+	$sql = "INSERT INTO cadastro (senha, email, nome) VALUES ('".$senhaHash."', '".$cadastro->getEmail()."', '".$cadastro->getNome()."');";
 
 	error_log($sql);
 
