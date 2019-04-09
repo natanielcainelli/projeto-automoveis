@@ -45,6 +45,7 @@ class CadastroController {
 		return cadastraUser($cadastro);
 		
 	}
+	
 	function verificaCadastro($params) {
 
 		$cadastro = new Cadastro();
@@ -52,7 +53,21 @@ class CadastroController {
 		$cadastro->setEmail($params['data']['email']);
 
 		return verificaCadastro($cadastro);
-
-
 	}
+
+	function verificarEmail($endereço) { 
+
+		$er='#^[\w.-]+@[\w.-]+\.[a-zA-Z]{2,6}$#';
+
+		 if(preg_match($er,$endereço)) {
+
+		 	return true;
+
+		 }else {
+
+		 	return false;
+
+		 }  
+	}
+
 }

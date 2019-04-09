@@ -13,10 +13,12 @@ Router::register('excluirVeiculo', 'VeiculoController', 'excluir', ['AuthMiddlew
 Router::register('geraAdicionaisVeiculo', 'VeiculoController', 'geraDadosAdicionais', ['AuthMiddleware']);
 Router::register('listarUltimoIdVeiculo', 'VeiculoController', 'listarUltimoId', ['AuthMiddleware']);
 Router::register('listarEditarVeiculo', 'VeiculoController', 'listarEditar', ['AuthMiddleware']);
+Router::register('validaCampos', 'VeiculoController', 'validaCampos');
 
 Router::register('verificaLogin', 'CadastroController', 'verificaLogin');
 Router::register('getUsuario', 'CadastroController', 'getUsuario', ['AuthMiddleware']);
 Router::register('verificaCadastro', 'CadastroController', 'verificaCadastro');
 Router::register('cadastraUsuario', 'CadastroController', 'cadastraUsuario');
+Router::register('verificarEmail', 'CadastroController', 'verificarEmail');
 
 Router::call($_REQUEST['action'], $_REQUEST);

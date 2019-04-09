@@ -91,6 +91,31 @@ class VeiculoController {
 		return listarEditar($filtro);
 
 	}
+
+	function validaCampos($data) {
+
+		if($data['descricao'] == ""){
+			return $erro = ['error' => 'Por favor insira uma descricao válida']; 
+		}
+		if($data['placa'] == "" || strlen($data['placa']) < 8 || strlen($data['placa']) > 8 ){
+			return $erro = ['error' => 'Por favor insira uma placa válida']; 
+		}
+		if($data['renavam'] == "" || strlen($data['renavam']) < 10 || strlen($data['renavam']) > 10 ){
+			return $erro = ['error' => 'Por favor insira um renavam válido']; 
+		}
+		if($data['cor'] == ""){
+			return $erro = ['error' => 'Por favor insira uma cor válida']; 
+		}
+		if($data['km'] == ""){
+			return $erro = ['error' => 'Por favor insira uma km válida']; 
+		}
+		if($data['preco'] == "" || $data['preco'] <= 0){
+			return $erro = ['error' => 'Por favor insira um preço válido']; 
+		}
+		if($data['precofipe'] == ""){
+			return $erro = ['error' => 'Por favor insira um preço da tabela fipe válido']; 
+		}
+	}
 }
 	
 ?>

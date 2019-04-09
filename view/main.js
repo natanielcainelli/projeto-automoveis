@@ -60,13 +60,29 @@ function vincularEventos() {
     });
 }
 
-function isEmail(email) {
-	er = /^[a-zA-Z0-9][a-zA-Z0-9\._-]+@([a-zA-Z0-9\._-]+\.)[a-zA-Z-0-9]{2,3}/; 
-	if(!er.exec(email)) {
-		return false;
-	}else {
-		return true;
-	}
+
+function isEmail(email) { 
+	
+	var erro = [];
+
+	var data ={
+
+		email: email
+
+	};
+
+	requisicao({
+		url: 'http://localhost/projeto-automoveis/api/',
+		type: 'POST',
+		data: {data: data, 'action': 'verificarEmail'},
+		fnSuccess: function(result) {
+			erro = result;
+			return erro;
+		}
+	});
+
+	return erro;
+
 }
 
 function verificarLogin() {
