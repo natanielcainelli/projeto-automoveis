@@ -7,15 +7,18 @@ require_once('../controller/cadastro_controller.php');
 
 
 Router::register('listarVeiculo', 'VeiculoController', 'listarVeiculo', ['AuthMiddleware']);
-Router::register('alterarVeiculo', 'VeiculoController', 'alterar');
-Router::register('novoVeiculo', 'VeiculoController', 'novo');
-Router::register('excluirVeiculo', 'VeiculoController', 'excluir');
-Router::register('geraAdicionaisVeiculo', 'VeiculoController', 'geraDadosAdicionais');
-Router::register('listarUltimoIdVeiculo', 'VeiculoController', 'listarUltimoId');
-Router::register('listarEditarVeiculo', 'VeiculoController', 'listarEditar');
+Router::register('alterarVeiculo', 'VeiculoController', 'alterar', ['AuthMiddleware']);
+Router::register('novoVeiculo', 'VeiculoController', 'novo', ['AuthMiddleware']);
+Router::register('excluirVeiculo', 'VeiculoController', 'excluir', ['AuthMiddleware']);
+Router::register('geraAdicionaisVeiculo', 'VeiculoController', 'geraDadosAdicionais', ['AuthMiddleware']);
+Router::register('listarUltimoIdVeiculo', 'VeiculoController', 'listarUltimoId', ['AuthMiddleware']);
+Router::register('listarEditarVeiculo', 'VeiculoController', 'listarEditar', ['AuthMiddleware']);
+Router::register('validaCampos', 'VeiculoController', 'validaCampos');
 
 Router::register('verificaLogin', 'CadastroController', 'verificaLogin');
 Router::register('getUsuario', 'CadastroController', 'getUsuario', ['AuthMiddleware']);
+Router::register('verificaCadastro', 'CadastroController', 'verificaCadastro');
 Router::register('cadastraUsuario', 'CadastroController', 'cadastraUsuario');
+Router::register('verificarEmail', 'CadastroController', 'verificarEmail');
 
 Router::call($_REQUEST['action'], $_REQUEST);

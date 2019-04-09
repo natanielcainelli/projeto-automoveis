@@ -19,7 +19,7 @@ class CadastroController {
 
 		$cadastro = new Cadastro();
 
-		$cadastro->setLogin($params['data']['login']);
+		$cadastro->setEmail($params['data']['email']);
 		$cadastro->setSenha($params['data']['senha']);
 
 		$erro = verificaLogin($cadastro);
@@ -38,7 +38,6 @@ class CadastroController {
 	function cadastraUsuario($params) {
 		$cadastro = new Cadastro();
 
-		$cadastro->setLogin($params['data']['login']);
 		$cadastro->setSenha($params['data']['senha']);
 		$cadastro->setEmail($params['data']['email']);
 		$cadastro->setNome($params['data']['nome']);
@@ -47,4 +46,28 @@ class CadastroController {
 		
 	}
 	
+	function verificaCadastro($params) {
+
+		$cadastro = new Cadastro();
+
+		$cadastro->setEmail($params['data']['email']);
+
+		return verificaCadastro($cadastro);
+	}
+
+	function verificarEmail($endereço) { 
+
+		$er='#^[\w.-]+@[\w.-]+\.[a-zA-Z]{2,6}$#';
+
+		 if(preg_match($er,$endereço)) {
+
+		 	return true;
+
+		 }else {
+
+		 	return false;
+
+		 }  
+	}
+
 }

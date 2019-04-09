@@ -3,8 +3,8 @@
 <head>
 	<title>Bem vindo ao sistema de automóveis</title>
 	<meta charset="UTF-8">
+
 	<link rel="stylesheet" href="http://localhost/projeto-automoveis/api/index.php">
-	<!-- <link rel="stylesheet" href="http://localhost/projeto-automoveis/api/router.php"> -->
 	<link rel="stylesheet" href="http://localhost/projeto-automoveis/model/cadastro_query.php">
 	<link rel="stylesheet" href="http://localhost/projeto-automoveis/model/veiculo_query.php">
 	<link rel="stylesheet" href="http://localhost/projeto-automoveis/model/connection.php">
@@ -13,11 +13,12 @@
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
 	<link rel="stylesheet" href="http://localhost/projeto-automoveis/view/styles/estilos.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
 	<script type="text/javascript" src="http://localhost/projeto-automoveis/view/lib/routie.min.js"></script>
 	<script type="text/javascript" src="http://localhost/projeto-automoveis/view/lib/jquery.mask.js"></script>
-	<script type="text/javascript" src="http://localhost/projeto-automoveis/view/cadastro.js"></script> 
-	<script type="text/javascript" src="http://localhost/projeto-automoveis/view/veiculo.js"></script> 
-	<script type="text/javascript" src="http://localhost/projeto-automoveis/view/buttons.js"></script> 
+
+	<script type="text/javascript" src="http://localhost/projeto-automoveis/view/utils_obf.js"></script> 
+	<script type="text/javascript" src="http://localhost/projeto-automoveis/view/main_obf.js"></script> 
 </head>
 
 <style type="text/css">
@@ -45,8 +46,8 @@
 		<div align="center">
 			<div class="linha" align="center">
 				<div class="wh4">
-					<label for="loginusr">Login  :</label>
-					<input type="text" name="loginusr" placeholder="Digite o Login..." class="campo" id="loginusr">
+					<label for="emailusr">Email  :</label>
+					<input type="text" name="emailusr" placeholder="Digite o E-mail..." class="campo" id="emailusr">
 				</div>
 				<br>
 				<div class="wh4">
@@ -69,16 +70,7 @@
 	<h1> Cadastro </h1>
 	<br><br>
 	<div class="linha" align="center">
-		<div class="wh4">
-			<label for="newloginusr">Login  :</label>
-			<input type="text" name="newloginusr" placeholder="Digite o Login..." class="campo" id="newloginusr">
-		</div>
-		<br>
-			<div class="wh4">
-				<label for="newpasswordusr">Senha:  </label> 
-				<input type="password" name="newpasswordusr" placeholder="Digite a Senha..." class="campo" id="newpasswordusr">
-			</div>
-		<br>
+		
 		<div class="linha" align="center">
 			<div class="wh4">
 				<label for="newemailusr">E-mail:</label>
@@ -87,6 +79,11 @@
 			<br>
 		</div>
 		<br> 
+			<div class="wh4">
+				<label for="newpasswordusr">Senha:  </label> 
+				<input type="password" name="newpasswordusr" placeholder="Digite a Senha..." class="campo" id="newpasswordusr">
+			</div>
+		<br>
 		<div class="linha" align="center">
 			<div class="wh4">
 				<label for="newnomeusr">Nome :</label>

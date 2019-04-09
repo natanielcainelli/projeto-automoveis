@@ -1,3 +1,185 @@
+window.onload = function() {
+	pagina = 1;
+	var usuario = getUsuario();
+	$('#nomeusuario').text(usuario);
+	vincularEventos();
+
+}
+
+/* Aqui ocorrem os eventos de ação de botões e campos de input */ 
+
+function vincularEventos() {
+
+	routie('', function() {
+		$('#relatoriodados').hide();
+		$('#alterar-tela').hide();
+		$('#menuprincipal').show();
+
+		listar();
+	});
+
+	routie('cadastro', function() {
+		$('#menuprincipal').hide();
+		$('#alterar-tela').show();	
+		$('#alterar_menu').hide();
+		$('#novo_menu').show();
+		$('#menubusca').hide();
+		$('#placa').mask("AAA-0000");
+		$('#renavam').mask("00000000-0");
+		$('#preco').mask('R$ #########');
+		$('#precofipe').mask('R$ #########');
+		validaCampos();
+	});
+
+	routie('editar/?:id', function(id) {
+		$('#alterar_menu').show();
+		$('#novo_menu').hide();
+		$('#menubusca').hide();
+		montaObjetoEditar(id);
+	});
+
+	$('#botaobuscardescricao, #botaobuscarmarca').on('click', function() {
+		
+		listar();
+
+	});	
+
+	$('#cadastrarnovo').on('click', function() {
+
+		routie('cadastro');
+
+	});
+
+	$('#excluirveiculoid').on('click', function() {
+
+		montaObjetoExcluir();
+	});
+
+	$('#buscarapidadescricao').keypress(function(e) {
+    	if(e.keyCode==13){
+    		$('#botaobuscardescricao').click();
+    		$('#buscarapidadescricao').val("");
+  		}
+    });
+
+	$('#buscarapidamarca').keypress(function(e) {
+    	if(e.keyCode==13){
+      		$('#botaobuscardescricao').click();
+      		$('#buscarapidamarca').val("");
+    	}
+    });
+
+    $('#buscarapidamarcarelatorio').keypress(function(e) {
+    	if(e.keyCode==13){
+      		$('#filtrobutton').click();
+      		$('#buscarapidamarcarelatorio').val("");
+    	}
+    });
+
+    $('#buscarapidaano').keypress(function(e) {
+    	if(e.keyCode==13){
+      		$('#filtrobutton').click();
+      		$('#buscarapidaano').val("");
+    	}
+    });
+
+	$('#confirmaalteracaotelaprincipal').on('click', function() {
+		
+		var erro = validaCampos();
+		var tipo = 'alterar';
+
+		if(erro == true){
+
+			var erro = validaCampos();
+			alert('Por favor preencha todos os campos para continuar');
+
+		}
+		if(erro == false){
+
+			var data = montarObjeto();
+			recebeParametros(tipo, data);
+			
+			alert('Veiculo modificado com sucesso');
+			window.location.href="veiculos.html";
+		}
+	});
+	
+	$('#page1, #page2, #page3').on('click', function() {
+		pagina = parseInt($(this).text());
+		listar();
+
+	});
+
+	$('#pageant').on('click', function() {
+
+		if(pagina>1){
+			pagina=pagina-1;
+			listar();
+		}
+
+	});
+
+	$('#pagenext').on('click', function() {
+
+		if(pagina<3){
+			pagina=pagina+1;
+			listar();
+		}
+
+	});
+
+	$('#confirmanovotelaprincipal').on('click', function() {
+		
+		var i = 0;
+		var erro = validaCampos();
+		var tipo = 'novo';
+
+		if(erro != "") {
+			
+			alert(erro);
+
+		}else {
+			var data = montarObjeto();
+			recebeParametros(tipo, data);	
+			alert('Veiculo cadastrado com sucesso');
+			window.location.href="veiculos.html";
+			listar();
+		}
+	});
+}
+
+function validaCampos() {
+	var erros = "";
+	data = {
+
+		descricao: $("#descricao").val(),
+		placa: $("#placa").unmask().val(),
+		renavam: $("#renavam").unmask().val(),
+		cor: $("#cor").val(),
+		km: $("#km").val(),
+		preco: $("#preco").unmask().val(),
+		precofipe: $("#precofipe").unmask().val()
+
+	}
+
+	requisicao({
+		url: 'http://localhost/projeto-automoveis/api/',
+		type: 'POST',
+		data: {data: data, 'action': 'validaCampos'},
+		fnSuccess: function(result) {
+			erros = result;
+			return erros;
+		}
+	});
+	return erros;
+}
+
+function editar(veiculo) {
+
+	routie('editar/' +veiculo.id);
+
+}
+
 function montarObjeto(){
 
 	var id = parseInt($('#idAutomovel').val());
@@ -31,41 +213,35 @@ function recebeParametros (tipo, data) {
 
 	if(tipo == 'alterar') {
 
-		$.ajax({
-		url: 'http://localhost/projeto-automoveis/api/',
-		type: 'POST',
-		dataType: 'json',
-		data: {'data': data, 'action': 'alterarVeiculo'},
-
-		success: function(result) {
-			veiculos = result;
-		},
-		error: function(error) {}
-		});	
-
-	}
-	if(tipo == 'novo') {
-
-		$.ajax({
+		requisicao({
 			url: 'http://localhost/projeto-automoveis/api/',
 			type: 'POST',
-			dataType: 'json',
-			data: {'data': data, 'action': 'novoVeiculo'},
-			success: function(result) {
-				if (result['erro'].arr.length != 0) {
-					$('#campo_erros_texto')+= result['erro'];
-				}
+			data: {data: data, 'action': 'alterarVeiculo'},
+			fnSuccess: function(result) {
 				veiculos = result;
-			},
-			error: function(error) {
 			}
-		});		
+		});
+
 	}
+
+	if(tipo == 'novo') {
+
+		requisicao({
+			url: 'http://localhost/projeto-automoveis/api/',
+			type: 'POST',
+			data: {data: data, 'action': 'novoVeiculo'},
+			fnSuccess: function(result) {
+				veiculos = result;
+			}
+		});	
+	}
+
 }
 
 function montaObjetoEditar(id) {
 
 	veiculo = [];
+
 	$.ajax({
 		url: 'http://localhost/projeto-automoveis/api/',
 		type: 'GET',
@@ -97,6 +273,7 @@ function montaObjetoEditar(id) {
 
 		}
 	});
+
 	validaCampos();
 
 	var data = {
@@ -195,31 +372,15 @@ function obterUltimoIndice() {
 }
 
 function listar() {
-	$.ajax({
+
+	requisicao({
 		url: 'http://localhost/projeto-automoveis/api/?pagina='+ pagina+'&marca='+ $('#buscarapidamarca').val()+ '&descricao='+ $('#buscarapidadescricao').val(),
 		type: 'GET',
-		dataType: 'json',
 		data: {'action': 'listarVeiculo'},
-		success: function(result) {
+		fnSuccess: function(result) {
 			veiculos = result;
 			montarTabela();
-		},
-		error: function(error) {}
-	});
-}
-
-function listarRelatorio(filtro, data) {
-
-	$.ajax({
-		url: 'http://localhost/projeto-automoveis/api/',
-		type: 'GET',
-		dataType: 'json',
-		data: {data: data, 'action': 'listarUltimoIdVeiculo', filtro: filtro, marca: $('#buscarapidamarcarelatorio').val(), ano: $('#buscarapidaano').val()},
-		success: function(result) {
-			veiculos = result;
-			montarTabelaRelatorio();
-		},
-		error: function(error) {}
+		}
 	});
 }
 
@@ -242,79 +403,10 @@ function montarTabela() {
 				).click(function(e) {
 					if ($(e.target).attr('type') != 'checkbox') {
 						editar(veiculo);
-
 					}
 				})
-			 )
+			)
 		}
 	})	
 }
 
-function montarTabelaRelatorio() {
-
-	var table = document.querySelector('table tbody')
-	var tableHtml = ''
-	
-	$('table tbody').html('')
-	veiculos.forEach(function(veiculo) {
-		if (!$.isEmptyObject(veiculo)) {
-				
-			 $('table tbody').append(
-				$('<tr>').append(
-					$('<td>', {text: veiculo.descricao.toUpperCase()}),
-					$('<td>', {text: veiculo.placa}).mask("AAA-0000"),
-					$('<td>', {text: veiculo.renavam}).mask("00000000-0"),
-					$('<td>', {text: veiculo.anomodelo}),
-					$('<td>', {text: veiculo.anofabrica}),
-					$('<td>', {text: veiculo.cor}),
-					$('<td>', {text: veiculo.km}),
-					$('<td>', {text: veiculo.marca.toUpperCase()}),
-					$('<td>', {text: veiculo.preco}).mask('R$ #########'),
-					$('<td>', {text: veiculo.precofipe}).mask('R$ #########'),
-					$('<td>').append(
-					)
-				)
-			 )
-		}
-	})	
-}
-
-function editar(veiculo) {
-
-	routie('editar/' +veiculo.id);
-
-}
-
-function montaCabecalho(adicionais) {
-
-	adicionais.forEach(function(adicional) {
-
-		if(adicional == 1){
-			$('#filtradoar').show();
-		}if(adicional == 2){
-			$('#filtradoairbag').show();
-		}if(adicional == 3){
-			$('#filtradocd').show();
-		}if(adicional == 4){
-			$('#filtradodirecao').show();
-		}if(adicional == 5){
-			$('#filtradovidro').show();
-		}if(adicional == 6){
-			$('#filtradotrava').show();
-		}if(adicional == 7){
-			$('#filtradocambio').show();
-		}if(adicional == 8){
-			$('#filtradorodas').show();
-		}if(adicional == 9){
-			$('#filtradoalarme').show();
-		}
-	});
-
-	if($('#buscarapidaano').val() != ''){
-		$('#filtradoano').show();
-	}
-	if($('#buscarapidamarca').val() != ''){
-		$('#filtradomarca').show();
-	}
-
-}
