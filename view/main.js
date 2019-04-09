@@ -1,6 +1,9 @@
 window.onload = function() {
+
 	vincularEventos();
+	
 }
+
 function vincularEventos() {
 
 	$('#buttonlogin').on('click', function() {
@@ -55,7 +58,6 @@ function vincularEventos() {
     		$('#passwordusr').val("");
   		}
     });
-
 }
 
 function isEmail(email) {
@@ -146,6 +148,7 @@ function verificaCadastro(dados) {
 	return cadastro;
 
 }
+
 function cadastrarUsuario() {
 
     var	data = {

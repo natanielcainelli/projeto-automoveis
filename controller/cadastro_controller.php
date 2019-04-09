@@ -49,12 +49,10 @@ class CadastroController {
 
 		$cadastro = new Cadastro();
 
-		$cadastro->setLogin($params['data']['login']);
 		$cadastro->setEmail($params['data']['email']);
 
 		return verificaCadastro($cadastro);
 
 
 	}
-	
 }
