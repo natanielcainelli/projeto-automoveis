@@ -328,3 +328,8 @@ function getUsuario() {
 		}
 	});
 }
+function editar(veiculo) {
+
+	routie('editar/' +veiculo.id);
+
+}

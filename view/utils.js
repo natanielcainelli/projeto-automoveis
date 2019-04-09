@@ -1,3 +1,4 @@
+/*Nesta classe somente funções para montar tabelas e objetos */
 
 function requisicao(params) {
 	$.ajax({
@@ -61,6 +62,7 @@ function recebeParametros (tipo, data) {
 		});
 
 	}
+
 	if(tipo == 'novo') {
 
 		requisicao({
@@ -75,6 +77,7 @@ function recebeParametros (tipo, data) {
 			}
 		});	
 	}
+
 }
 
 function montaObjetoEditar(id) {
@@ -112,6 +115,7 @@ function montaObjetoEditar(id) {
 
 		}
 	});
+
 	validaCampos();
 
 	var data = {
@@ -379,8 +383,9 @@ function montarTabelaRelatorioMarca() {
 					)
 				);
 
-			}	
-			 $('table tbody').append(
+			}
+
+			$('table tbody').append(
 				$('<tr>').append(
 					$('<td>', {text: veiculo.descricao.toUpperCase()}),
 					$('<td>', {text: veiculo.placa}).mask("AAA-0000"),
@@ -400,41 +405,4 @@ function montarTabelaRelatorioMarca() {
 	})	
 }
 
-function editar(veiculo) {
 
-	routie('editar/' +veiculo.id);
-
-}
-
-function montaCabecalho(adicionais) {
-
-	adicionais.forEach(function(adicional) {
-
-		if(adicional == 1){
-			$('#filtradoar').show();
-		}if(adicional == 2){
-			$('#filtradoairbag').show();
-		}if(adicional == 3){
-			$('#filtradocd').show();
-		}if(adicional == 4){
-			$('#filtradodirecao').show();
-		}if(adicional == 5){
-			$('#filtradovidro').show();
-		}if(adicional == 6){
-			$('#filtradotrava').show();
-		}if(adicional == 7){
-			$('#filtradocambio').show();
-		}if(adicional == 8){
-			$('#filtradorodas').show();
-		}if(adicional == 9){
-			$('#filtradoalarme').show();
-		}
-	});
-
-	if($('#buscarapidaano').val() != ''){
-		$('#filtradoano').show();
-	}
-	if($('#buscarapidamarca').val() != ''){
-		$('#filtradomarca').show();
-	}
-}

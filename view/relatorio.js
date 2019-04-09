@@ -1,4 +1,5 @@
 window.onload = function() {
+	$('#relatoriodados').hide();
 	vincularEventos();
 }
 function vincularEventos() {
@@ -83,4 +84,36 @@ function getUsuario() {
 			$('#nomeusuario').text(login);
 		}
 	});
+}
+function montaCabecalho(adicionais) {
+
+	adicionais.forEach(function(adicional) {
+
+		if(adicional == 1){
+			$('#filtradoar').show();
+		}if(adicional == 2){
+			$('#filtradoairbag').show();
+		}if(adicional == 3){
+			$('#filtradocd').show();
+		}if(adicional == 4){
+			$('#filtradodirecao').show();
+		}if(adicional == 5){
+			$('#filtradovidro').show();
+		}if(adicional == 6){
+			$('#filtradotrava').show();
+		}if(adicional == 7){
+			$('#filtradocambio').show();
+		}if(adicional == 8){
+			$('#filtradorodas').show();
+		}if(adicional == 9){
+			$('#filtradoalarme').show();
+		}
+	});
+
+	if($('#buscarapidaano').val() != ''){
+		$('#filtradoano').show();
+	}
+	if($('#buscarapidamarca').val() != ''){
+		$('#filtradomarca').show();
+	}
 }
