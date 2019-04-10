@@ -1,5 +1,6 @@
 window.onload = function() {
 	$('#relatoriodados').hide();
+
 	vincularEventos();
 }
 function vincularEventos() {
@@ -56,7 +57,6 @@ function vincularEventos() {
 	});
 }
 
-
 function montaCabecalho(adicionais) {
 
 	adicionais.forEach(function(adicional) {
@@ -89,6 +89,7 @@ function montaCabecalho(adicionais) {
 		$('#filtradomarca').show();
 	}
 }
+
 function listarRelatorio(filtro, data) {
 
 	requisicao({
@@ -101,6 +102,7 @@ function listarRelatorio(filtro, data) {
 		}
 	});
 }
+
 function listarRelatorioAno(filtro, data) {
 
 	requisicao({
@@ -113,6 +115,7 @@ function listarRelatorioAno(filtro, data) {
 		}
 	});
 }
+
 function listarRelatorioMarca(filtro, data) {
 
 	requisicao({
@@ -125,6 +128,7 @@ function listarRelatorioMarca(filtro, data) {
 		}
 	});
 }
+
 function montarTabelaRelatorio() {
 
 	var table = document.querySelector('table tbody')
@@ -240,5 +244,3 @@ function montarTabelaRelatorioMarca() {
 		}
 	})	
 }
-
-

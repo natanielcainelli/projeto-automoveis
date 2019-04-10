@@ -59,28 +59,24 @@ function vincularEventos() {
 	$('#buscarapidadescricao').keypress(function(e) {
     	if(e.keyCode==13){
     		$('#botaobuscardescricao').click();
-    		$('#buscarapidadescricao').val("");
   		}
     });
 
 	$('#buscarapidamarca').keypress(function(e) {
     	if(e.keyCode==13){
       		$('#botaobuscardescricao').click();
-      		$('#buscarapidamarca').val("");
     	}
     });
 
     $('#buscarapidamarcarelatorio').keypress(function(e) {
     	if(e.keyCode==13){
       		$('#filtrobutton').click();
-      		$('#buscarapidamarcarelatorio').val("");
     	}
     });
 
     $('#buscarapidaano').keypress(function(e) {
     	if(e.keyCode==13){
       		$('#filtrobutton').click();
-      		$('#buscarapidaano').val("");
     	}
     });
 
@@ -296,8 +292,6 @@ function montaObjetoEditar(id) {
 
 		}
 	});
-
-	validaCampos();
 
 	var data = {
 

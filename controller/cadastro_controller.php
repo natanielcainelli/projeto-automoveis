@@ -59,7 +59,7 @@ class CadastroController {
 
 		$er='#^[\w.-]+@[\w.-]+\.[a-zA-Z]{2,6}$#';
 
-		 if(preg_match($er,$endereço)) {
+		 if(preg_match($er,$endereço['data']['email'])) {
 
 		 	return true;
 

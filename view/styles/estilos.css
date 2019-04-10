@@ -102,14 +102,11 @@
 		color: #000;
 		background-color: #f3f3f3;
 	}
-	/*.txt::before { 
-	  content: 's';
-	}*/
 	.txt {
 		margin-left: 70px;
 	}
 	.icone_warning{
 		position: absolute;
-		padding: 5px;
+		padding: 20px;
 		font-size: 40px;
 	}

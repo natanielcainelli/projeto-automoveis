@@ -16,23 +16,20 @@ function listar($filtros) {
 
 	$id = $_SESSION['usuario']['id'];
 
-	$sql = "SELECT id,descricao, placa, renavam, anomodelo, anofabrica, cor, km , marca, preco, precofipe FROM veiculo ";
+	$sql = "SELECT id,descricao, placa, renavam, anomodelo, anofabrica, cor, km , marca, preco, precofipe FROM veiculo WHERE id_usuario =".$id;
 
 	if(isset($filtros['descricao']) && $filtros['descricao'] != '' &&$filtros['marca'] == '') {
-
-		$sql.= " WHERE descricao = '{$filtros['descricao']}' and id_usuario =".$id;
-	}
+		$sql.= " and descricao like '%{$filtros['descricao']}%' ";
+	}	
 	if(isset($filtros['marca']) && $filtros['marca'] != '' && $filtros['descricao'] == '') {
 
-		$sql.= " WHERE marca = '{$filtros['marca']}' and id_usuario =".$id;
+		$sql.= " and marca like '%{$filtros['marca']}%' ";
 	}
 	if (isset($filtros['descricao']) && $filtros['descricao'] != '' && isset($filtros['marca']) && $filtros['marca'] != '') {
 
-		$sql.= " WHERE descricao = '{$filtros['descricao']}' and marca = '{$filtros['marca']}' and id_usuario =".$id; 
-	} else if( $filtros['descricao'] == '' && $filtros['marca'] == ''){
-
-		$sql.=" WHERE id_usuario =".$id." ";
+		$sql.= " and descricao like '%{$filtros['descricao']}%' and marca like '%{$filtros['marca']}%' "; 
 	}
+	
 
 	$sql.= " LIMIT $inicio ,10";
 

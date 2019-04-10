@@ -52,11 +52,11 @@ class VeiculoController {
 
 	function excluir($data) {
 		
-		$veiculo = new Veiculo();
+		//$veiculo = new Veiculo();
 
-		$veiculo->setId($data['data']);
+		//$veiculo->setId($data['data']);
 
-		return removeDados($veiculo);
+		return removeDados($data['data']);
 	}
 
 	function novo($params) {
