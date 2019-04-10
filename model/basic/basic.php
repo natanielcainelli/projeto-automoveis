@@ -54,6 +54,12 @@ function removeDados($ids) {
 
 	$conn = connectionFactory();
 
+
+	//implementar uma validação de delete com base no idUsuario para evitar uma falha de segurança que é a possibilidade de alterar um veículo que não pertence
+	//ao idUsuario, sendo manipulavel por javascript
+
+	//base de implementação
+
 	// $idsSql = implode("','", $ids);
 
 	// $sql = "DELETE FROM veiculo  WHERE id in ('" . $idsSql . "')";
