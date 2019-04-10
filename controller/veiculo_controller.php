@@ -16,6 +16,7 @@ require_once '/var/www/html/projeto-automoveis/persistence/veiculo_adicional.php
 
 class VeiculoController {
 
+
 	function listarVeiculo($params) {
 
 		return listar($params);
@@ -38,20 +39,28 @@ class VeiculoController {
 		$veiculo->setPreco($params['data']['preco']);
 		$veiculo->setPrecoFipe($params['data']['precofipe']);
 
+		
+		$erros = $this->validaCampos($veiculo);
+
+		if(!empty($erros)){
+			return array('erros' => $erros);
+		}
+
 		return alteraDados($veiculo,$params);
 		
 	}
 
 	function excluir($data) {
 		
-		$veiculo = new Veiculo();
+		//$veiculo = new Veiculo();
 
-		$veiculo->setId($data['data']);
+		//$veiculo->setId($data['data']);
 
-		return removeDados($veiculo);
+		return removeDados($data['data']);
 	}
 
 	function novo($params) {
+
 
 		$veiculo = new Veiculo();
 
@@ -66,7 +75,15 @@ class VeiculoController {
 		$veiculo->setPreco($params['data']['preco']);
 		$veiculo->setPrecoFipe($params['data']['precofipe']);
 
+		$erros = $this->validaCampos($veiculo);
+
+		if(!empty($erros)){
+			return array('erros' => $erros);
+		} else {
+
 		return insereDados($veiculo,$params['data']['adicionais']);
+
+		}
 
 	}
 
@@ -92,29 +109,44 @@ class VeiculoController {
 
 	}
 
-	function validaCampos($data) {
+	function validaCampos($veiculo) {
 
-		if($data['descricao'] == ""){
-			return $erro = ['error' => 'Por favor insira uma descricao válida']; 
+
+		if(empty($veiculo->getDescricao())){
+			$erro['descricao'] = " O campo Descrição não pode ser nulo ";
 		}
-		if($data['placa'] == "" || strlen($data['placa']) < 8 || strlen($data['placa']) > 8 ){
-			return $erro = ['error' => 'Por favor insira uma placa válida']; 
+		if(empty($veiculo->getPlaca())){
+			$erro['placa'] = " O campo Placa não pode ser nulo "; 
 		}
-		if($data['renavam'] == "" || strlen($data['renavam']) < 10 || strlen($data['renavam']) > 10 ){
-			return $erro = ['error' => 'Por favor insira um renavam válido']; 
+		if(strlen($veiculo->getPlaca()) != 7){
+			$erro['placa'] = " O tamanho do campo Placa deve conter 7 caracteres "; 
 		}
-		if($data['cor'] == ""){
-			return $erro = ['error' => 'Por favor insira uma cor válida']; 
+		if(empty($veiculo->getRenavam())){
+			$erro['renavam'] = " O campo Renavam não pode ser nulo "; 
 		}
-		if($data['km'] == ""){
-			return $erro = ['error' => 'Por favor insira uma km válida']; 
+		if(strlen($veiculo->getRenavam()) != 9){
+			$erro['renavam'] = " O tamanho do campo Renavam deve conter 9 caracteres "; 
 		}
-		if($data['preco'] == "" || $data['preco'] <= 0){
-			return $erro = ['error' => 'Por favor insira um preço válido']; 
+		if(empty($veiculo->getCor())){
+			$erro['cor'] = " O campo Cor não pode ser nulo ";  
 		}
-		if($data['precofipe'] == ""){
-			return $erro = ['error' => 'Por favor insira um preço da tabela fipe válido']; 
+		if(empty($veiculo->getKm())){
+			$erro['km'] = " O campo Km não pode ser nulo ";  
 		}
+		if(empty($veiculo->getPreco())){
+			$erro['preco'] = " O campo Preço não pode estar vazio "; 
+		}
+		if($veiculo->getPreco() < 1){
+			$erro['preco'] = " O campo Preço não pode ser menor ou igual a 0 "; 
+		}
+		if(empty($veiculo->getPrecoFipe())){
+			$erro['precofipe'] = " O campo preço da Tabela FIPE não pode ser nulo "; 
+		}
+		if($veiculo->getPrecoFipe() < 1){
+			$erro['precofipe'] = " O campo preço da Tabela FIPE não pode ser menor ou igual a 0 "; 
+		}
+
+		return $erro;
 	}
 }
 	

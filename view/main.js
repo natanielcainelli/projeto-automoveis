@@ -24,18 +24,8 @@ function vincularEventos() {
 
 	$('#newbuttoncadastrar').on('click', function() {
 		var email = $('#newemailusr').val();
-		var valid = isEmail(email);
-		if(valid == true) {
-			cadastrarUsuario();
-			$('#usrcadastro').hide();
-			$('#logintela').show();	
-	    	$('#newemailusr').val("");
-	    	$('#newpasswordusr').val("");
-	    	$('#newnomeusr').val("");
-		}else { 
-			$('#newemailusr').val("");
-			alert('Por favor digite um e-mail valido');
-		}
+		isEmail(email);
+		
 	});
 
 	$('#newbuttoncancelar').on('click', function() {
@@ -62,7 +52,7 @@ function vincularEventos() {
 
 
 function isEmail(email) { 
-	
+
 	var erro = [];
 
 	var data ={
@@ -77,7 +67,17 @@ function isEmail(email) {
 		data: {data: data, 'action': 'verificarEmail'},
 		fnSuccess: function(result) {
 			erro = result;
-			return erro;
+			if(result == true) {
+				cadastrarUsuario();
+				$('#usrcadastro').hide();
+				$('#logintela').show();	
+		    	$('#newemailusr').val("");
+		    	$('#newpasswordusr').val("");
+		    	$('#newnomeusr').val("");
+			}else { 
+				$('#newpasswordusr').val("");
+				alert('Por favor digite um e-mail valido');
+			}
 		}
 	});
 
@@ -161,6 +161,4 @@ function cadastrarUsuario() {
     }else {
     	alert('O email escolhido ja está em uso, por favor digite outro');
     }
-    
-	
 }

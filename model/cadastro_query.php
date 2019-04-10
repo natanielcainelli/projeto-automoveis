@@ -50,7 +50,7 @@ function verificaCadastro($cadastro) {
 		connectionKill($conn);
 		return [];
 
-	} else{
+	} else {
 		
 		while($row = $result->fetch_assoc()) {
 	    	$response[] = $row; 

@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+
 	<title>Menu Principal</title>
 	<meta charset="UTF-8">
 	<link rel="stylesheet" href="http://localhost/projeto-automoveis/api/index.php">
@@ -9,18 +10,22 @@
 	<link rel="stylesheet" href="http://localhost/projeto-automoveis/model/veiculo_query.php">
 	<link rel="stylesheet" href="http://localhost/projeto-automoveis/model/connection.php">
 	<link rel="stylesheet" href="http://localhost/projeto-automoveis/model/basic/basic.php">
-	
+
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/solid.css" integrity="sha384-QokYePQSOwpBDuhlHOsX0ymF6R/vLk/UQVz3WHa6wygxI5oGTmDTv8wahFOSspdm" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/fontawesome.css" integrity="sha384-vd1e11sR28tEK9YANUtpIOdjGW14pS87bUBuOIoBILVWLFnS+MCX9T6MMf0VdPGq" crossorigin="anonymous">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
 	<link rel="stylesheet" href="http://localhost/projeto-automoveis/view/styles/estilos.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<script type="text/javascript" src="http://localhost/projeto-automoveis/view/lib/routie.min.js"></script>
 	<script type="text/javascript" src="http://localhost/projeto-automoveis/view/lib/jquery.mask.js"></script>	
 
-	<script type="text/javascript" src="http://localhost/projeto-automoveis/view/veiculos_obf.js"></script> 
+	<script type="text/javascript" src="http://localhost/projeto-automoveis/view/veiculos.js"></script> 
 	<script type="text/javascript" src="http://localhost/projeto-automoveis/view/utils_obf.js"></script> 
-	
+
 </head>
+
 <body>
+
 <nav class="navbar navbar-default">
   <div class="container-fluid">
     <div class="navbar-header">
@@ -40,8 +45,9 @@
     </div>
   </div>
 </nav>
-<div class="container-fluid">
 
+
+<div class="container-fluid">
 <div id="menubusca">
 	<h1><p align="center"><strong> Busca Rápida </strong> </p></h1>	
 	<div align="center">
@@ -248,7 +254,6 @@
 				<input type="checkbox" name="direcaohidraulica" value="4" id="direcaohidraulica">
 				<label for="direcaohidraulica">Direção Hidráulica</label>
 			</div>
-			
 		</div>
 		<br><br><br><br>
 		<div class="linha">
@@ -290,10 +295,39 @@
 		<div id="campo_erros_aviso" style="display: none;" >
 			<div class="panel-group">
 			  <div class="panel panel-danger">
-			    <div align="center" id="campo_erros_titulo" class="panel-body">Os seguintes campos possuem erros:</div>
+			    <div align="center" id="campo_erros_titulo" class="panel-body"><b>Os seguintes campos possuem erros:</b></div>
 			  </div>
-			  <div class="panel panel-danger">
-			    <div id="campo_erros_texto" class="panel-body"></div>
+			  <div class="panel panel-danger">	
+			  	<br>
+			  	<!-- icone do warning -->
+			  	<div class="icone_warning">
+			  		<i class="fas fa-exclamation-triangle"></i>
+			  	</div>
+			  	<!-- aqui fica a classe dos bullet ul li -->
+			  	<div class="txt"> 
+				  	<ul id="ul_descricao" style="display: none;">
+				      <li id="li_descricao"><span id="span_descricao" type="text"> </span>  </li>
+				    </ul>
+				    <ul id="ul_placa" style="display: none;">
+				      <li id="li_placa"> <span id="span_placa" type="text"></span> </li>
+				    </ul>
+				    <ul id="ul_renavam" style="display: none;">
+				      <li id="li_renavam"> <span id="span_renavam" type="text"></span></li>
+				    </ul>
+				    <ul id="ul_cor" style="display: none;">
+				      <li id="li_cor"><span id="span_cor" type="text"></span></li>
+				    </ul>
+				    <ul id="ul_km" style="display: none;">
+				      <li id="li_km"><span id="span_km" type="text"></span></li>
+				    </ul>
+				    <ul id="ul_preco" style="display: none;">
+				      <li id="li_preco"><span id="span_preco" type="text"></span></li>
+				    </ul>
+				    <ul id="ul_precofipe" style="display: none;">
+				      <li id="li_precofipe"><span id="span_precofipe" type="text"></span></li>
+				    </ul>
+				   <br>
+				</div>
 			  </div>
 			</div> 
 		</div>

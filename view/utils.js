@@ -7,7 +7,6 @@ function requisicao(params) {
 		dataType: 'json',
 		data: params.data,
 		success: function(result) {
-
 			if (result['redirect']) {
 				window.location.href = result['redirect'];
 			}

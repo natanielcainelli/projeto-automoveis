@@ -50,9 +50,19 @@ function insereAdicionais($idVeiculo, $adicionais) {
 	
 /* Remove um ou varios veículos e seus adicionais */
 
-function removeDados($veiculo) {
+function removeDados($ids) {
 
 	$conn = connectionFactory();
+
+	// $idsSql = implode("','", $ids);
+
+	// $sql = "DELETE FROM veiculo  WHERE id in ('" . $idsSql . "')";
+	// error_log($sql);
+	// $result = $conn->query($sql);
+
+	// $sql = "DELETE FROM veiculo_adicionais WHERE veiculo_id in ('" . $idsSql . "')";
+	// error_log($sql);
+	// $result = $conn->query($sql);
 
 	foreach ($veiculo->getId() as $values) {
 		

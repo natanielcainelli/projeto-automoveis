@@ -2,8 +2,8 @@ window.onload = function() {
 	pagina = 1;
 	var usuario = getUsuario();
 	$('#nomeusuario').text(usuario);
-	vincularEventos();
 
+	vincularEventos();
 }
 
 /* Aqui ocorrem os eventos de ação de botões e campos de input */ 
@@ -24,11 +24,12 @@ function vincularEventos() {
 		$('#alterar_menu').hide();
 		$('#novo_menu').show();
 		$('#menubusca').hide();
+
 		$('#placa').mask("AAA-0000");
 		$('#renavam').mask("00000000-0");
 		$('#preco').mask('R$ #########');
 		$('#precofipe').mask('R$ #########');
-		validaCampos();
+
 	});
 
 	routie('editar/?:id', function(id) {
@@ -58,51 +59,27 @@ function vincularEventos() {
 	$('#buscarapidadescricao').keypress(function(e) {
     	if(e.keyCode==13){
     		$('#botaobuscardescricao').click();
-    		$('#buscarapidadescricao').val("");
   		}
     });
 
 	$('#buscarapidamarca').keypress(function(e) {
     	if(e.keyCode==13){
       		$('#botaobuscardescricao').click();
-      		$('#buscarapidamarca').val("");
     	}
     });
 
     $('#buscarapidamarcarelatorio').keypress(function(e) {
     	if(e.keyCode==13){
       		$('#filtrobutton').click();
-      		$('#buscarapidamarcarelatorio').val("");
     	}
     });
 
     $('#buscarapidaano').keypress(function(e) {
     	if(e.keyCode==13){
       		$('#filtrobutton').click();
-      		$('#buscarapidaano').val("");
     	}
     });
 
-	$('#confirmaalteracaotelaprincipal').on('click', function() {
-		
-		var erro = validaCampos();
-		var tipo = 'alterar';
-
-		if(erro == true){
-
-			var erro = validaCampos();
-			alert('Por favor preencha todos os campos para continuar');
-
-		}
-		if(erro == false){
-
-			var data = montarObjeto();
-			recebeParametros(tipo, data);
-			
-			alert('Veiculo modificado com sucesso');
-			window.location.href="veiculos.html";
-		}
-	});
 	
 	$('#page1, #page2, #page3').on('click', function() {
 		pagina = parseInt($(this).text());
@@ -128,50 +105,22 @@ function vincularEventos() {
 
 	});
 
+	$('#confirmaalteracaotelaprincipal').on('click', function() {
+		
+		var tipo = 'alterar';
+		var data = montarObjeto();
+		recebeParametros(tipo, data);	
+		
+	});
+
 	$('#confirmanovotelaprincipal').on('click', function() {
 		
-		var i = 0;
-		var erro = validaCampos();
 		var tipo = 'novo';
 
-		if(erro != "") {
-			
-			alert(erro);
+		var data = montarObjeto();
+		recebeParametros(tipo, data);
 
-		}else {
-			var data = montarObjeto();
-			recebeParametros(tipo, data);	
-			alert('Veiculo cadastrado com sucesso');
-			window.location.href="veiculos.html";
-			listar();
-		}
 	});
-}
-
-function validaCampos() {
-	var erros = "";
-	data = {
-
-		descricao: $("#descricao").val(),
-		placa: $("#placa").unmask().val(),
-		renavam: $("#renavam").unmask().val(),
-		cor: $("#cor").val(),
-		km: $("#km").val(),
-		preco: $("#preco").unmask().val(),
-		precofipe: $("#precofipe").unmask().val()
-
-	}
-
-	requisicao({
-		url: 'http://localhost/projeto-automoveis/api/',
-		type: 'POST',
-		data: {data: data, 'action': 'validaCampos'},
-		fnSuccess: function(result) {
-			erros = result;
-			return erros;
-		}
-	});
-	return erros;
 }
 
 function editar(veiculo) {
@@ -219,6 +168,16 @@ function recebeParametros (tipo, data) {
 			data: {data: data, 'action': 'alterarVeiculo'},
 			fnSuccess: function(result) {
 				veiculos = result;
+				if(result ['erros']) {
+					$('#campo_erros_aviso').show();
+					mostraErros(result);
+					alert('Veiculo não alterado, existem erros');
+				}else {
+					$('#campo_erros_aviso').hide();
+					alert('Veiculo modificado com sucesso');
+					window.location.href="veiculos.html";
+					listar();
+				}
 			}
 		});
 
@@ -232,8 +191,68 @@ function recebeParametros (tipo, data) {
 			data: {data: data, 'action': 'novoVeiculo'},
 			fnSuccess: function(result) {
 				veiculos = result;
+				if(result ['erros']) {
+					$('#campo_erros_aviso').show();
+					mostraErros(result);
+					alert('Veiculo não cadastrado, existem erros');
+				}else {
+					$('#campo_erros_aviso').hide();
+					alert('Veiculo cadastrado com sucesso');
+					window.location.href="veiculos.html";
+					listar();
+				}
 			}
 		});	
+	}
+}
+
+function mostraErros(erros) {
+
+	console.log(erros)
+
+		$('#ul_descricao').hide();
+		$('#ul_placa').hide();
+		$('#ul_renavam').hide();
+		$('#ul_cor').hide();
+		$('#ul_km').hide();
+		$('#ul_preco').hide();
+		$('#ul_precofipe').hide();
+
+
+	if(erros['erros']['descricao']){
+		$('#ul_descricao').show();
+		$('#li_descricao').show();
+		$('#span_descricao').text(erros['erros']['descricao']);
+	}
+	if(erros['erros']['placa']){
+		$('#ul_placa').show();
+		$('#li_placa').show();
+		$('#span_placa').text(erros['erros']['placa']);
+	}
+	if(erros['erros']['renavam']){
+		$('#ul_renavam').show();
+		$('#li_renavam').show();
+		$('#span_renavam').text(erros['erros']['renavam']);
+	}
+	if(erros['erros']['cor']){
+		$('#ul_cor').show();
+		$('#li_cor').show();
+		$('#span_cor').text(erros['erros']['cor']);
+	}
+	if(erros['erros']['km']){
+		$('#ul_km').show();
+		$('#li_km').show();
+		$('#span_km').text(erros['erros']['km']);
+	}
+	if(erros['erros']['preco']){
+		$('#ul_preco').show();
+		$('#li_preco').show();
+		$('#span_preco').text(erros['erros']['preco']);
+	}
+	if(erros['erros']['precofipe']){
+		$('#ul_precofipe').show();
+		$('#li_precofipe').show();
+		$('#span_precofipe').text(erros['erros']['precofipe']);
 	}
 
 }
@@ -273,8 +292,6 @@ function montaObjetoEditar(id) {
 
 		}
 	});
-
-	validaCampos();
 
 	var data = {
 
@@ -409,4 +426,3 @@ function montarTabela() {
 		}
 	})	
 }
-
