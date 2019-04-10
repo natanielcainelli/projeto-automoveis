@@ -113,9 +113,7 @@ function vincularEventos() {
 		
 		var tipo = 'alterar';
 		var data = montarObjeto();
-		recebeParametros(tipo, data);
-			
-			
+		recebeParametros(tipo, data);	
 		
 	});
 
@@ -126,7 +124,6 @@ function vincularEventos() {
 		var data = montarObjeto();
 		recebeParametros(tipo, data);
 
-		
 	});
 }
 
@@ -177,11 +174,10 @@ function recebeParametros (tipo, data) {
 				veiculos = result;
 				if(result ['erros']) {
 					$('#campo_erros_aviso').show();
-					$('#erros_texto').text(result['erros']);
+					mostraErros(result);
 					alert('Veiculo não alterado, existem erros');
 				}else {
 					$('#campo_erros_aviso').hide();
-					$('#erros_texto').text('');
 					alert('Veiculo modificado com sucesso');
 					window.location.href="veiculos.html";
 					listar();
@@ -201,11 +197,10 @@ function recebeParametros (tipo, data) {
 				veiculos = result;
 				if(result ['erros']) {
 					$('#campo_erros_aviso').show();
-					$('#erros_texto').text(result['erros']);
+					mostraErros(result);
 					alert('Veiculo não cadastrado, existem erros');
 				}else {
 					$('#campo_erros_aviso').hide();
-					$('#erros_texto').text('');
 					alert('Veiculo cadastrado com sucesso');
 					window.location.href="veiculos.html";
 					listar();
@@ -213,6 +208,57 @@ function recebeParametros (tipo, data) {
 			}
 		});	
 	}
+}
+
+function mostraErros(erros) {
+
+	console.log(erros)
+
+		$('#ul_descricao').hide();
+		$('#ul_placa').hide();
+		$('#ul_renavam').hide();
+		$('#ul_cor').hide();
+		$('#ul_km').hide();
+		$('#ul_preco').hide();
+		$('#ul_precofipe').hide();
+
+
+	if(erros['erros']['descricao']){
+		$('#ul_descricao').show();
+		$('#li_descricao').show();
+		$('#span_descricao').text(erros['erros']['descricao']);
+	}
+	if(erros['erros']['placa']){
+		$('#ul_placa').show();
+		$('#li_placa').show();
+		$('#span_placa').text(erros['erros']['placa']);
+	}
+	if(erros['erros']['renavam']){
+		$('#ul_renavam').show();
+		$('#li_renavam').show();
+		$('#span_renavam').text(erros['erros']['renavam']);
+	}
+	if(erros['erros']['cor']){
+		$('#ul_cor').show();
+		$('#li_cor').show();
+		$('#span_cor').text(erros['erros']['cor']);
+	}
+	if(erros['erros']['km']){
+		$('#ul_km').show();
+		$('#li_km').show();
+		$('#span_km').text(erros['erros']['km']);
+	}
+	if(erros['erros']['preco']){
+		$('#ul_preco').show();
+		$('#li_preco').show();
+		$('#span_preco').text(erros['erros']['preco']);
+	}
+	if(erros['erros']['precofipe']){
+		$('#ul_precofipe').show();
+		$('#li_precofipe').show();
+		$('#span_precofipe').text(erros['erros']['precofipe']);
+	}
+
 }
 
 function montaObjetoEditar(id) {
@@ -386,4 +432,3 @@ function montarTabela() {
 		}
 	})	
 }
-

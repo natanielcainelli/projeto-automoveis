@@ -111,42 +111,39 @@ class VeiculoController {
 
 	function validaCampos($veiculo) {
 
-		$erro = "";
-
-		error_log(print_r($veiculo, true));
 
 		if(empty($veiculo->getDescricao())){
-			$erro .= "- O campo descrição não pode ser nulo "; 
+			$erro['descricao'] = " O campo Descrição não pode ser nulo ";
 		}
 		if(empty($veiculo->getPlaca())){
-			$erro .= "- O campo placa não pode ser nulo "; 
+			$erro['placa'] = " O campo Placa não pode ser nulo "; 
 		}
 		if(strlen($veiculo->getPlaca()) != 7){
-			$erro .= "- O tamanho do campo placa está incorreto "; 
+			$erro['placa'] = " O tamanho do campo Placa deve conter 7 caracteres "; 
 		}
 		if(empty($veiculo->getRenavam())){
-			$erro .= "- O campo renavam não pode ser nulo "; 
+			$erro['renavam'] = " O campo Renavam não pode ser nulo "; 
 		}
 		if(strlen($veiculo->getRenavam()) != 9){
-			$erro .= "- O tamanho do campo renavam deve conter 9 caracteres "; 
+			$erro['renavam'] = " O tamanho do campo Renavam deve conter 9 caracteres "; 
 		}
 		if(empty($veiculo->getCor())){
-			$erro .= "- O campo cor não pode ser nulo ";  
+			$erro['cor'] = " O campo Cor não pode ser nulo ";  
 		}
 		if(empty($veiculo->getKm())){
-			$erro .= "- O campo km não pode ser nulo ";  
+			$erro['km'] = " O campo Km não pode ser nulo ";  
 		}
 		if(empty($veiculo->getPreco())){
-			$erro .= "- O campo preço não pode estar vazio "; 
+			$erro['preco'] = " O campo Preço não pode estar vazio "; 
 		}
 		if($veiculo->getPreco() < 1){
-			$erro .=  "- O campo preço não pode ser menor ou igual a 0 "; 
+			$erro['preco'] = " O campo Preço não pode ser menor ou igual a 0 "; 
 		}
 		if(empty($veiculo->getPrecoFipe())){
-			$erro .= "- O campo preço da tabela fipe não pode ser nulo "; 
+			$erro['precofipe'] = " O campo preço da Tabela FIPE não pode ser nulo "; 
 		}
 		if($veiculo->getPrecoFipe() < 1){
-			$erro .= "- O campo preço da tabela fipe não pode ser menor ou igual a 0 "; 
+			$erro['precofipe'] = " O campo preço da Tabela FIPE não pode ser menor ou igual a 0 "; 
 		}
 
 		return $erro;
