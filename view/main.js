@@ -62,7 +62,7 @@ function vincularEventos() {
 
 
 function isEmail(email) { 
-	
+
 	var erro = [];
 
 	var data ={
@@ -161,6 +161,4 @@ function cadastrarUsuario() {
     }else {
     	alert('O email escolhido ja está em uso, por favor digite outro');
     }
-    
-	
 }
