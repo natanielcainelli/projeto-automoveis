@@ -58,26 +58,16 @@ function removeDados($ids) {
 	//implementar uma validação de delete com base no idUsuario para evitar uma falha de segurança que é a possibilidade de alterar um veículo que não pertence
 	//ao idUsuario, sendo manipulavel por javascript
 
-	//base de implementação
+	$idsSql = implode("','", $ids);
 
-	// $idsSql = implode("','", $ids);
+	$sql = "DELETE FROM veiculo  WHERE id in ('" . $idsSql . "')";
+	error_log($sql);
+	$result = $conn->query($sql);
 
-	// $sql = "DELETE FROM veiculo  WHERE id in ('" . $idsSql . "')";
-	// error_log($sql);
-	// $result = $conn->query($sql);
+	$sql = "DELETE FROM veiculo_adicionais WHERE veiculo_id in ('" . $idsSql . "')";
+	error_log($sql);
+	$result = $conn->query($sql);
 
-	// $sql = "DELETE FROM veiculo_adicionais WHERE veiculo_id in ('" . $idsSql . "')";
-	// error_log($sql);
-	// $result = $conn->query($sql);
-
-	foreach ($veiculo->getId() as $values) {
-		
-		if($values > 0 ){
-			$sql = "DELETE FROM veiculo  WHERE (id = $values); DELETE FROM veiculo_adicionais WHERE (veiculo_id = $values);";
-			error_log($sql);
-			$result = $conn->multi_query($sql);
-		}				
-	}
 	
 	connectionKill($conn);
 
