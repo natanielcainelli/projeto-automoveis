@@ -124,7 +124,7 @@ function listarID($filtro) {
 			$sql.=" AND ";
 		}
 
-		$sql.=" veiculo.anomodelo = ".$filtro['ano']."and id_usuario = ".$id;
+		$sql.=" veiculo.anomodelo = ".$filtro['ano']." and id_usuario = ".$id;
 
 
 	}

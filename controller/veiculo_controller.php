@@ -51,10 +51,6 @@ class VeiculoController {
 	}
 
 	function excluir($data) {
-		
-		//$veiculo = new Veiculo();
-
-		//$veiculo->setId($data['data']);
 
 		return removeDados($data['data']);
 	}
