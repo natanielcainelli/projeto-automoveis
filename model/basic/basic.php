@@ -54,20 +54,19 @@ function removeDados($ids) {
 
 	$conn = connectionFactory();
 
+	session_start();
 
-	//implementar uma validação de delete com base no idUsuario para evitar uma falha de segurança que é a possibilidade de alterar um veículo que não pertence
-	//ao idUsuario, sendo manipulavel por javascript
+	$id = $_SESSION['usuario']['id'];
 
 	$idsSql = implode("','", $ids);
 
-	$sql = "DELETE FROM veiculo  WHERE id in ('" . $idsSql . "')";
+	$sql = "DELETE FROM veiculo  WHERE id in ('" . $idsSql . "') and id_usuario = ".$id." ";
 	error_log($sql);
 	$result = $conn->query($sql);
 
 	$sql = "DELETE FROM veiculo_adicionais WHERE veiculo_id in ('" . $idsSql . "')";
 	error_log($sql);
 	$result = $conn->query($sql);
-
 	
 	connectionKill($conn);
 
